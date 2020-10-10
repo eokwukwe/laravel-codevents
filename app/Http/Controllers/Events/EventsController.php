@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Events;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\EventsRequest;
 use App\Http\Resources\Events\EventsResource;
@@ -28,20 +27,10 @@ class EventsController extends Controller
      */
     public function store(EventsRequest $request)
     {
-        $event = Event::create([
-            'title' => $request->title,
-            'date' => $request->date,
-            'category' => $request->category,
-            'description' => $request->description,
-            'city_address' => $request->city_address,
-            'city_lat' => $request->city_lat,
-            'city_lng' => $request->city_lng,
-            'venue_address' => $request->venue_address,
-            'venue_lat' => $request->venue_lat,
-            'venue_lng' => $request->venue_lng,
-            'user_id' => $request->user()->id,
-
-        ]);
+        $event = Event::create(array_merge(
+            ['user_id' => $request->user()->id],
+            $request->all()
+        ));
 
         return new EventsResource($event);
     }
