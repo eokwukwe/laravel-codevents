@@ -7,6 +7,17 @@ Route::middleware('auth:api')->group(function () {
     Route::post('settings/profile', 'Users\SettingsController@updateProfile');
     Route::put('settings/password', 'Users\SettingsController@updatePassword');
 
+    
+    Route::post(
+        'events/{event}/attendees',
+        'Events\EventAttendeesController@join'
+    );
+    
+    Route::delete(
+        'events/{event}/attendees',
+        'Events\EventAttendeesController@leave'
+    );
+
     Route::apiResource('events', 'Events\EventsController');
 });
 

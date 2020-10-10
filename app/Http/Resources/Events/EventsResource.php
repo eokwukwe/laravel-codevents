@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Events;
 
+use App\Http\Resources\Attendees\AttendeesResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventsResource extends JsonResource
@@ -38,6 +39,11 @@ class EventsResource extends JsonResource
                 'id'       => $this->user->id,
                 'name'     => $this->user->name,
                 'photoURL' => $this->user->photo_url,
+            ],
+            'attendees' => AttendeesResource::collection($this->attendees),
+            'created'   => [
+                'forHuman'  => $this->created_at->diffForHumans(),
+                'createdAt' => $this->created_at
             ],
         ];
     }

@@ -6,6 +6,8 @@ use App\Models\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\EventsRequest;
 use App\Http\Resources\Events\EventsResource;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
@@ -16,7 +18,9 @@ class EventsController extends Controller
      */
     public function index()
     {
-        return EventsResource::collection(Event::paginate(5));
+        return EventsResource::collection(
+            Event::orderBy('created_at', 'desc')->paginate(5)
+        );
     }
 
     /**
@@ -27,10 +31,30 @@ class EventsController extends Controller
      */
     public function store(EventsRequest $request)
     {
-        $event = Event::create(array_merge(
-            ['user_id' => $request->user()->id],
-            $request->all()
-        ));
+        DB::beginTransaction();
+
+        try {
+            $event = Event::create(array_merge(
+                ['user_id' => $request->user()->id],
+                $request->all()
+            ));
+
+            // Add the event creator as an attendee
+            $event->attendees()->create([
+                'event_id' => $event->id,
+                'user_id' => $request->user()->id
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $ex) {
+            Log::info($ex->getMessage());
+
+            DB::rollback();
+
+            return response()->json([
+                'message' => $ex->getMessage()
+            ], 409);
+        }
 
         return new EventsResource($event);
     }

@@ -15,4 +15,34 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function attendees()
+    {
+        return $this->hasMany(Attendee::class);
+    }
+
+    /**
+     * Check is user is the event host
+     * 
+     * @param int $userId
+     * @return bool
+     */
+    public function isHost($userId)
+    {
+        return $this->user_id === $userId;
+    }
+
+    /**
+     * Check is user is the event host
+     * 
+     * @param int $userId
+     * @return \App\Models\Attendee  $attendee
+     */
+    public function isAttendee($userId)
+    {
+        return Attendee::where([
+            'event_id' => $this->id,
+            'user_id' => $userId
+        ])->first();
+    }
 }
