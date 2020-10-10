@@ -6,6 +6,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Auth\LoginController@logout');
     Route::post('settings/profile', 'Users\SettingsController@updateProfile');
     Route::put('settings/password', 'Users\SettingsController@updatePassword');
+
+    Route::apiResource('events', 'Events\EventsController');
 });
 
 Route::middleware('guest:api')->group(function () {
