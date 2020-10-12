@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Events;
 
 use App\Http\Resources\Attendees\AttendeesResource;
+use App\Http\Resources\Comments\CommentsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventsResource extends JsonResource
@@ -40,10 +41,15 @@ class EventsResource extends JsonResource
                 'name'     => $this->user->name,
                 'photoURL' => $this->user->photo_url,
             ],
-            'attendees' => AttendeesResource::collection($this->attendees),
-            'created'   => [
+            'attendees'   => AttendeesResource::collection($this->attendees),
+            'comments'    => CommentsResource::collection($this->comments),
+            'createdAt'   => [
                 'forHuman'  => $this->created_at->diffForHumans(),
-                'createdAt' => $this->created_at
+                'timestamp' => $this->created_at
+            ],
+            'updatedAt'   => [
+                'forHuman'  => $this->updated_at->diffForHumans(),
+                'timestamp' => $this->updated_at
             ],
         ];
     }

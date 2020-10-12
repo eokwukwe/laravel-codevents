@@ -7,18 +7,21 @@ Route::middleware('auth:api')->group(function () {
     Route::post('settings/profile', 'Users\SettingsController@updateProfile');
     Route::put('settings/password', 'Users\SettingsController@updatePassword');
 
-    
     Route::post(
         'events/{event}/attendees',
         'Events\EventAttendeesController@join'
     );
-    
+
     Route::delete(
         'events/{event}/attendees',
         'Events\EventAttendeesController@leave'
     );
 
-    Route::apiResource('events', 'Events\EventsController');
+    Route::apiResource('events', 'Events\EventsController')
+        ->except('index', 'show');
+
+    Route::apiResource('events.comments', 'Comments\CommentsController')
+        ->only('store', 'update', 'destroy');
 });
 
 Route::middleware('guest:api')->group(function () {
@@ -38,4 +41,7 @@ Route::middleware('guest:api')->group(function () {
     );
 
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+    Route::apiResource('events', 'Events\EventsController')
+        ->only('index', 'show');
 });

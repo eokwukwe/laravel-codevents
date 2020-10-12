@@ -21,6 +21,11 @@ class Event extends Model
         return $this->hasMany(Attendee::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * Check is user is the event host
      * 

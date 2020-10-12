@@ -24,7 +24,11 @@ class UsersResource extends JsonResource
             'photoURL' => $this->photo_url,
             'events'   => EventsResource::collection(
                 $this->whenLoaded('events')
-            )
+            ),
+            'createdAt' => [
+                'forHuman'  => $this->created_at->diffForHumans(),
+                'timestamp' => $this->created_at
+            ],
         ];
     }
 }
