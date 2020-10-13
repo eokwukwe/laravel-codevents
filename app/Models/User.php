@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use App\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\DB;
 use App\Notifications\ResetPassword;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
@@ -111,18 +112,69 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function events()
     {
         return $this->hasMany(Event::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function attendings()
     {
         return $this->hasMany(Attendee::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'relationships',
+            'following_id',
+            'follower_id'
+        )->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followings()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'relationships',
+            'follower_id',
+            'following_id'
+        )->withTimestamps();
+    }
+
+
+    /**
+     * Check if the user is already a follower
+     * 
+     * @param int $followerId
+     */
+    public function isFollowedBy($followerId)
+    {
+        return DB::table('relationships')
+            ->select('follower_id')
+            ->where([
+                ['follower_id', '=', $followerId],
+                ['following_id', '=', $this->id]
+            ])->get();
     }
 }

@@ -18,17 +18,7 @@ class UsersResource extends JsonResource
         return [
             'id'       => $this->id,
             'name'     => $this->name,
-            'email'    => $this->email,
-            'phone'    => $this->phone,
-            'bio'      => $this->bio,
             'photoURL' => $this->photo_url,
-            'events'   => EventsResource::collection(
-                $this->whenLoaded('events')
-            ),
-            'createdAt' => [
-                'forHuman'  => $this->created_at->diffForHumans(),
-                'timestamp' => $this->created_at
-            ],
         ];
     }
 }

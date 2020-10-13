@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources\Events;
 
-use App\Http\Resources\Attendees\AttendeesResource;
-use App\Http\Resources\Comments\CommentsResource;
+use App\Http\Resources\Users\UsersResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Comments\CommentsResource;
+use App\Http\Resources\Attendees\AttendeesResource;
 
 class EventsResource extends JsonResource
 {
@@ -36,11 +37,7 @@ class EventsResource extends JsonResource
                     'lng' => $this->venue_lng,
                 ]
             ],
-            'hostedBy' => [
-                'id'       => $this->user->id,
-                'name'     => $this->user->name,
-                'photoURL' => $this->user->photo_url,
-            ],
+            'hostedBy' => new UsersResource($this->user),
             'attendees'   => AttendeesResource::collection($this->attendees),
             'comments'    => CommentsResource::collection($this->comments),
             'createdAt'   => [

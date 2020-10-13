@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('me', 'Users\UserProfilesController');
+    Route::get('user/events', 'Users\UserEventsController');
+
     Route::post('logout', 'Auth\LoginController@logout');
     Route::post('settings/profile', 'Users\SettingsController@updateProfile');
     Route::put('settings/password', 'Users\SettingsController@updatePassword');
@@ -22,6 +25,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::apiResource('events.comments', 'Comments\CommentsController')
         ->only('store', 'update', 'destroy');
+
+    Route::post('users/{user}/relationships', 'Users\RelationshipsController');
 });
 
 Route::middleware('guest:api')->group(function () {
