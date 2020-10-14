@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
 Route::get('/test/{id}', function (Request $request) {
     return new EventsResource(Event::find($request->id));
