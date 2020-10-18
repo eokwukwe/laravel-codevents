@@ -12,7 +12,7 @@ const opts = {
                 success: "#3cd1c2",
                 info: "#ffaa2c",
                 error: "#f83e70",
-                background: colors.grey.lighten4
+                background: colors.grey.lighten5
             },
             dark: {
                 primary: colors.blue.lighten3,

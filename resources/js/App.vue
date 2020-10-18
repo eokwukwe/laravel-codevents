@@ -2,9 +2,7 @@
   <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <navigation />
     <v-main>
-      <v-container>
-        <router-view></router-view>
-      </v-container>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -32,6 +30,6 @@ export default {
 
 <style>
   /* .h-screen {
-                                min-height: 100vh;
-                              } */
+                                  min-height: 100vh;
+                                } */
 </style>

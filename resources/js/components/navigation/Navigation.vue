@@ -2,7 +2,7 @@
   <nav id="nav">
     <v-navigation-drawer app temporary class="nav-color" v-model="drawer">
       <v-toolbar-title class="d-flex justify-center white--text py-3">
-        <span class="font-weight-light">LARAEvents</span>
+        <span class="font-weight-light">LARAEVENTS</span>
       </v-toolbar-title>
 
       <v-divider></v-divider>
@@ -60,9 +60,7 @@
             style="margin-left: -14px"
           ></v-app-bar-nav-icon>
 
-          <v-toolbar-title class="white--text">
-            <span class="font-weight-light">LARAEvents</span>
-          </v-toolbar-title>
+          <v-toolbar-title class="white--text"> LARAEVENTS </v-toolbar-title>
 
           <v-btn router to="/" class="ml-3" text small color="grey lighten-5">
             Events
@@ -112,8 +110,13 @@
             </v-list>
           </v-menu>
 
-          <v-btn small text class="mr-2" color="white"> Login </v-btn>
-          <v-btn depressed small color="grey lighten-5"> Register </v-btn>
+          <v-btn to="/login" small text class="mr-2" color="white">
+            Login
+          </v-btn>
+
+          <v-btn to="/register" depressed small color="grey lighten-5">
+            Register
+          </v-btn>
         </span>
       </v-container>
     </v-app-bar>
