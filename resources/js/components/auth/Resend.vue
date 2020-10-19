@@ -3,29 +3,19 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="7" md="5" lg="4">
         <v-card>
-          <v-card-title class="primary--text title">
-            Reset Your Password
+          <v-card-title class="primary--text lighten-3 title">
+            Resend Verification Link
           </v-card-title>
 
           <v-card-text class="py-5">
             <v-form v-model="valid" lazy-validation ref="form">
               <v-text-field
+                v-model="email"
+                label="Email"
+                outlined
                 dense
                 filled
-                outlined
-                type="password"
-                label="Password"
-                v-model="password"
-                append-icon="mdi-eye-off"
-              ></v-text-field>
-              <v-text-field
-                dense
-                filled
-                outlined
-                type="password"
-                append-icon="mdi-eye-off"
-                label="Password Confirmation"
-                v-model="password_confirmation"
+                append-icon="mdi-email"
               ></v-text-field>
 
               <v-btn dark block depressed color="primary lighten-0">
@@ -34,6 +24,11 @@
               </v-btn>
             </v-form>
           </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text to="/login"> Login </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -42,7 +37,7 @@
 
 <script>
 export default {
-  name: "ResetPassword",
+  name: "ResendLink",
 };
 </script>
 

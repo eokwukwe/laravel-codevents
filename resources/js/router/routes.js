@@ -1,5 +1,7 @@
 import Home from "../views/Home.vue";
 import Login from "../components/auth/Login";
+import Resend from "../components/auth/Resend";
+import Profile from "../components/user/Profile";
 import Register from "../components/auth/Register";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
@@ -21,6 +23,11 @@ const routes = [
         component: Register
     },
     {
+        path: "/resend",
+        name: "ResendLinkPage",
+        component: Resend
+    },
+    {
         path: "/forgot-password",
         name: "ForgotPasswordPage",
         component: ForgotPassword
@@ -29,7 +36,12 @@ const routes = [
         path: "/reset-password",
         name: "ResetPasswordPage",
         component: ResetPassword
-    }
+    },
+    {
+        path: "/users",
+        name: "ProfilePage",
+        component: Profile
+    },
 ];
 
 export default routes;

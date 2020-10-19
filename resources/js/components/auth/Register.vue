@@ -1,31 +1,35 @@
 <template>
   <v-container class="fill-height">
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="7" md="5">
+      <v-col cols="12" sm="7" md="5" lg="4">
         <v-card>
-          <v-toolbar dense flat color="success" class="white--text">
-            <v-toolbar-title>Create Account</v-toolbar-title>
-          </v-toolbar>
+          <v-card-title class="primary--text title">
+            Create Account
+          </v-card-title>
+
           <v-card-text class="py-5">
             <v-form v-model="valid" lazy-validation ref="form">
               <v-text-field
-                v-model="name"
-                label="Name"
-                outlined
                 dense
+                filled
+                outlined
+                label="Name"
+                v-model="name"
                 append-icon="mdi-account"
               ></v-text-field>
 
               <v-text-field
-                v-model="email"
-                label="Email"
-                outlined
                 dense
+                filled
+                outlined
+                label="Email"
+                v-model="email"
                 append-icon="mdi-email"
               ></v-text-field>
 
               <v-text-field
                 dense
+                filled
                 outlined
                 type="password"
                 label="Password"
@@ -35,6 +39,7 @@
 
               <v-text-field
                 dense
+                filled
                 outlined
                 type="password"
                 append-icon="mdi-eye-off"
@@ -42,13 +47,13 @@
                 v-model="password_confirmation"
               ></v-text-field>
 
-              <v-btn block depressed color="success">
+              <v-btn block depressed dark color="primary lighten-0">
                 <v-icon left>mdi-account-plus</v-icon>
-                register</v-btn
-              >
+                register
+              </v-btn>
             </v-form>
 
-            <v-row align="center" class="mt-3">
+            <v-row align="center" class="mt-3 primary--text darken-0">
               <v-divider></v-divider>OR<v-divider></v-divider>
             </v-row>
 
@@ -68,6 +73,12 @@
               </v-col>
             </v-row>
           </v-card-text>
+
+          <v-card-actions class="pt-0">
+            <v-btn color="primary" text to="/resend">resend link</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text to="/login"> login </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>

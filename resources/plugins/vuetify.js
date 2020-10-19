@@ -8,15 +8,17 @@ const opts = {
     theme: {
         themes: {
             light: {
-                primary: "#009688",
-                success: "#3cd1c2",
-                info: "#ffaa2c",
-                error: "#f83e70",
-                background: colors.grey.lighten5
+                primary: "#311B92",
+                success: "#46d160",
+                info: "#1565C0",
+                error: "#D84315",
+                warning: "#E65100",
+                background: colors.grey.lighten3
+                // secondary: colors.white.lighten3
             },
             dark: {
-                primary: colors.blue.lighten3,
-                background: colors.indigo.base
+                primary: colors.grey.lighten3,
+                background: colors.grey.darken3
             }
         }
     }

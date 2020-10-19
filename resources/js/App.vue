@@ -20,6 +20,12 @@ export default {
     Navigation,
   },
 
+  data() {
+    return {
+      theme: 'light'
+    }
+  },
+
   computed: {
     theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
@@ -29,7 +35,4 @@ export default {
 </script>
 
 <style>
-  /* .h-screen {
-                                  min-height: 100vh;
-                                } */
 </style>
