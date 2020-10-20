@@ -28,15 +28,16 @@
           v-for="link in links"
           :key="link.text"
           router
-          :to="link.route"
+          :to="{ name: link.routeName }"
         >
           <v-list-item-icon>
             <v-icon color="white">{{ link.icon }}</v-icon>
           </v-list-item-icon>
+
           <v-list-item-content>
-            <v-list-item-title class="white--text">{{
-              link.text
-            }}</v-list-item-title>
+            <v-list-item-title class="white--text">
+              {{ link.text }}
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -46,7 +47,13 @@
         <div class="pa-2">
           <v-row align="center" justify="center">
             <v-col cols="6">
-              <v-btn to="/create-event" small block depressed color="white--text success">
+              <v-btn
+                to="/create-event"
+                small
+                block
+                depressed
+                color="white--text success"
+              >
                 <v-icon small left dark>mdi-text-box-plus-outline</v-icon>
                 add event
               </v-btn>
@@ -104,7 +111,14 @@
             </span>
           </router-link>
 
-          <v-btn router to="/" class="ml-3" text small color="primary darken-2">
+          <v-btn
+            router
+            :to="{ name: 'EventsPage' }"
+            class="ml-3"
+            text
+            small
+            color="primary darken-2"
+          >
             Events
           </v-btn>
 
@@ -121,7 +135,7 @@
             add event
           </v-btn>
 
-          <!-- <v-menu bottom left offset-y>
+          <v-menu bottom left offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn text color="primary" dark v-bind="attrs" v-on="on">
                 <v-avatar size="36">
@@ -150,7 +164,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-          </v-menu> -->
+          </v-menu>
 
           <v-btn to="/login" small outlined class="mr-2" color="primary">
             Login
@@ -173,9 +187,9 @@ export default {
     return {
       drawer: false,
       links: [
-        { icon: "mdi-view-dashboard", text: "Dashboard", route: "/" },
-        { icon: "mdi-folder", text: "My Projects", route: "/projects" },
-        { icon: "mdi-account", text: "Team", route: "/team" },
+        { icon: "mdi-view-dashboard", text: "Events", routeName: "EventsPage" },
+        // { icon: "mdi-folder", text: "My Projects", route: "/projects" },
+        // { icon: "mdi-account", text: "Team", route: "/team" },
       ],
     };
   },

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import ProfileTabs from "./ProfileTabs";
-import ProfileHeader from "./ProfileHeader";
+import ProfileTabs from "../components/user/ProfileTabs";
+import ProfileHeader from "../components/user/ProfileHeader";
 
 export default {
   name: "Profile",

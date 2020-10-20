@@ -1,12 +1,12 @@
 import Home from "../views/Home.vue";
+import Profile from "../views/Profile.vue";
+
 import Login from "../components/auth/Login";
 import Resend from "../components/auth/Resend";
-import Profile from "../components/user/Profile";
 import Register from "../components/auth/Register";
+import EventForm from "../components/events/EventForm.vue";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
-
-import EventForm from "../components/events/EventForm.vue"
 
 const routes = [
     {
@@ -49,6 +49,14 @@ const routes = [
         name: "EventFormPage",
         component: EventForm
     },
+    {
+        path: "/events",
+        name: "EventsPage",
+        component: () =>
+            import(
+                /* webpackChunkName: "EventsPage" */ "../views/EventDashboard.vue"
+            )
+    }
 ];
 
 export default routes;
