@@ -2,4 +2,4 @@
 
 > Events app for coders.
 
-Built with `Laravel` and `Vue.js`
+Built with `PHP 7.3`, `Laravel 8`, `MySQL`, `Vue.js 2`, and `Vuetify`
