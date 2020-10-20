@@ -6,6 +6,8 @@ import Register from "../components/auth/Register";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
 
+import EventForm from "../components/events/EventForm.vue"
+
 const routes = [
     {
         path: "/",
@@ -41,6 +43,11 @@ const routes = [
         path: "/users",
         name: "ProfilePage",
         component: Profile
+    },
+    {
+        path: "/create-event",
+        name: "EventFormPage",
+        component: EventForm
     },
 ];
 

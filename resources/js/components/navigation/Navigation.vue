@@ -46,7 +46,7 @@
         <div class="pa-2">
           <v-row align="center" justify="center">
             <v-col cols="6">
-              <v-btn small block depressed color="white--text success">
+              <v-btn to="/create-event" small block depressed color="white--text success">
                 <v-icon small left dark>mdi-text-box-plus-outline</v-icon>
                 add event
               </v-btn>
@@ -112,7 +112,7 @@
 
           <v-btn
             router
-            to="/createEvents"
+            to="/create-event"
             class="mr-3 hidden-sm-and-down"
             small
             depressed
