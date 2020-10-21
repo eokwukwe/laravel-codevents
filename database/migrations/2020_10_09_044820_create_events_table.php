@@ -19,10 +19,10 @@ class CreateEventsTable extends Migration
             $table->dateTime('date');
             $table->string('category');
             $table->text('description');
-            $table->string('city_address');
+            $table->string('city');
             $table->decimal('city_lat', 8, 6);
             $table->decimal('city_lng', 9, 6);
-            $table->text('venue_address');
+            $table->text('venue');
             $table->decimal('venue_lat', 8, 6);
             $table->decimal('venue_lng', 9, 6);
             $table->timestamps();

@@ -19,7 +19,8 @@ class CommentsResource extends JsonResource
             'content' => $this->content,
             'user' => [
                 'id'   => $this->user->id,
-                'name' => $this->user->name
+                'name' => $this->user->name,
+                'photoURL' => $this->user->photo_url
             ],
             'createdAt' => [
                 'forHuman'  => $this->created_at->diffForHumans(),

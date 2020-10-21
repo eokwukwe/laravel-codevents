@@ -15,7 +15,7 @@ class AttendeesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'attendeeId' => $this->user->id,
+            'id' => $this->user->id,
             'name'       => $this->user->name,
             'photoURL'   => $this->user->photo_url,
         ];

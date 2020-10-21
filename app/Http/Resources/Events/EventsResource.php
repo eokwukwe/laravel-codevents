@@ -24,14 +24,14 @@ class EventsResource extends JsonResource
             'category'    => $this->category,
             'description' => $this->description,
             'city' => [
-                'address' => $this->city_address,
+                'address' => $this->city,
                 'latLng'  => [
                     'lat' => $this->city_lat,
                     'lng' => $this->city_lng,
                 ]
             ],
             'venue' => [
-                'address' => $this->venue_address,
+                'address' => $this->venue,
                 'latLng'  => [
                     'lat' => $this->venue_lat,
                     'lng' => $this->venue_lng,

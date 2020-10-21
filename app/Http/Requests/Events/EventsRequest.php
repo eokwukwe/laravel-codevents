@@ -26,8 +26,8 @@ class EventsRequest extends FormRequest
         return [
             'date' => ['required', 'date'],
             'category' => ['required', 'string'],
-            'city_address' => ['required', 'string'],
-            'venue_address' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'venue' => ['required', 'string'],
             'description' => ['required', 'string', 'min:10'],
             'title' => [
                 'required', 'string',
