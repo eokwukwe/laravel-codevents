@@ -28,6 +28,7 @@
           v-for="link in links"
           :key="link.text"
           router
+          exact
           :to="{ name: link.routeName }"
         >
           <v-list-item-icon>
@@ -113,6 +114,7 @@
 
           <v-btn
             router
+            exact
             :to="{ name: 'EventsPage' }"
             class="ml-3"
             text
@@ -137,7 +139,7 @@
 
           <v-menu bottom left offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn text color="primary" dark v-bind="attrs" v-on="on">
+              <v-btn icon dark v-bind="attrs" v-on="on">
                 <v-avatar size="36">
                   <img
                     src="https://cdn.vuetifyjs.com/images/john.jpg"
@@ -145,13 +147,21 @@
                   />
                 </v-avatar>
               </v-btn>
+              <!-- <v-btn text color="primary" dark v-bind="attrs" v-on="on">
+                <v-avatar size="36">
+                  <img
+                    src="https://cdn.vuetifyjs.com/images/john.jpg"
+                    alt="John"
+                  />
+                </v-avatar>
+              </v-btn> -->
             </template>
             <v-list dense>
               <v-list-item
                 v-for="(link, index) in links"
                 :key="index"
                 router
-                :to="link.route"
+                :to="{name: link.routeName}"
                 class=""
               >
                 <v-list-item-icon class="mr-0">

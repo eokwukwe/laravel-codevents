@@ -20,11 +20,11 @@ export default {
     Navigation,
   },
 
-  data() {
-    return {
-      theme: 'light'
-    }
-  },
+  // data() {
+  //   return {
+  //     theme: 'light'
+  //   }
+  // },
 
   computed: {
     theme() {

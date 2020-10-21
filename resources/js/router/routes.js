@@ -1,10 +1,8 @@
 import Home from "../views/Home.vue";
-import Profile from "../views/Profile.vue";
 
 import Login from "../components/auth/Login";
 import Resend from "../components/auth/Resend";
 import Register from "../components/auth/Register";
-import EventForm from "../components/events/EventForm.vue";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
 
@@ -12,7 +10,8 @@ const routes = [
     {
         path: "/",
         name: "HomePage",
-        component: Home
+        component: () =>
+            import(/* webpackChunkName: "HomePage" */ "../views/Home.vue")
     },
     {
         path: "/login",
@@ -42,12 +41,16 @@ const routes = [
     {
         path: "/users",
         name: "ProfilePage",
-        component: Profile
+        component: () =>
+            import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
     },
     {
         path: "/create-event",
         name: "EventFormPage",
-        component: EventForm
+        component: () =>
+            import(
+                /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
+            )
     },
     {
         path: "/events",
@@ -55,6 +58,14 @@ const routes = [
         component: () =>
             import(
                 /* webpackChunkName: "EventsPage" */ "../views/EventDashboard.vue"
+            )
+    },
+    {
+        path: "/events/:id/detail",
+        name: "EventDetailPage",
+        component: () =>
+            import(
+                /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"
             )
     }
 ];

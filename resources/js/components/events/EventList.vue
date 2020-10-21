@@ -32,7 +32,7 @@
           <v-icon small>mdi-clock</v-icon>
           <span> October 31, 2020 1:00 PM</span>
         </span>
-        <span class="ml-1">
+        <span class="ml-1 text-capitalize">
           <v-icon small>mdi-map-marker</v-icon>
           <span>ikeja computer village, Pepple Street, Lagos, Nigeria</span>
         </span>
@@ -69,7 +69,16 @@
         <v-spacer></v-spacer>
         <v-btn small text color="warning darken-3"> delete </v-btn>
 
-        <v-btn small depressed dark color="success px-3"> view </v-btn>
+        <v-btn
+          router
+          :to="{ name: 'EventDetailPage', params: { id: 1 } }"
+          small
+          depressed
+          dark
+          color="success px-3"
+        >
+          view
+        </v-btn>
       </v-card-actions>
     </v-card-text>
   </v-card>

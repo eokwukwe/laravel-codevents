@@ -7,19 +7,24 @@
             Create Event
           </v-card-title>
 
-          <v-form v-model="valid" lazy-validation ref="form">
+          <v-form
+            @submit.prevent="handleEventSubmit"
+            v-model="valid"
+            lazy-validation
+            ref="form"
+          >
             <v-card-text class="pb-0">
               <v-text-field
                 dense
                 filled
                 outlined
                 label="Title"
-                v-model="title"
+                v-model="event.title"
                 append-icon="mdi-bookmark-check"
               ></v-text-field>
 
               <v-select
-                v-model="category"
+                v-model="event.category"
                 :items="categories"
                 label="Category"
                 dense
@@ -34,7 +39,7 @@
                 filled
                 outlined
                 label="Description"
-                v-model="description"
+                v-model="event.description"
                 append-icon="mdi-information"
               ></v-textarea>
 
@@ -48,7 +53,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="date"
+                    v-model="event.date"
                     label="Event Date"
                     append-icon="mdi-calendar"
                     readonly
@@ -62,7 +67,7 @@
                 <v-date-picker
                   no-title
                   color="primary"
-                  v-model="date"
+                  v-model="event.date"
                   @input="dateMenu = false"
                 ></v-date-picker>
               </v-menu>
@@ -72,7 +77,7 @@
                 v-model="timeMenu"
                 :close-on-content-click="false"
                 :nudge-right="40"
-                :return-value.sync="time"
+                :return-value.sync="event.time"
                 transition="scale-transition"
                 offset-y
                 max-width="290px"
@@ -80,7 +85,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="time"
+                    v-model="event.time"
                     label="Event Time"
                     append-icon="mdi-clock-time-four-outline"
                     readonly
@@ -93,9 +98,9 @@
                 </template>
                 <v-time-picker
                   v-if="timeMenu"
-                  v-model="time"
+                  v-model="event.time"
                   full-width
-                  @click:minute="$refs.menu.save(time)"
+                  @click:minute="$refs.menu.save(event.time)"
                 ></v-time-picker>
               </v-menu>
 
@@ -104,7 +109,7 @@
                 filled
                 outlined
                 label="City"
-                v-model="city"
+                v-model="event.city"
                 append-icon="mdi-map"
               ></v-text-field>
 
@@ -113,7 +118,7 @@
                 filled
                 outlined
                 label="Venue"
-                v-model="venue"
+                v-model="event.venue"
                 append-icon="mdi-map-marker-radius"
               ></v-text-field>
             </v-card-text>
@@ -125,7 +130,7 @@
                 Cancel
               </v-btn>
 
-              <v-btn small depressed dark color="primary lighten-0">
+              <v-btn type="submit" small depressed dark color="primary lighten-0">
                 <v-icon small left>mdi-text-box-plus-outline</v-icon>
                 Add event
               </v-btn>
@@ -151,12 +156,27 @@ export default {
       { key: "travel", text: "Travel", value: "travel" },
     ],
 
+    valid: false,
     dateMenu: false,
     timeMenu: false,
     dateOnMenu: new Date().toISOString().substr(0, 10),
-    date: "",
-    time: "",
+
+    event: {
+      title: "",
+      category: "",
+      description: "",
+      date: "",
+      time: "",
+      city: "",
+      venue: "",
+    },
   }),
+
+  methods: {
+    handleEventSubmit() {
+      console.log(JSON.stringify(this.event, null, 2));
+    },
+  },
 };
 </script>
 
