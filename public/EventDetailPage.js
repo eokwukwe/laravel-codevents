@@ -778,7 +778,7 @@ var render = function() {
             { attrs: { small: "", depressed: "", color: "success" } },
             [
               _c("v-icon", { attrs: { small: "", left: "" } }, [
-                _vm._v("mdi-pencil")
+                _vm._v("mdi-file-document-edit")
               ]),
               _vm._v("\n      edit\n    ")
             ],

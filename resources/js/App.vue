@@ -20,12 +20,6 @@ export default {
     Navigation,
   },
 
-  // data() {
-  //   return {
-  //     theme: 'light'
-  //   }
-  // },
-
   computed: {
     theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
@@ -35,4 +29,9 @@ export default {
 </script>
 
 <style>
+  .theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined) {
+    color: white !important;
+    background-color: #9575CD !important;
+    cursor: not-allowed !important;
+  }
 </style>

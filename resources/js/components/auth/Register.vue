@@ -7,15 +7,18 @@
             Create Account
           </v-card-title>
 
-          <v-card-text class="py-5">
-            <v-form v-model="valid" lazy-validation ref="form">
+          <v-card-text class="pb-0 pt-3">
+            <v-form @submit.prevent="handleRegisterSubmit">
               <v-text-field
                 dense
                 filled
                 outlined
                 label="Name"
-                v-model="name"
                 append-icon="mdi-account"
+                v-model="registerData.name"
+                :error-messages="nameErrors"
+                @blur="$v.registerData.name.$touch()"
+                @input="$v.registerData.name.$touch()"
               ></v-text-field>
 
               <v-text-field
@@ -23,8 +26,11 @@
                 filled
                 outlined
                 label="Email"
-                v-model="email"
                 append-icon="mdi-email"
+                v-model="registerData.email"
+                :error-messages="emailErrors"
+                @blur="$v.registerData.email.$touch()"
+                @input="$v.registerData.email.$touch()"
               ></v-text-field>
 
               <v-text-field
@@ -33,8 +39,11 @@
                 outlined
                 type="password"
                 label="Password"
-                v-model="password"
                 append-icon="mdi-eye-off"
+                v-model="registerData.password"
+                :error-messages="passwordErrors"
+                @input="$v.registerData.password.$touch()"
+                @blur="$v.registerData.password.$touch()"
               ></v-text-field>
 
               <v-text-field
@@ -44,10 +53,19 @@
                 type="password"
                 append-icon="mdi-eye-off"
                 label="Password Confirmation"
-                v-model="password_confirmation"
+                :error-messages="passwordConfirmationErrors"
+                v-model="registerData.password_confirmation"
+                @blur="$v.registerData.password_confirmation.$touch()"
+                @input="$v.registerData.password_confirmation.$touch()"
               ></v-text-field>
 
-              <v-btn block depressed dark color="primary lighten-0">
+              <v-btn
+                block
+                depressed
+                type="submit"
+                color="primary lighten-0"
+                :disabled="isSubmitting || $v.$invalid"
+              >
                 <v-icon left>mdi-account-plus</v-icon>
                 register
               </v-btn>
@@ -59,14 +77,24 @@
 
             <v-row align="center" justify="center">
               <v-col cols="6">
-                <v-btn dark color="blue lighten-1" block depressed>
+                <v-btn
+                  block
+                  depressed
+                  class="white--text"
+                  color="blue lighten-1"
+                >
                   <v-icon color="blue darken-4" left>mdi-facebook</v-icon>
                   facebook
                 </v-btn>
               </v-col>
 
               <v-col cols="6">
-                <v-btn dark color="red lighten-1" block depressed>
+                <v-btn
+                  block
+                  depressed
+                  class="white--text"
+                  color="red lighten-1"
+                >
                   <v-icon color="red darken-4" left>mdi-google</v-icon>
                   google
                 </v-btn>
@@ -86,8 +114,85 @@
 </template>
 
 <script>
+import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
+
 export default {
   name: "Register",
+
+  data: () => ({
+    isSubmitting: false,
+    registerData: {
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    },
+  }),
+
+  validations: {
+    registerData: {
+      name: { required },
+      email: { required, email },
+      password: { required, minLength: minLength(8) },
+      password_confirmation: { required, sameAsPassword: sameAs("password") },
+    },
+  },
+
+  computed: {
+    nameErrors() {
+      const errors = [];
+
+      if (!this.$v.registerData.name.$dirty) return errors;
+
+      !this.$v.registerData.name.required && errors.push("Name is required.");
+
+      return errors;
+    },
+
+    emailErrors() {
+      const errors = [];
+
+      if (!this.$v.registerData.email.$dirty) return errors;
+
+      !this.$v.registerData.email.email && errors.push("Must be valid email");
+
+      !this.$v.registerData.email.required && errors.push("Email is required");
+
+      return errors;
+    },
+
+    passwordErrors() {
+      const errors = [];
+
+      if (!this.$v.registerData.password.$dirty) return errors;
+
+      !this.$v.registerData.password.required &&
+        errors.push("Password is required.");
+
+      return errors;
+    },
+
+    passwordConfirmationErrors() {
+      const errors = [];
+
+      if (!this.$v.registerData.password_confirmation.$dirty) return errors;
+
+      !this.$v.registerData.password_confirmation.required &&
+        errors.push("Password is required.");
+
+      !this.$v.registerData.password_confirmation.sameAsPassword &&
+        errors.push("Passwords do not match");
+
+      return errors;
+    },
+  },
+
+  methods: {
+    handleRegisterSubmit() {
+      // this.$v.touch()
+      console.log(JSON.stringify(this.registerData, null, 2));
+    },
+  },
 };
 </script>
 

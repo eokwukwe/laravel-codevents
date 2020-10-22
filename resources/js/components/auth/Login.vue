@@ -7,15 +7,18 @@
             Welcome Back
           </v-card-title>
 
-          <v-card-text class="pt-5">
-            <v-form v-model="valid" lazy-validation ref="form">
+          <v-card-text class="pb-0 pt-3">
+            <v-form @submit.prevent="handleLoginSubmit">
               <v-text-field
-                v-model="email"
-                label="Email"
-                outlined
                 dense
                 filled
+                outlined
+                label="Email"
                 append-icon="mdi-email"
+                v-model="loginData.email"
+                :error-messages="emailErrors"
+                @input="$v.loginData.email.$touch()"
+                @blur="$v.loginData.email.$touch()"
               ></v-text-field>
 
               <v-text-field
@@ -24,11 +27,20 @@
                 outlined
                 type="password"
                 label="Password"
-                v-model="password"
                 append-icon="mdi-eye-off"
+                v-model="loginData.password"
+                :error-messages="passwordErrors"
+                @input="$v.loginData.password.$touch()"
+                @blur="$v.loginData.password.$touch()"
               ></v-text-field>
 
-              <v-btn dark block depressed color="primary lighten-0">
+              <v-btn
+                block
+                depressed
+                type="submit"
+                color="primary lighten-0"
+                :disabled="isSubmitting || $v.$invalid"
+              >
                 <v-icon left>mdi-login</v-icon>
                 login
               </v-btn>
@@ -69,8 +81,58 @@
 </template>
 
 <script>
+import { required, email } from "vuelidate/lib/validators";
+
 export default {
   name: "Login",
+
+  data: () => ({
+    valid: false,
+    isSubmitting: false,
+    loginData: {
+      email: "",
+      password: "",
+    },
+  }),
+
+  validations: {
+    loginData: {
+      email: { required, email },
+      password: { required },
+    },
+  },
+
+  computed: {
+    emailErrors() {
+      const errors = [];
+
+      if (!this.$v.loginData.email.$dirty) return errors;
+      
+      !this.$v.loginData.email.email && errors.push("Must be valid email");
+      
+      !this.$v.loginData.email.required && errors.push("Email is required");
+      
+      return errors;
+    },
+
+    passwordErrors() {
+      const errors = [];
+      
+      if (!this.$v.loginData.password.$dirty) return errors;
+      
+      !this.$v.loginData.password.required &&
+        errors.push("Password is required.");
+      
+      return errors;
+    },
+  },
+
+  methods: {
+    handleLoginSubmit() {
+      // this.$v.$touch();
+      console.log(JSON.stringify(this.loginData, null, 2));
+    },
+  },
 };
 </script>
 

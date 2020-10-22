@@ -32,7 +32,7 @@
       <v-spacer></v-spacer>
 
       <v-btn small depressed color="success">
-        <v-icon small left>mdi-pencil</v-icon>
+        <v-icon small left>mdi-file-document-edit</v-icon>
         edit
       </v-btn>
     </v-card-actions>
