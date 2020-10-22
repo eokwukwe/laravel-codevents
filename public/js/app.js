@@ -4784,7 +4784,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined) {\n  color: white !important;\n  background-color: #9575CD !important;\n  cursor: not-allowed !important;\n}\n", ""]);
+exports.push([module.i, "\n.theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined) {\n  color: white !important;\n  background-color: #9575cd !important;\n  cursor: not-allowed !important;\n}\n.v-btn.v-btn--depressed.v-btn--disabled.btn--cancel:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined) {\n  background-color: gray !important;\n}\n", ""]);
 
 // exports
 
@@ -41729,6 +41729,48 @@ var fakeWithParams = function fakeWithParams(paramsOrClosure, maybeValidator) {
 var withParams = root.vuelidate ? root.vuelidate.withParams : fakeWithParams;
 exports.withParams = withParams;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/vuetify-google-autocomplete/lib/VuetifyGoogleAutocomplete.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/vuetify-google-autocomplete/lib/VuetifyGoogleAutocomplete.js ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuetify_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetify/lib */ "./node_modules/vuetify/lib/index.js");
+function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i]}return arr2}else{return Array.from(arr)}}/* harmony default export */ __webpack_exports__["default"] = ({name:'vuetify-google-autocomplete',props:{addressComponents:{type:Object,default:function _default(){return{street_number:'short_name',route:'long_name',locality:'long_name',administrative_area_level_1:'short_name',administrative_area_level_2:'short_name',country:'long_name',postal_code:'short_name'}}},appendIcon:{type:String,default:undefined},appendOuterIcon:{type:String,default:undefined},autocapitalize:{type:String,default:'off'},autocorrect:{type:String,default:'off'},autofocus:{type:Boolean,default:false},backgroundColor:{type:String,default:undefined},browserAutocomplete:{type:String,default:'off'},clearIcon:{type:String,default:'$clear'},clearable:{type:Boolean,default:false},color:{type:String,default:undefined},counter:{type:[Boolean,Number,String],default:undefined},country:{type:[String,Array],default:null},dark:{type:Boolean,default:false},dense:{type:Boolean,default:false},disabled:{type:Boolean,default:false},enableGeolocation:{type:Boolean,default:false},error:{type:Boolean,default:false},errorCount:{type:[Number,String],default:1},errorMessages:{type:Array,default:function _default(){return[]}},filled:{type:Boolean,default:false},fields:{type:[String,Array],default:null},flat:{type:Boolean,default:false},fullWidth:{type:Boolean,default:false},hideDetails:{type:Boolean,default:false},hint:{type:String,default:undefined},id:{type:String,required:true},label:{type:String,default:undefined},light:{type:Boolean,default:false},loaderHeight:{type:[Number,String],default:2},loading:{type:[Boolean,String],default:false},messages:{type:[String,Array],default:function _default(){return[]}},mask:{type:[Object,String],default:undefined},noResize:{type:Boolean,default:false},outlined:{type:Boolean,default:false},persistentHint:{type:Boolean,default:false},placeholder:{type:String,default:undefined},placeName:{type:Boolean,default:false},prefix:{type:String,default:undefined},prependIcon:{type:String,default:undefined},prependIconInner:{type:String,default:undefined},readonly:{type:Boolean,default:false},returnMaskedValue:{type:Boolean,default:false},reverse:{type:Boolean,default:false},rounded:{type:Boolean,default:false},rows:{type:[Number,String],default:5},rules:{type:Array,default:function _default(){return[]}},selectionRequired:{type:Boolean,default:false},selectionRequiredText:{type:String,default:'Please select an address from the list.'},shaped:{type:Boolean,default:false},singleLine:{type:Boolean,default:false},solo:{type:Boolean,default:false},soloInverted:{type:Boolean,default:false},spellcheck:{type:String,default:'false'},suffix:{type:String,default:undefined},success:{type:Boolean,default:false},successMessages:{type:[String,Array],default:function _default(){return[]}},tabindex:{default:0},textarea:{type:Boolean,default:false},toggleKeys:{type:Array,default:function _default(){return[13,32]}},type:{type:String,default:'text'},types:{type:String,default:'address'},validateOnBlur:{type:Boolean,default:false},value:{type:String,default:undefined,required:false}},components:{VTextField:vuetify_lib__WEBPACK_IMPORTED_MODULE_0__["VTextField"]},data:function data(){return{autocomplete:null,autocompleteText:'',geolocateSet:false,loadInterval:null,vgaMapState:null,lastSelectedPlace:''}},computed:{rulesPlusInternalRules:function rulesPlusInternalRules(){var enforceSelectionRequired=[];if(this.selectionRequired&&(this.lastSelectedPlace.trim()===''||this.lastSelectedPlace!==this.autocompleteText)){enforceSelectionRequired.push(this.selectionRequiredText)}else{enforceSelectionRequired.push(true)}return[].concat(_toConsumableArray(this.rules),enforceSelectionRequired)}},methods:{onFocus:function onFocus(){this.geolocate();this.$emit('focus')},onBlur:function onBlur(){this.$emit('blur')},onChange:function onChange(){this.$emit('change',this.autocompleteText)},onClickAppend:function onClickAppend(){this.$emit('click:append')},onClickAppendOuter:function onClickAppendOuter(){this.$emit('click:append-outer')},onClickClear:function onClickClear(){this.$emit('click:clear')},onClickPrepend:function onClickPrepend(){this.$emit('click:prepend')},onClickPrependInner:function onClickPrependInner(){this.$emit('click:prepend-inner')},onUpdateError:function onUpdateError(){this.$emit('update:error')},onKeyPress:function onKeyPress(event){this.$emit('keypress',event)},clear:function clear(){this.autocompleteText='';this.$refs.textField.clearableCallback()},focus:function focus(){this.$refs.autocomplete.focus()},blur:function blur(){this.$refs.autocomplete.blur()},update:function update(value){this.autocompleteText=value},geolocate:function geolocate(){var _this=this;if(this.enableGeolocation&&!this.geolocateSet){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(position){var geolocation={lat:position.coords.latitude,lng:position.coords.longitude};var circle=new window.google.maps.Circle({center:geolocation,radius:position.coords.accuracy});_this.autocomplete.setBounds(circle.getBounds());_this.geolocateSet=true})}}},setupGoogle:function setupGoogle(){var _this2=this;var options={};if(this.types){options.types=[this.types]}if(this.country){options.componentRestrictions={country:this.country}}if(this.fields){if(typeof this.fields==='string'){options.fields=[this.fields]}else{options.fields=this.fields}}this.autocomplete=new window.google.maps.places.Autocomplete(document.getElementById(this.id),options);document.getElementById(this.id).setAttribute('placeholder',this.placeholder?this.placeholder:'');this.autocomplete.addListener('place_changed',function(){var place=_this2.autocomplete.getPlace();if(Object.keys(place).length<2){_this2.$emit('no-results-found',place);return}var returnData={};if(place.name!==undefined&&_this2.placeName){_this2.autocompleteText=place.name}else if(place.formatted_address!==undefined){_this2.autocompleteText=place.formatted_address}if(place.address_components!==undefined){for(var i=0;i<place.address_components.length;i+=1){var addressType=place.address_components[i].types[0];if(_this2.addressComponents[addressType]){var val=place.address_components[i][_this2.addressComponents[addressType]];returnData[addressType]=val}}if(place.geometry){returnData.latitude=place.geometry.location.lat();returnData.longitude=place.geometry.location.lng()}if(place.name){returnData.name=place.name}if(place.photos){returnData.photos=place.photos}if(place.place_id){returnData.place_id=place.place_id}_this2.$emit('placechanged',returnData,place,_this2.id);_this2.lastSelectedPlace=_this2.autocompleteText;_this2.onChange();if(_this2.validateOnBlur){_this2.$refs.textField.validate()}}})}},created:function created(){this.autocompleteText=this.value?this.value:'';this.lastSelectedPlace=this.autocompleteText},mounted:function mounted(){this.vgaMapState=window.vgaMapState;if(Object.prototype.hasOwnProperty.call(window,'google')){this.setupGoogle()}},destroyed:function destroyed(){window.vgaMapState.initMap=false},render:function render(createElement){var _this3=this;var self=this;return createElement('v-text-field',{ref:'textField',attrs:{id:self.id,name:self.id,autocapitalize:self.autocapitalize,autocorrect:self.autocorrect,spellcheck:self.spellcheck},props:{'append-icon':self.appendIcon,'append-outer-icon':self.appendOuterIcon,autofocus:self.autofocus,'background-color':self.backgroundColor,'browser-autocomplete':self.browserAutocomplete,'clear-icon':self.clearIcon,clearable:self.clearable,color:self.color,counter:self.counter,dark:self.dark,dense:self.dense,disabled:self.disabled,error:self.error,'error-count':self.errorCount,'error-messages':self.errorMessages,filled:self.filled,flat:self.flat,'full-width':self.fullWidth,'hide-details':self.hideDetails,hint:self.hint,label:self.label,light:self.light,'loader-height':self.loaderHeight,loading:self.loading,messages:self.messages,mask:self.mask,'no-resize':self.noResize,outlined:self.outlined,'persistent-hint':self.persistentHint,placeholder:self.placeholder,prefix:self.prefix,'prepend-icon':self.prependIcon,'prepend-inner-icon':self.prependIconInner,readonly:self.readonly,'return-masked-value':self.returnMaskedValue,reverse:self.reverse,rounded:self.rounded,rows:self.rows,rules:self.rulesPlusInternalRules,ref:'autocomplete',shaped:self.shaped,'single-line':self.singleLine,solo:self.solo,'solo-inverted':self.soloInverted,suffix:self.suffix,success:self.success,'success-messages':self.successMessages,tabindex:self.tabindex,textarea:self.textarea,'toggle-keys':self.toggleKeys,type:self.type,value:self.autocompleteText,'validate-on-blur':self.validateOnBlur,'@focus':self.onFocus(),'@blur':self.onFocus(),'@change':self.onChange(),'@click:append':self.onClickAppend(),'@click:append-outer':self.onClickAppendOuter(),'@click:clear':self.onClickClear(),'@click:prepend':self.onClickPrependInner(),'@click:prepend-inner':self.onClickPrependInner(),'@update:error':self.onUpdateError(),'@keypress':self.onKeyPress()},domProps:{},on:{focus:function focus(){self.onFocus()},blur:function blur(){self.onBlur()},change:function change(){self.onChange()},'click:append':function clickAppend(){self.onClickAppend()},'click:append-outer':function clickAppendOuter(){self.onClickAppendOuter()},'click:clear':function clickClear(){self.onClickClear()},'click:prepend':function clickPrepend(){self.onClickPrepend()},'click:prepend-inner':function clickPrependInner(){self.onClickPrependInner()},'update:error':function updateError(){self.onUpdateError()},keypress:function keypress(e){self.onKeyPress(e.target.value)},input:function input(value){_this3.autocompleteText=value}}},['append','append-outer','label','message','prepend','prepend-inner','progress'].map(function(slot){return createElement('template',{slot:slot},[_this3.$slots[slot]])}))},watch:{autocompleteText:function autocompleteText(newVal){this.$emit('input',newVal||'')},value:function value(newVal){if(newVal!==this.autocompleteText){this.autocompleteText=newVal;this.lastSelectedPlace=newVal}},country:function country(newVal){if(newVal){this.autocomplete.componentRestrictions.country=newVal}},fields:function fields(newVal){if(newVal){if(typeof newVal==='string'){this.setFields([newVal])}else{this.setFields(newVal)}}},enableGeolocation:function enableGeolocation(newVal){if(!newVal){this.geolocateSet=false}this.enableGeolocation=newVal},'vgaMapState.initMap':function vgaMapStateInitMap(value){if(value){this.setupGoogle()}},types:function types(newVal){if(newVal){this.autocomplete.setTypes([this.types])}}}});
+
+/***/ }),
+
+/***/ "./node_modules/vuetify-google-autocomplete/lib/helper.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vuetify-google-autocomplete/lib/helper.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var _typeof=typeof Symbol==='function'&&typeof Symbol.iterator==='symbol'?function(obj){return typeof obj}:function(obj){return obj&&typeof Symbol==='function'&&obj.constructor===Symbol&&obj!==Symbol.prototype?'symbol':typeof obj};var loadGoogleMaps=function loadGoogleMaps(apiKey,version,language){try{if(typeof window==='undefined'||typeof document==='undefined'){return}if(_typeof(window.google)==='object'&&_typeof(window.google.maps)==='object'){if(_typeof(window.google.maps.places)==='object'){return}throw new Error('Google is already loaded, but does not contain the places API.')}if(!window.vgaMapState.initMap){var googleMapScript=document.createElement('SCRIPT');var options={};if(typeof apiKey==='string'){options.key=apiKey}else if((typeof apiKey==='undefined'?'undefined':_typeof(apiKey))==='object'){Object.keys(apiKey).forEach(function(key){options[key]=apiKey[key]})}else{throw new Error('apiKey should either be a string or an object')}options.libraries='places';options.callback='initVGAMaps';var parameters=Object.keys(options).map(function(key){return encodeURIComponent(key)+'='+encodeURIComponent(options[key])}).join('&');var url='https://maps.googleapis.com/maps/api/js?'+parameters;if(version){url=url+'&v='+version}if(language){url=url+'&language='+language}googleMapScript.setAttribute('src',url);googleMapScript.setAttribute('async','');googleMapScript.setAttribute('defer','');document.body.appendChild(googleMapScript)}else{throw new Error('Vuetify google autocomplete loaded multiple times.')}}catch(exception){throw new Error('Vuetify google autocomplete load error: ',exception)}};/* harmony default export */ __webpack_exports__["default"] = (loadGoogleMaps);
+
+/***/ }),
+
+/***/ "./node_modules/vuetify-google-autocomplete/lib/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/vuetify-google-autocomplete/lib/index.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helper */ "./node_modules/vuetify-google-autocomplete/lib/helper.js");
+/* harmony import */ var _VuetifyGoogleAutocomplete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VuetifyGoogleAutocomplete */ "./node_modules/vuetify-google-autocomplete/lib/VuetifyGoogleAutocomplete.js");
+if(typeof window!=='undefined'){window.vgaMapState={initMap:false};window.initVGAMaps=function(){window.vgaMapState.initMap=true}}_VuetifyGoogleAutocomplete__WEBPACK_IMPORTED_MODULE_1__["default"].install=function(Vue,options){if(options.apiKey){Object(_helper__WEBPACK_IMPORTED_MODULE_0__["default"])(options.apiKey,options.version,options.language)}Vue.component(_VuetifyGoogleAutocomplete__WEBPACK_IMPORTED_MODULE_1__["default"].name,_VuetifyGoogleAutocomplete__WEBPACK_IMPORTED_MODULE_1__["default"])};/* harmony default export */ __webpack_exports__["default"] = (_VuetifyGoogleAutocomplete__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 /***/ }),
 
@@ -84635,19 +84677,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
-/* harmony import */ var _plugins_vuetify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../plugins/vuetify */ "./resources/plugins/vuetify.js");
+/* harmony import */ var vuetify_google_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetify-google-autocomplete */ "./node_modules/vuetify-google-autocomplete/lib/index.js");
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
+/* harmony import */ var _plugins_vuetify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../plugins/vuetify */ "./resources/plugins/vuetify.js");
+
 
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuelidate__WEBPACK_IMPORTED_MODULE_1___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify_google_autocomplete__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  apiKey: process.env.MIX_GOOGLE_API_KEY
+});
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
@@ -84655,12 +84702,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   components: {
-    App: _App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    App: _App_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   // store,
-  router: _router__WEBPACK_IMPORTED_MODULE_3__["default"],
-  vuetify: _plugins_vuetify__WEBPACK_IMPORTED_MODULE_4__["default"]
+  router: _router__WEBPACK_IMPORTED_MODULE_4__["default"],
+  vuetify: _plugins_vuetify__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 

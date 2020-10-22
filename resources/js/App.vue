@@ -31,7 +31,11 @@ export default {
 <style>
   .theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined) {
     color: white !important;
-    background-color: #9575CD !important;
+    background-color: #9575cd !important;
     cursor: not-allowed !important;
+  }
+
+  .v-btn.v-btn--depressed.v-btn--disabled.btn--cancel:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined) {
+    background-color: gray !important;
   }
 </style>

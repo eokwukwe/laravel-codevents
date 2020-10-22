@@ -7,130 +7,152 @@
             Create Event
           </v-card-title>
 
-          <v-form
-            @submit.prevent="handleEventSubmit"
-            v-model="valid"
-            lazy-validation
-            ref="form"
-          >
+          <v-form @submit.prevent="handleEventSubmit">
             <v-card-text class="pb-0">
               <v-text-field
                 dense
                 filled
                 outlined
-                label="Title"
-                v-model="event.title"
+                label="Event title"
+                v-model="eventData.title"
+                :error-messages="titleErrors"
+                @blur="$v.eventData.title.$touch()"
+                @input="$v.eventData.title.$touch()"
                 append-icon="mdi-bookmark-check"
               ></v-text-field>
 
               <v-select
-                v-model="event.category"
-                :items="categories"
-                label="Category"
                 dense
-                outlined
                 filled
+                outlined
+                label="Event category"
+                :items="categories"
                 append-icon="mdi-view-list"
+                v-model="eventData.category"
+                :error-messages="categoryErrors"
+                @blur="$v.eventData.category.$touch()"
+                @input="$v.eventData.category.$touch()"
               ></v-select>
 
               <v-textarea
-                rows="2"
                 dense
                 filled
+                rows="2"
                 outlined
-                label="Description"
-                v-model="event.description"
+                auto-grow
+                label="Event description"
                 append-icon="mdi-information"
+                v-model="eventData.description"
+                :error-messages="descriptionErrors"
+                @blur="$v.eventData.description.$touch()"
+                @input="$v.eventData.description.$touch()"
               ></v-textarea>
 
               <v-menu
-                v-model="dateMenu"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
                 offset-y
                 min-width="290px"
+                :nudge-right="40"
+                v-model="dateMenu"
+                transition="scale-transition"
+                :close-on-content-click="false"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="event.date"
-                    label="Event Date"
-                    append-icon="mdi-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                    outlined
                     dense
                     filled
+                    readonly
+                    outlined
+                    v-on="on"
+                    v-bind="attrs"
+                    label="Event Date"
+                    v-model="eventData.date"
+                    append-icon="mdi-calendar"
+                    :error-messages="dateErrors"
+                    @blur="$v.eventData.date.$touch()"
+                    @input="$v.eventData.date.$touch()"
                   ></v-text-field>
                 </template>
                 <v-date-picker
                   no-title
                   color="primary"
-                  v-model="event.date"
+                  v-model="eventData.date"
                   @input="dateMenu = false"
                 ></v-date-picker>
               </v-menu>
 
               <v-menu
                 ref="menu"
-                v-model="timeMenu"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                :return-value.sync="event.time"
-                transition="scale-transition"
                 offset-y
                 max-width="290px"
                 min-width="290px"
+                :nudge-right="40"
+                v-model="timeMenu"
+                transition="scale-transition"
+                :close-on-content-click="false"
+                :return-value.sync="eventData.time"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="event.time"
-                    label="Event Time"
-                    append-icon="mdi-clock-time-four-outline"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                    outlined
                     dense
                     filled
+                    readonly
+                    outlined
+                    v-on="on"
+                    v-bind="attrs"
+                    label="Event Time"
+                    v-model="eventData.time"
+                    :error-messages="timeErrors"
+                    @blur="$v.eventData.time.$touch()"
+                    @input="$v.eventData.time.$touch()"
+                    append-icon="mdi-clock-time-four-outline"
                   ></v-text-field>
                 </template>
                 <v-time-picker
-                  v-if="timeMenu"
-                  v-model="event.time"
                   full-width
-                  @click:minute="$refs.menu.save(event.time)"
+                  v-if="timeMenu"
+                  v-model="eventData.time"
+                  @click:minute="$refs.menu.save(eventData.time)"
                 ></v-time-picker>
               </v-menu>
 
-              <v-text-field
+              <vuetify-google-autocomplete
+                id="venue"
                 dense
                 filled
                 outlined
-                label="City"
-                v-model="event.city"
-                append-icon="mdi-map"
-              ></v-text-field>
-
-              <v-text-field
-                dense
-                filled
-                outlined
-                label="Venue"
-                v-model="event.venue"
+                placeholder=""
+                label="Event venue"
+                v-model="eventData.venue"
+                :error-messages="venueErrors"
+                v-on:placechanged="getEventVenue"
+                @blur="$v.eventData.venue.$touch()"
+                @input="$v.eventData.venue.$touch()"
                 append-icon="mdi-map-marker-radius"
-              ></v-text-field>
+              >
+              </vuetify-google-autocomplete>
+
             </v-card-text>
 
             <v-card-actions class="pt-0">
               <v-spacer></v-spacer>
-              <v-btn small depressed dark color="grey darken-2">
+              <v-btn
+                small
+                depressed
+                class="white--text btn--cancel"
+                color="grey darken-2"
+                :disabled="isSubmitting"
+              >
                 <v-icon small left>mdi-text-box-minus-outline</v-icon>
                 Cancel
               </v-btn>
 
-              <v-btn type="submit" small depressed dark color="primary lighten-0">
+              <v-btn
+                small
+                depressed
+                type="submit"
+                color="primary lighten-0"
+                :disabled="isSubmitting || $v.$invalid"
+              >
                 <v-icon small left>mdi-text-box-plus-outline</v-icon>
                 Add event
               </v-btn>
@@ -143,42 +165,133 @@
 </template>
 
 <script>
+import { required, minValue } from "vuelidate/lib/validators";
+
+import clearFormInput from "../../helpers/clearFormInput";
+import { eventCategories } from "../../api/eventCategories";
+
+const minDate = (value) => new Date(value) >= new Date();
+
 export default {
   name: "EventForm",
 
   data: () => ({
-    categories: [
-      { key: "drinks", text: "Drinks", value: "drinks" },
-      { key: "culture", text: "Culture", value: "culture" },
-      { key: "film", text: "Film", value: "film" },
-      { key: "food", text: "Food", value: "food" },
-      { key: "music", text: "Music", value: "music" },
-      { key: "travel", text: "Travel", value: "travel" },
-    ],
-
-    valid: false,
+    categories: eventCategories,
     dateMenu: false,
     timeMenu: false,
-    dateOnMenu: new Date().toISOString().substr(0, 10),
-
-    event: {
-      title: "",
-      category: "",
-      description: "",
+    isSubmitting: false,
+    eventData: {
       date: "",
       time: "",
-      city: "",
+      title: "",
       venue: "",
+      category: "",
+      description: "",
     },
   }),
 
+  validations: {
+    eventData: {
+      date: { required, minDate },
+      time: { required },
+      title: { required },
+      venue: { required },
+      category: { required },
+      description: { required },
+    },
+  },
+
+  computed: {
+    dateErrors() {
+      const errors = [];
+
+      if (!this.$v.eventData.date.$dirty) return errors;
+
+      !this.$v.eventData.date.required &&
+        errors.push("Event date is required.");
+
+      !this.$v.eventData.date.minDate &&
+        errors.push("Event date cannot be less than today.");
+
+      return errors;
+    },
+
+    timeErrors() {
+      const errors = [];
+
+      if (!this.$v.eventData.time.$dirty) return errors;
+
+      !this.$v.eventData.time.required &&
+        errors.push("Event time is required.");
+
+      return errors;
+    },
+
+    titleErrors() {
+      const errors = [];
+
+      if (!this.$v.eventData.title.$dirty) return errors;
+
+      !this.$v.eventData.title.required &&
+        errors.push("Event title is required.");
+
+      return errors;
+    },
+
+    venueErrors() {
+      const errors = [];
+
+      if (!this.$v.eventData.venue.$dirty) return errors;
+
+      !this.$v.eventData.venue.required &&
+        errors.push("Event venue is required.");
+
+      return errors;
+    },
+
+    categoryErrors() {
+      const errors = [];
+
+      if (!this.$v.eventData.category.$dirty) return errors;
+
+      !this.$v.eventData.category.required &&
+        errors.push("Event category is required.");
+
+      return errors;
+    },
+
+    descriptionErrors() {
+      const errors = [];
+
+      if (!this.$v.eventData.description.$dirty) return errors;
+
+      !this.$v.eventData.description.required &&
+        errors.push("Event description is required.");
+
+      return errors;
+    },
+  },
+
   methods: {
     handleEventSubmit() {
-      console.log(JSON.stringify(this.event, null, 2));
+      console.log(JSON.stringify(this.eventData, null, 2));
+      clearFormInput({
+        validationReset: this.$v.$reset,
+        formData: this.eventData,
+      });
+      console.log(JSON.stringify(this.eventData, null, 2));
+    },
+
+    getEventVenue(addressData, placeResultData, id) {
+      console.log({ addressData }, { placeResultData }, { id });
+      // this.address = addressData;
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
+  .btn--cancel:disabled {
+    background-color: rgb(189, 189, 189) !important;
+  }
 </style>
