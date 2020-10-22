@@ -7,7 +7,7 @@
             Create Account
           </v-card-title>
 
-          <v-card-text class="pb-0 pt-3">
+          <v-card-text class="py-3">
             <v-form @submit.prevent="handleRegisterSubmit">
               <v-text-field
                 dense
@@ -59,50 +59,52 @@
                 @input="$v.registerData.password_confirmation.$touch()"
               ></v-text-field>
 
-              <v-btn
-                block
-                depressed
-                type="submit"
-                color="primary lighten-0"
-                :disabled="isSubmitting || $v.$invalid"
+              <v-row
+                align="center"
+                justify="space-between"
+                class="px-3 primary--text darken-0"
               >
-                <v-icon left>mdi-account-plus</v-icon>
-                register
-              </v-btn>
+                <v-col class="pl-0" cols="6">
+                  <v-btn
+                    icon
+                    style="background-color: #bbdefb"
+                    color="blue darken-3"
+                    depressed
+                  >
+                    <v-icon size="30" color="blue darken-4"
+                      >mdi-facebook</v-icon
+                    >
+                  </v-btn>
+
+                  <v-btn
+                    icon
+                    style="background-color: #ffcdd2"
+                    color="red darken-3"
+                    depressed
+                    class="ml-4"
+                  >
+                    <v-icon color="red darken-4">mdi-google</v-icon>
+                  </v-btn>
+                </v-col>
+
+                <v-col class="d-flex justify-end pr-0" cols="6">
+                  <v-btn
+                    depressed
+                    type="submit"
+                    color="primary lighten-0"
+                    :disabled="isSubmitting || $v.$invalid"
+                  >
+                    <v-icon left>mdi-account-plus</v-icon>
+                    register
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-form>
-
-            <v-row align="center" class="mt-3 primary--text darken-0">
-              <v-divider></v-divider>OR<v-divider></v-divider>
-            </v-row>
-
-            <v-row align="center" justify="center">
-              <v-col cols="6">
-                <v-btn
-                  block
-                  depressed
-                  class="white--text"
-                  color="blue lighten-1"
-                >
-                  <v-icon color="blue darken-4" left>mdi-facebook</v-icon>
-                  facebook
-                </v-btn>
-              </v-col>
-
-              <v-col cols="6">
-                <v-btn
-                  block
-                  depressed
-                  class="white--text"
-                  color="red lighten-1"
-                >
-                  <v-icon color="red darken-4" left>mdi-google</v-icon>
-                  google
-                </v-btn>
-              </v-col>
-            </v-row>
           </v-card-text>
 
-          <v-card-actions class="pt-0">
+          <v-divider></v-divider>
+
+          <v-card-actions>
             <v-btn color="primary" text to="/resend">resend link</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" text to="/login"> login </v-btn>

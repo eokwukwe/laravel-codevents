@@ -7,7 +7,7 @@
             Reset Your Password
           </v-card-title>
 
-          <v-card-text class="py-3">
+          <v-card-text class="pt-3 pb-5">
             <v-form @submit.prevent="handleResetPasswordSubmit">
               <v-text-field
                 dense

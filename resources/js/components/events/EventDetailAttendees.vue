@@ -8,7 +8,7 @@
 
       <v-divider class="mt-2"></v-divider>
 
-      <v-virtual-scroll :items="attendees" :item-height="60" height="300">
+      <v-virtual-scroll :items="attendees" :item-height="60" max-height="300">
         <template v-slot:default="{ item }">
           <v-list-item>
             <v-list-item-avatar class="mr-1">
@@ -50,14 +50,6 @@ export default {
     benched: 0,
 
     attendees: [
-      {
-        name: "john doe",
-        photoURL: "https://cdn.vuetifyjs.com/images/john.jpg",
-      },
-      {
-        name: "john doe",
-        photoURL: "https://cdn.vuetifyjs.com/images/john.jpg",
-      },
       {
         name: "john doe",
         photoURL: "https://cdn.vuetifyjs.com/images/john.jpg",

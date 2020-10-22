@@ -9,20 +9,22 @@
 
 
 <script>
-import Home from "./views/Home";
 import Navigation from "./components/navigation/Navigation";
 
 export default {
   name: "App",
 
   components: {
-    Home,
     Navigation,
   },
 
   computed: {
     theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
+    },
+
+    homePage() {
+      return this.$route.path === "/";
     },
   },
 };

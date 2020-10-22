@@ -177,8 +177,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -376,6 +374,7 @@ var render = function() {
                   _c(
                     "v-form",
                     {
+                      staticClass: "pb-5",
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
@@ -386,7 +385,7 @@ var render = function() {
                     [
                       _c(
                         "v-card-text",
-                        { staticClass: "pb-0" },
+                        { staticClass: "pb-1" },
                         [
                           _c("v-text-field", {
                             attrs: {
@@ -702,7 +701,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-card-actions",
-                        { staticClass: "pt-0" },
+                        { staticClass: "pt-0 pr-4" },
                         [
                           _c("v-spacer"),
                           _vm._v(" "),
@@ -711,7 +710,6 @@ var render = function() {
                             {
                               staticClass: "white--text btn--cancel",
                               attrs: {
-                                small: "",
                                 depressed: "",
                                 color: "grey darken-2",
                                 disabled: _vm.isSubmitting
@@ -730,7 +728,6 @@ var render = function() {
                             "v-btn",
                             {
                               attrs: {
-                                small: "",
                                 depressed: "",
                                 type: "submit",
                                 color: "primary lighten-0",

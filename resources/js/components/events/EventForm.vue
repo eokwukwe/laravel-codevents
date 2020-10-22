@@ -7,8 +7,8 @@
             Create Event
           </v-card-title>
 
-          <v-form @submit.prevent="handleEventSubmit">
-            <v-card-text class="pb-0">
+          <v-form class="pb-5" @submit.prevent="handleEventSubmit">
+            <v-card-text class="pb-1">
               <v-text-field
                 dense
                 filled
@@ -133,10 +133,9 @@
 
             </v-card-text>
 
-            <v-card-actions class="pt-0">
+            <v-card-actions class="pt-0 pr-4">
               <v-spacer></v-spacer>
               <v-btn
-                small
                 depressed
                 class="white--text btn--cancel"
                 color="grey darken-2"
@@ -147,7 +146,6 @@
               </v-btn>
 
               <v-btn
-                small
                 depressed
                 type="submit"
                 color="primary lighten-0"

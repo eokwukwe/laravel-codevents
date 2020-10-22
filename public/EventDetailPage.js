@@ -67,12 +67,6 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         name: "john doe",
         photoURL: "https://cdn.vuetifyjs.com/images/john.jpg"
-      }, {
-        name: "john doe",
-        photoURL: "https://cdn.vuetifyjs.com/images/john.jpg"
-      }, {
-        name: "john doe",
-        photoURL: "https://cdn.vuetifyjs.com/images/john.jpg"
       }]
     };
   }
@@ -89,6 +83,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
 //
 //
 //
@@ -146,16 +141,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EventDetailComment",
   data: function data() {
     return {
-      comment: null,
+      eventCommentData: {
+        comment: null
+      },
       comments: [],
       commentId: 0,
       userId: 0
     };
   },
+  // computed: {
+  //   commentErrors() {
+  //     const errors = [];
+  //     if (!this.$v.eventCommentData.comment.$dirty) return errors;
+  //     !this.$v.eventCommentData.comment.required &&
+  //       errors.push("Event date is required.");
+  //     return errors;
+  //   },
+  // },
   methods: {
     handleAddComment: function handleAddComment(e) {
       e.preventDefault();
@@ -166,19 +173,20 @@ __webpack_require__.r(__webpack_exports__);
 
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
+        if (!this.eventCommentData.comment) return;
         var cId = ++this.commentId;
         var uId = ++this.userId;
         var userComment = {
           id: cId,
-          content: this.comment,
+          content: this.eventCommentData.comment,
           user: {
             id: uId,
             name: "john doe",
             photoURL: "https://cdn.vuetifyjs.com/images/john.jpg"
           }
         };
-        this.comment = null;
         this.comments.push(userComment);
+        this.eventCommentData.comment = "";
       }
     }
   }
@@ -453,7 +461,11 @@ var render = function() {
           _c("v-divider", { staticClass: "mt-2" }),
           _vm._v(" "),
           _c("v-virtual-scroll", {
-            attrs: { items: _vm.attendees, "item-height": 60, height: "300" },
+            attrs: {
+              items: _vm.attendees,
+              "item-height": 60,
+              "max-height": "300"
+            },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -560,6 +572,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
+    { staticClass: "pb-3" },
     [
       _c("v-card-title", { staticClass: "primary white--text py-2" }, [
         _vm._v("\n    Comments about this event\n  ")
@@ -578,28 +591,23 @@ var render = function() {
                   dense: "",
                   filled: "",
                   outlined: "",
+                  "auto-grow": "",
                   label: "Comment",
                   placeholder:
-                    "Enter your comment (Press Enter to submit, SHIFT + Enter for new line)",
-                  "auto-grow": ""
+                    "Enter your comment (Press Enter to submit, SHIFT + Enter for new line)"
                 },
                 on: {
                   keypress: function($event) {
-                    if (
-                      !$event.type.indexOf("key") &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
+                    $event.preventDefault()
                     return _vm.handleAddComment($event)
                   }
                 },
                 model: {
-                  value: _vm.comment,
+                  value: _vm.eventCommentData.comment,
                   callback: function($$v) {
-                    _vm.comment = $$v
+                    _vm.$set(_vm.eventCommentData, "comment", $$v)
                   },
-                  expression: "comment"
+                  expression: "eventCommentData.comment"
                 }
               })
             ],

@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="pb-3">
     <v-card-title class="primary white--text py-2">
       Comments about this event
     </v-card-title>
@@ -11,11 +11,11 @@
           dense
           filled
           outlined
+          auto-grow
           label="Comment"
           placeholder="Enter your comment (Press Enter to submit, SHIFT + Enter for new line)"
-          v-model="comment"
-          auto-grow
-          @keypress.enter="handleAddComment"
+          v-model="eventCommentData.comment"
+          @keypress.prevent="handleAddComment"
         ></v-textarea>
       </v-form>
     </v-card-text>
@@ -56,15 +56,30 @@
 </template>
 
 <script>
+import clearFormInput from "../../helpers/clearFormInput";
+
 export default {
   name: "EventDetailComment",
 
   data: () => ({
-    comment: null,
+    eventCommentData: { comment: null },
     comments: [],
     commentId: 0,
     userId: 0,
   }),
+
+  // computed: {
+  //   commentErrors() {
+  //     const errors = [];
+
+  //     if (!this.$v.eventCommentData.comment.$dirty) return errors;
+
+  //     !this.$v.eventCommentData.comment.required &&
+  //       errors.push("Event date is required.");
+
+  //     return errors;
+  //   },
+  // },
 
   methods: {
     handleAddComment(e) {
@@ -76,12 +91,14 @@ export default {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
 
+        if (!this.eventCommentData.comment) return;
+
         const cId = ++this.commentId;
         const uId = ++this.userId;
 
         const userComment = {
           id: cId,
-          content: this.comment,
+          content: this.eventCommentData.comment,
           user: {
             id: uId,
             name: "john doe",
@@ -89,8 +106,9 @@ export default {
           },
         };
 
-        this.comment = null;
         this.comments.push(userComment);
+
+        this.eventCommentData.comment = "";
       }
     },
   },

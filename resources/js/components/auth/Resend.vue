@@ -7,7 +7,7 @@
             Resend Verification Link
           </v-card-title>
 
-          <v-card-text class="pb-0 pt-3">
+          <v-card-text class="pt-3 pb-5">
             <v-form @submit.prevent="handleResendLinkSubmit">
               <v-text-field
                 dense
@@ -33,6 +33,8 @@
               </v-btn>
             </v-form>
           </v-card-text>
+
+          <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>

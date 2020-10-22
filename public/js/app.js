@@ -2023,8 +2023,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/navigation/Navigation */ "./resources/js/components/navigation/Navigation.vue");
+/* harmony import */ var _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/navigation/Navigation */ "./resources/js/components/navigation/Navigation.vue");
 //
 //
 //
@@ -2035,17 +2034,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   components: {
-    Home: _views_Home__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Navigation: _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Navigation: _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   computed: {
     theme: function theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
+    },
+    homePage: function homePage() {
+      return this.$route.path === "/";
     }
   }
 });
@@ -2064,6 +2064,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
+//
+//
 //
 //
 //
@@ -2165,6 +2167,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2429,6 +2444,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2518,6 +2535,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
+//
+//
 //
 //
 //
@@ -23164,7 +23183,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
-                    { staticClass: "pb-0 pt-3" },
+                    { staticClass: "pb-5 pt-3" },
                     [
                       _c(
                         "v-form",
@@ -23228,6 +23247,8 @@ var render = function() {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c("v-divider"),
                   _vm._v(" "),
                   _c(
                     "v-card-actions",
@@ -23298,7 +23319,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
-                    { staticClass: "pb-0 pt-3" },
+                    { staticClass: "py-3" },
                     [
                       _c(
                         "v-form",
@@ -23365,101 +23386,99 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c(
-                            "v-btn",
+                            "v-row",
                             {
+                              staticClass: "px-3 primary--text darken-0",
                               attrs: {
-                                block: "",
-                                depressed: "",
-                                type: "submit",
-                                color: "primary lighten-0",
-                                disabled: _vm.isSubmitting || _vm.$v.$invalid
+                                align: "center",
+                                justify: "space-between"
                               }
                             },
                             [
-                              _c("v-icon", { attrs: { left: "" } }, [
-                                _vm._v("mdi-login")
-                              ]),
-                              _vm._v("\n              login\n            ")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-row",
-                        {
-                          staticClass: "mt-3 primary--text darken-0",
-                          attrs: { align: "center" }
-                        },
-                        [_c("v-divider"), _vm._v("OR"), _c("v-divider")],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-row",
-                        { attrs: { align: "center", justify: "center" } },
-                        [
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "6" } },
-                            [
                               _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    dark: "",
-                                    color: "blue lighten-1",
-                                    block: "",
-                                    depressed: ""
-                                  }
-                                },
+                                "v-col",
+                                { staticClass: "pl-0", attrs: { cols: "6" } },
                                 [
                                   _c(
-                                    "v-icon",
+                                    "v-btn",
                                     {
+                                      staticStyle: {
+                                        "background-color": "#bbdefb"
+                                      },
                                       attrs: {
-                                        color: "blue darken-4",
-                                        left: ""
+                                        icon: "",
+                                        color: "blue darken-3",
+                                        depressed: ""
                                       }
                                     },
-                                    [_vm._v("mdi-facebook")]
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          attrs: {
+                                            size: "30",
+                                            color: "blue darken-4"
+                                          }
+                                        },
+                                        [_vm._v("mdi-facebook")]
+                                      )
+                                    ],
+                                    1
                                   ),
-                                  _vm._v(
-                                    "\n                facebook\n              "
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "ml-4",
+                                      staticStyle: {
+                                        "background-color": "#ffcdd2"
+                                      },
+                                      attrs: {
+                                        icon: "",
+                                        color: "red darken-3",
+                                        depressed: ""
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { color: "red darken-4" } },
+                                        [_vm._v("mdi-google")]
+                                      )
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "6" } },
-                            [
+                              ),
+                              _vm._v(" "),
                               _c(
-                                "v-btn",
+                                "v-col",
                                 {
-                                  attrs: {
-                                    dark: "",
-                                    color: "red lighten-1",
-                                    block: "",
-                                    depressed: ""
-                                  }
+                                  staticClass: "d-flex justify-end pr-0",
+                                  attrs: { cols: "6" }
                                 },
                                 [
                                   _c(
-                                    "v-icon",
+                                    "v-btn",
                                     {
-                                      attrs: { color: "red darken-4", left: "" }
+                                      attrs: {
+                                        depressed: "",
+                                        type: "submit",
+                                        color: "primary lighten-0",
+                                        disabled:
+                                          _vm.isSubmitting || _vm.$v.$invalid
+                                      }
                                     },
-                                    [_vm._v("mdi-google")]
-                                  ),
-                                  _vm._v(
-                                    "\n                google\n              "
+                                    [
+                                      _c("v-icon", { attrs: { left: "" } }, [
+                                        _vm._v("mdi-login")
+                                      ]),
+                                      _vm._v(
+                                        "\n                  login\n                "
+                                      )
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
@@ -23474,6 +23493,8 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
                   _c(
                     "v-card-actions",
                     [
@@ -23486,11 +23507,7 @@ var render = function() {
                             to: "/forgot-password"
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n            forgot your password?\n          "
-                          )
-                        ]
+                        [_vm._v("\n            forgot password?\n          ")]
                       ),
                       _vm._v(" "),
                       _c("v-spacer"),
@@ -23561,7 +23578,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
-                    { staticClass: "pb-0 pt-3" },
+                    { staticClass: "py-3" },
                     [
                       _c(
                         "v-form",
@@ -23685,101 +23702,99 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c(
-                            "v-btn",
+                            "v-row",
                             {
+                              staticClass: "px-3 primary--text darken-0",
                               attrs: {
-                                block: "",
-                                depressed: "",
-                                type: "submit",
-                                color: "primary lighten-0",
-                                disabled: _vm.isSubmitting || _vm.$v.$invalid
+                                align: "center",
+                                justify: "space-between"
                               }
                             },
                             [
-                              _c("v-icon", { attrs: { left: "" } }, [
-                                _vm._v("mdi-account-plus")
-                              ]),
-                              _vm._v("\n              register\n            ")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-row",
-                        {
-                          staticClass: "mt-3 primary--text darken-0",
-                          attrs: { align: "center" }
-                        },
-                        [_c("v-divider"), _vm._v("OR"), _c("v-divider")],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-row",
-                        { attrs: { align: "center", justify: "center" } },
-                        [
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "6" } },
-                            [
                               _c(
-                                "v-btn",
-                                {
-                                  staticClass: "white--text",
-                                  attrs: {
-                                    block: "",
-                                    depressed: "",
-                                    color: "blue lighten-1"
-                                  }
-                                },
+                                "v-col",
+                                { staticClass: "pl-0", attrs: { cols: "6" } },
                                 [
                                   _c(
-                                    "v-icon",
+                                    "v-btn",
                                     {
+                                      staticStyle: {
+                                        "background-color": "#bbdefb"
+                                      },
                                       attrs: {
-                                        color: "blue darken-4",
-                                        left: ""
+                                        icon: "",
+                                        color: "blue darken-3",
+                                        depressed: ""
                                       }
                                     },
-                                    [_vm._v("mdi-facebook")]
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          attrs: {
+                                            size: "30",
+                                            color: "blue darken-4"
+                                          }
+                                        },
+                                        [_vm._v("mdi-facebook")]
+                                      )
+                                    ],
+                                    1
                                   ),
-                                  _vm._v(
-                                    "\n                facebook\n              "
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "ml-4",
+                                      staticStyle: {
+                                        "background-color": "#ffcdd2"
+                                      },
+                                      attrs: {
+                                        icon: "",
+                                        color: "red darken-3",
+                                        depressed: ""
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { color: "red darken-4" } },
+                                        [_vm._v("mdi-google")]
+                                      )
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "6" } },
-                            [
+                              ),
+                              _vm._v(" "),
                               _c(
-                                "v-btn",
+                                "v-col",
                                 {
-                                  staticClass: "white--text",
-                                  attrs: {
-                                    block: "",
-                                    depressed: "",
-                                    color: "red lighten-1"
-                                  }
+                                  staticClass: "d-flex justify-end pr-0",
+                                  attrs: { cols: "6" }
                                 },
                                 [
                                   _c(
-                                    "v-icon",
+                                    "v-btn",
                                     {
-                                      attrs: { color: "red darken-4", left: "" }
+                                      attrs: {
+                                        depressed: "",
+                                        type: "submit",
+                                        color: "primary lighten-0",
+                                        disabled:
+                                          _vm.isSubmitting || _vm.$v.$invalid
+                                      }
                                     },
-                                    [_vm._v("mdi-google")]
-                                  ),
-                                  _vm._v(
-                                    "\n                google\n              "
+                                    [
+                                      _c("v-icon", { attrs: { left: "" } }, [
+                                        _vm._v("mdi-account-plus")
+                                      ]),
+                                      _vm._v(
+                                        "\n                  register\n                "
+                                      )
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
@@ -23794,9 +23809,10 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
                   _c(
                     "v-card-actions",
-                    { staticClass: "pt-0" },
                     [
                       _c(
                         "v-btn",
@@ -23874,7 +23890,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
-                    { staticClass: "pb-0 pt-3" },
+                    { staticClass: "pt-3 pb-5" },
                     [
                       _c(
                         "v-form",
@@ -23938,6 +23954,8 @@ var render = function() {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c("v-divider"),
                   _vm._v(" "),
                   _c(
                     "v-card-actions",
@@ -24008,7 +24026,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
-                    { staticClass: "py-3" },
+                    { staticClass: "pt-3 pb-5" },
                     [
                       _c(
                         "v-form",
@@ -84677,7 +84695,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_1__);
@@ -84693,7 +84711,7 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuelidate__WEBPACK_IMPORTED_MODULE_1___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify_google_autocomplete__WEBPACK_IMPORTED_MODULE_2__["default"], {
-  apiKey: process.env.MIX_GOOGLE_API_KEY
+  apiKey: "AIzaSyAddwFzEu83xzv_3kQjwLOrK3d35bmiOKg"
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 
@@ -84708,7 +84726,6 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   router: _router__WEBPACK_IMPORTED_MODULE_4__["default"],
   vuetify: _plugins_vuetify__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -84761,9 +84778,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/index.js");
 /* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/index.js");
 /* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
-/* harmony import */ var vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VForm */ "./node_modules/vuetify/lib/components/VForm/index.js");
-/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
-/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
+/* harmony import */ var vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VDivider */ "./node_modules/vuetify/lib/components/VDivider/index.js");
+/* harmony import */ var vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VForm */ "./node_modules/vuetify/lib/components/VForm/index.js");
+/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
+/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
 
 
 
@@ -84796,7 +84814,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VForm: vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_7__["VForm"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_8__["VIcon"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_9__["VTextField"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__["VDivider"],VForm: vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__["VForm"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__["VIcon"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_10__["VTextField"]})
 
 
 /* hot reload */
@@ -85047,9 +85066,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/index.js");
 /* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/index.js");
 /* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
-/* harmony import */ var vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VForm */ "./node_modules/vuetify/lib/components/VForm/index.js");
-/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
-/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
+/* harmony import */ var vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VDivider */ "./node_modules/vuetify/lib/components/VDivider/index.js");
+/* harmony import */ var vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VForm */ "./node_modules/vuetify/lib/components/VForm/index.js");
+/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
+/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
 
 
 
@@ -85082,7 +85102,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VForm: vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_7__["VForm"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_8__["VIcon"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_9__["VTextField"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__["VDivider"],VForm: vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__["VForm"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__["VIcon"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_10__["VTextField"]})
 
 
 /* hot reload */
