@@ -116,6 +116,8 @@
 <script>
 import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 
+import clearFormInput from "../../helpers/clearFormInput";
+
 export default {
   name: "Register",
 
@@ -190,6 +192,11 @@ export default {
   methods: {
     handleRegisterSubmit() {
       // this.$v.touch()
+      console.log(JSON.stringify(this.registerData, null, 2));
+      clearFormInput({
+        validationReset: this.$v.$reset,
+        formData: this.registerData,
+      });
       console.log(JSON.stringify(this.registerData, null, 2));
     },
   },

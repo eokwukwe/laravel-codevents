@@ -14,11 +14,11 @@
                 filled
                 outlined
                 label="Email"
-                v-model="email"
                 append-icon="mdi-email"
-                @blur="$v.email.$touch()"
-                @input="$v.email.$touch()"
                 :error-messages="emailErrors"
+                v-model="resendLinkData.email"
+                @blur="$v.resendLinkData.email.$touch()"
+                @input="$v.resendLinkData.email.$touch()"
               ></v-text-field>
 
               <v-btn
@@ -47,27 +47,30 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
 
+import clearFormInput from "../../helpers/clearFormInput";
+
 export default {
   name: "ResendLink",
 
   data: () => ({
     isSubmitting: false,
-    email: "",
+    resendLinkData: { email: "" },
   }),
 
   validations: {
-    email: { required, email },
+    resendLinkData: { email: { required, email } },
   },
 
   computed: {
     emailErrors() {
       const errors = [];
 
-      if (!this.$v.email.$dirty) return errors;
+      if (!this.$v.resendLinkData.email.$dirty) return errors;
 
-      !this.$v.email.email && errors.push("Must be valid email");
+      !this.$v.resendLinkData.email.email && errors.push("Must be valid email");
 
-      !this.$v.email.required && errors.push("Email is required");
+      !this.$v.resendLinkData.email.required &&
+        errors.push("Email is required");
 
       return errors;
     },
@@ -75,7 +78,12 @@ export default {
 
   methods: {
     handleResendLinkSubmit() {
-      console.log(JSON.stringify(this.email, null, 2));
+      console.log(JSON.stringify(this.resendLinkData, null, 2));
+      clearFormInput({
+        validationReset: this.$v.$reset,
+        formData: this.resendLinkData,
+      });
+      console.log(JSON.stringify(this.resendLinkData, null, 2));
     },
   },
 };

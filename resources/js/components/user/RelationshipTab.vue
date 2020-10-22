@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center" justify-sm="start" dense>
-    <v-col v-for="card in cards" :key="card.name" cols="10" sm="4" md="3">
+    <v-col v-for="(card, idx) in cards" :key="idx" cols="10" sm="4" md="3">
       <v-card>
         <v-img
           :src="card.src"

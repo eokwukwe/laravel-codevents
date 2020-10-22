@@ -1,6 +1,6 @@
 <template>
   <v-row dense>
-    <v-col v-for="card in cards" :key="card.title" cols="12" sm="6" md="4">
+    <v-col v-for="(card, idx) in cards" :key="idx" cols="12" sm="6" md="4">
       <v-card>
         <v-img
           :src="card.src"

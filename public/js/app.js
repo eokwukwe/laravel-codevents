@@ -2063,6 +2063,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
 //
 //
 //
@@ -2110,32 +2111,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ForgotPassword",
   data: function data() {
     return {
       isSubmitting: false,
-      email: ""
+      forgotPasswordData: {
+        email: ""
+      }
     };
   },
   validations: {
-    email: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
-      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["email"]
+    forgotPasswordData: {
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["email"]
+      }
     }
   },
   computed: {
     emailErrors: function emailErrors() {
       var errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Must be valid email");
-      !this.$v.email.required && errors.push("Email is required");
+      if (!this.$v.forgotPasswordData.email.$dirty) return errors;
+      !this.$v.forgotPasswordData.email.email && errors.push("Must be valid email");
+      !this.$v.forgotPasswordData.email.required && errors.push("Email is required");
       return errors;
     }
   },
   methods: {
     handleForgotPasswordSubmit: function handleForgotPasswordSubmit() {
-      console.log(JSON.stringify(this.email, null, 2));
+      console.log(JSON.stringify(this.forgotPasswordData, null, 2));
+      Object(_helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__["default"])({
+        validationReset: this.$v.$reset,
+        formData: this.forgotPasswordData
+      });
+      console.log(JSON.stringify(this.forgotPasswordData, null, 2));
     }
   }
 });
@@ -2153,6 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
 //
 //
 //
@@ -2235,6 +2247,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Login",
@@ -2278,6 +2291,11 @@ __webpack_require__.r(__webpack_exports__);
     handleLoginSubmit: function handleLoginSubmit() {
       // this.$v.$touch();
       console.log(JSON.stringify(this.loginData, null, 2));
+      Object(_helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__["default"])({
+        validationReset: this.$v.$reset,
+        formData: this.loginData
+      });
+      console.log(JSON.stringify(this.loginData, null, 2));
     }
   }
 });
@@ -2295,6 +2313,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
 //
 //
 //
@@ -2410,6 +2429,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Register",
@@ -2475,6 +2495,11 @@ __webpack_require__.r(__webpack_exports__);
     handleRegisterSubmit: function handleRegisterSubmit() {
       // this.$v.touch()
       console.log(JSON.stringify(this.registerData, null, 2));
+      Object(_helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__["default"])({
+        validationReset: this.$v.$reset,
+        formData: this.registerData
+      });
+      console.log(JSON.stringify(this.registerData, null, 2));
     }
   }
 });
@@ -2492,6 +2517,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
 //
 //
 //
@@ -2539,32 +2565,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ResendLink",
   data: function data() {
     return {
       isSubmitting: false,
-      email: ""
+      resendLinkData: {
+        email: ""
+      }
     };
   },
   validations: {
-    email: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
-      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["email"]
+    resendLinkData: {
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["email"]
+      }
     }
   },
   computed: {
     emailErrors: function emailErrors() {
       var errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Must be valid email");
-      !this.$v.email.required && errors.push("Email is required");
+      if (!this.$v.resendLinkData.email.$dirty) return errors;
+      !this.$v.resendLinkData.email.email && errors.push("Must be valid email");
+      !this.$v.resendLinkData.email.required && errors.push("Email is required");
       return errors;
     }
   },
   methods: {
     handleResendLinkSubmit: function handleResendLinkSubmit() {
-      console.log(JSON.stringify(this.email, null, 2));
+      console.log(JSON.stringify(this.resendLinkData, null, 2));
+      Object(_helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__["default"])({
+        validationReset: this.$v.$reset,
+        formData: this.resendLinkData
+      });
+      console.log(JSON.stringify(this.resendLinkData, null, 2));
     }
   }
 });
@@ -2582,6 +2618,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
 //
 //
 //
@@ -2636,6 +2673,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ResetPassword",
@@ -2678,6 +2716,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handleResetPasswordSubmit: function handleResetPasswordSubmit() {
       // this.$v.touch()
+      console.log(JSON.stringify(this.passwordResetData, null, 2));
+      Object(_helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__["default"])({
+        validationReset: this.$v.$reset,
+        formData: this.passwordResetData
+      });
       console.log(JSON.stringify(this.passwordResetData, null, 2));
     }
   }
@@ -23145,18 +23188,18 @@ var render = function() {
                             },
                             on: {
                               blur: function($event) {
-                                return _vm.$v.email.$touch()
+                                return _vm.$v.forgotPasswordData.email.$touch()
                               },
                               input: function($event) {
-                                return _vm.$v.email.$touch()
+                                return _vm.$v.forgotPasswordData.email.$touch()
                               }
                             },
                             model: {
-                              value: _vm.email,
+                              value: _vm.forgotPasswordData.email,
                               callback: function($$v) {
-                                _vm.email = $$v
+                                _vm.$set(_vm.forgotPasswordData, "email", $$v)
                               },
-                              expression: "email"
+                              expression: "forgotPasswordData.email"
                             }
                           }),
                           _vm._v(" "),
@@ -23855,18 +23898,18 @@ var render = function() {
                             },
                             on: {
                               blur: function($event) {
-                                return _vm.$v.email.$touch()
+                                return _vm.$v.resendLinkData.email.$touch()
                               },
                               input: function($event) {
-                                return _vm.$v.email.$touch()
+                                return _vm.$v.resendLinkData.email.$touch()
                               }
                             },
                             model: {
-                              value: _vm.email,
+                              value: _vm.resendLinkData.email,
                               callback: function($$v) {
-                                _vm.email = $$v
+                                _vm.$set(_vm.resendLinkData, "email", $$v)
                               },
-                              expression: "email"
+                              expression: "resendLinkData.email"
                             }
                           }),
                           _vm._v(" "),
@@ -85242,6 +85285,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vuetify_loader_lib_loader_js_ref_11_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navigation_vue_vue_type_template_id_ae7ecf58_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/clearFormInput.js":
+/*!************************************************!*\
+  !*** ./resources/js/helpers/clearFormInput.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return clearFormInput; });
+/**
+ * Clear form input after form submission
+ * 
+ * @param {Object} param options
+ */
+function clearFormInput(_ref) {
+  var validationReset = _ref.validationReset,
+      formData = _ref.formData;
+  validationReset();
+
+  for (var key in formData) {
+    formData[key] = "";
+  }
+
+  return formData;
+}
 
 /***/ }),
 

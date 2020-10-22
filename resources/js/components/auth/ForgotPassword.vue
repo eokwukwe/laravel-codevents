@@ -14,11 +14,11 @@
                 filled
                 outlined
                 label="Email"
-                v-model="email"
                 append-icon="mdi-email"
-                @blur="$v.email.$touch()"
-                @input="$v.email.$touch()"
                 :error-messages="emailErrors"
+                v-model="forgotPasswordData.email"
+                @blur="$v.forgotPasswordData.email.$touch()"
+                @input="$v.forgotPasswordData.email.$touch()"
               ></v-text-field>
 
               <v-btn
@@ -47,27 +47,31 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
 
+import clearFormInput from "../../helpers/clearFormInput";
+
 export default {
   name: "ForgotPassword",
 
   data: () => ({
     isSubmitting: false,
-    email: "",
+    forgotPasswordData: { email: "" },
   }),
 
   validations: {
-    email: { required, email },
+    forgotPasswordData: { email: { required, email } },
   },
 
   computed: {
     emailErrors() {
       const errors = [];
 
-      if (!this.$v.email.$dirty) return errors;
+      if (!this.$v.forgotPasswordData.email.$dirty) return errors;
 
-      !this.$v.email.email && errors.push("Must be valid email");
+      !this.$v.forgotPasswordData.email.email &&
+        errors.push("Must be valid email");
 
-      !this.$v.email.required && errors.push("Email is required");
+      !this.$v.forgotPasswordData.email.required &&
+        errors.push("Email is required");
 
       return errors;
     },
@@ -75,7 +79,12 @@ export default {
 
   methods: {
     handleForgotPasswordSubmit() {
-      console.log(JSON.stringify(this.email, null, 2));
+      console.log(JSON.stringify(this.forgotPasswordData, null, 2));
+      clearFormInput({
+        validationReset: this.$v.$reset,
+        formData: this.forgotPasswordData,
+      });
+      console.log(JSON.stringify(this.forgotPasswordData, null, 2));
     },
   },
 };

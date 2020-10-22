@@ -55,6 +55,8 @@
 <script>
 import { required, sameAs, minLength } from "vuelidate/lib/validators";
 
+import clearFormInput from "../../helpers/clearFormInput";
+
 export default {
   name: "ResetPassword",
 
@@ -104,6 +106,11 @@ export default {
   methods: {
     handleResetPasswordSubmit() {
       // this.$v.touch()
+      console.log(JSON.stringify(this.passwordResetData, null, 2));
+      clearFormInput({
+        validationReset: this.$v.$reset,
+        formData: this.passwordResetData,
+      });
       console.log(JSON.stringify(this.passwordResetData, null, 2));
     },
   },

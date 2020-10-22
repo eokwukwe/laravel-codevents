@@ -83,6 +83,8 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
 
+import clearFormInput from "../../helpers/clearFormInput";
+
 export default {
   name: "Login",
 
@@ -107,22 +109,22 @@ export default {
       const errors = [];
 
       if (!this.$v.loginData.email.$dirty) return errors;
-      
+
       !this.$v.loginData.email.email && errors.push("Must be valid email");
-      
+
       !this.$v.loginData.email.required && errors.push("Email is required");
-      
+
       return errors;
     },
 
     passwordErrors() {
       const errors = [];
-      
+
       if (!this.$v.loginData.password.$dirty) return errors;
-      
+
       !this.$v.loginData.password.required &&
         errors.push("Password is required.");
-      
+
       return errors;
     },
   },
@@ -130,6 +132,11 @@ export default {
   methods: {
     handleLoginSubmit() {
       // this.$v.$touch();
+      console.log(JSON.stringify(this.loginData, null, 2));
+      clearFormInput({
+        validationReset: this.$v.$reset,
+        formData: this.loginData,
+      });
       console.log(JSON.stringify(this.loginData, null, 2));
     },
   },
