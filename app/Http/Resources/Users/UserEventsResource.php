@@ -20,13 +20,6 @@ class UserEventsResource extends JsonResource
             'date' => $this->date,
             'category' => $this->category,
             'description' => $this->description,
-            'city' => [
-                'address' => $this->city,
-                'latLng'  => [
-                    'lat' => $this->city_lat,
-                    'lng' => $this->city_lng,
-                ]
-            ],
             'venue' => [
                 'address' => $this->venue,
                 'latLng'  => [
