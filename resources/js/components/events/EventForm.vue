@@ -166,7 +166,7 @@
 import { required, minValue } from "vuelidate/lib/validators";
 
 import clearFormInput from "../../helpers/clearFormInput";
-import { eventCategories } from "../../api/eventCategories";
+import { eventCategories } from "../../helpers/eventCategories";
 
 const minDate = (value) => new Date(value) >= new Date();
 

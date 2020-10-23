@@ -25,7 +25,7 @@
 
       <v-list dense nav>
         <v-list-item
-          v-for="link in links"
+          v-for="link in drawerLinks"
           :key="link.text"
           router
           exact
@@ -49,7 +49,7 @@
           <v-row align="center" justify="center">
             <v-col cols="6">
               <v-btn
-                to="/create-event"
+                to="/events/add"
                 small
                 block
                 depressed
@@ -128,7 +128,7 @@
 
           <v-btn
             router
-            to="/create-event"
+            to="/events/add"
             class="mr-3 hidden-sm-and-down"
             small
             depressed
@@ -137,7 +137,7 @@
             add event
           </v-btn>
 
-          <v-menu bottom left offset-y>
+          <v-menu transition="slide-y-transition" bottom left offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon dark v-bind="attrs" v-on="on">
                 <v-avatar size="36">
@@ -158,19 +158,33 @@
             </template>
             <v-list dense>
               <v-list-item
-                v-for="(link, index) in links"
+                v-for="(link, index) in navbarLinks"
                 :key="index"
                 router
-                :to="{name: link.routeName}"
+                :to="{ name: link.routeName }"
                 class=""
               >
-                <v-list-item-icon class="mr-0">
-                  <v-icon size="small">{{ link.icon }}</v-icon>
+                <v-list-item-icon class="mr-1">
+                  <v-icon size="20">{{ link.icon }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title class="text-subtitle-2">{{
                     link.text
                   }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-divider></v-divider>
+
+              <v-list-item router to="/">
+                <v-list-item-icon class="mr-1">
+                  <v-icon size="20">mdi-exit-to-app</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title class="text-subtitle-2">
+                    Logout
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -196,8 +210,14 @@ export default {
   data() {
     return {
       drawer: false,
-      links: [
+      drawerLinks: [
         { icon: "mdi-view-dashboard", text: "Events", routeName: "EventsPage" },
+        // { icon: "mdi-folder", text: "My Projects", route: "/projects" },
+        // { icon: "mdi-account", text: "Team", route: "/team" },
+      ],
+
+      navbarLinks: [
+        { icon: "mdi-account", text: "My Profile", routeName: "ProfilePage" },
         // { icon: "mdi-folder", text: "My Projects", route: "/projects" },
         // { icon: "mdi-account", text: "Team", route: "/team" },
       ],

@@ -12,7 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
-/* harmony import */ var _api_eventCategories__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/eventCategories */ "./resources/js/api/eventCategories.js");
+/* harmony import */ var _helpers_eventCategories__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/eventCategories */ "./resources/js/helpers/eventCategories.js");
 //
 //
 //
@@ -189,7 +189,7 @@ var minDate = function minDate(value) {
   name: "EventForm",
   data: function data() {
     return {
-      categories: _api_eventCategories__WEBPACK_IMPORTED_MODULE_2__["eventCategories"],
+      categories: _helpers_eventCategories__WEBPACK_IMPORTED_MODULE_2__["eventCategories"],
       dateMenu: false,
       timeMenu: false,
       isSubmitting: false,
@@ -768,44 +768,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/api/eventCategories.js":
-/*!*********************************************!*\
-  !*** ./resources/js/api/eventCategories.js ***!
-  \*********************************************/
-/*! exports provided: eventCategories */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventCategories", function() { return eventCategories; });
-var eventCategories = [{
-  key: "drinks",
-  text: "Drinks",
-  value: "drinks"
-}, {
-  key: "culture",
-  text: "Culture",
-  value: "culture"
-}, {
-  key: "film",
-  text: "Film",
-  value: "film"
-}, {
-  key: "food",
-  text: "Food",
-  value: "food"
-}, {
-  key: "music",
-  text: "Music",
-  value: "music"
-}, {
-  key: "travel",
-  text: "Travel",
-  value: "travel"
-}];
-
-/***/ }),
-
 /***/ "./resources/js/components/events/EventForm.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/events/EventForm.vue ***!
@@ -925,6 +887,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vuetify_loader_lib_loader_js_ref_11_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EventForm_vue_vue_type_template_id_fe98899a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/eventCategories.js":
+/*!*************************************************!*\
+  !*** ./resources/js/helpers/eventCategories.js ***!
+  \*************************************************/
+/*! exports provided: eventCategories */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventCategories", function() { return eventCategories; });
+var eventCategories = [{
+  key: "drinks",
+  text: "Drinks",
+  value: "drinks"
+}, {
+  key: "culture",
+  text: "Culture",
+  value: "culture"
+}, {
+  key: "film",
+  text: "Film",
+  value: "film"
+}, {
+  key: "food",
+  text: "Food",
+  value: "food"
+}, {
+  key: "music",
+  text: "Music",
+  value: "music"
+}, {
+  key: "travel",
+  text: "Travel",
+  value: "travel"
+}];
 
 /***/ })
 

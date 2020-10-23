@@ -44,15 +44,17 @@
 
       <v-divider v-show="showMap"></v-divider>
 
-      <v-list-item v-show="showMap">
-        <v-list-item-content>
-          <v-img
-            :src="card.src"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="300px"
-          />
-        </v-list-item-content>
-      </v-list-item>
+      <v-scroll-y-transition>
+        <v-list-item v-show="showMap">
+          <v-list-item-content>
+            <v-img
+              :src="card.src"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              height="300px"
+            />
+          </v-list-item-content>
+        </v-list-item>
+      </v-scroll-y-transition>
     </v-list>
   </v-card>
 </template>

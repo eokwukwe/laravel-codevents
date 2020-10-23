@@ -3,10 +3,6 @@
     <v-row>
       <v-col order="last" order-sm="0" cols="12" sm="8">
         <event-list v-for="n in 3" :key="n" />
-        <!-- <event-list />
-        <event-list />
-        <event-list />
-        <event-list /> -->
       </v-col>
 
       <v-col cols="12" sm="4">
@@ -31,11 +27,4 @@ export default {
 </script>
 
 <style scoped>
-  /* .sticky--header {
-    position: fixed;
-    right: 0;
-  } */
-  /* .overflow {
-    overflow-y: auto;
-  } */
 </style>

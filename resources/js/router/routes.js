@@ -1,18 +1,16 @@
-import Home from "../views/Home.vue";
 
 import Login from "../components/auth/Login";
 import Resend from "../components/auth/Resend";
 import Register from "../components/auth/Register";
+import EventForm from "../components/events/EventForm.vue";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
 
+import Profile from "../views/Profile.vue";
+import EventDetail from "../views/EventDetail.vue";
+import EventDashboard from "../views/EventDashboard.vue";
+
 const routes = [
-    {
-        path: "/",
-        name: "HomePage",
-        component: () =>
-            import(/* webpackChunkName: "HomePage" */ "../views/Home.vue")
-    },
     {
         path: "/login",
         name: "LoginPage",
@@ -41,32 +39,36 @@ const routes = [
     {
         path: "/users",
         name: "ProfilePage",
-        component: () =>
-            import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
+        component: Profile
+        // component: () =>
+        //     import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
     },
     {
-        path: "/create-event",
+        path: "/events/add",
         name: "EventFormPage",
-        component: () =>
-            import(
-                /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
-            )
+        component: EventForm
+        // component: () =>
+        //     import(
+        //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
+        //     )
     },
     {
         path: "/events",
         name: "EventsPage",
-        component: () =>
-            import(
-                /* webpackChunkName: "EventsPage" */ "../views/EventDashboard.vue"
-            )
+        component: EventDashboard
+        // component: () =>
+        //     import(
+        //         /* webpackChunkName: "EventsPage" */ "../views/EventDashboard.vue"
+        //     )
     },
     {
         path: "/events/:id/detail",
         name: "EventDetailPage",
-        component: () =>
-            import(
-                /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"
-            )
+        component: EventDetail
+        // component: () =>
+        //     import(
+        //         /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"
+        //     )
     }
 ];
 

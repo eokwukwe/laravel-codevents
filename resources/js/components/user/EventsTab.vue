@@ -1,12 +1,12 @@
 <template>
   <v-row dense>
-    <v-col v-for="(card, idx) in cards" :key="idx" cols="12" sm="6" md="4">
+    <v-col v-for="(card, idx) in cards" :key="idx" cols="12" sm="4" md="3">
       <v-card>
         <v-img
           :src="card.src"
           class="white--text align-end"
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-          height="200px"
+          height="150px"
         >
           <v-card-title v-text="card.title"></v-card-title>
         </v-img>
@@ -22,10 +22,6 @@
             12:30 AM
           </span>
           <v-spacer></v-spacer>
-
-          <!-- <v-btn icon>
-            <v-icon>mdi-share-variant</v-icon>
-          </v-btn> -->
         </v-card-actions>
       </v-card>
     </v-col>

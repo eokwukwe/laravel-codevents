@@ -154,19 +154,8 @@ __webpack_require__.r(__webpack_exports__);
       userId: 0
     };
   },
-  // computed: {
-  //   commentErrors() {
-  //     const errors = [];
-  //     if (!this.$v.eventCommentData.comment.$dirty) return errors;
-  //     !this.$v.eventCommentData.comment.required &&
-  //       errors.push("Event date is required.");
-  //     return errors;
-  //   },
-  // },
   methods: {
     handleAddComment: function handleAddComment(e) {
-      e.preventDefault();
-
       if (e.key === "Enter" && e.shiftKey) {
         return;
       }
@@ -276,6 +265,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -596,12 +587,7 @@ var render = function() {
                   placeholder:
                     "Enter your comment (Press Enter to submit, SHIFT + Enter for new line)"
                 },
-                on: {
-                  keypress: function($event) {
-                    $event.preventDefault()
-                    return _vm.handleAddComment($event)
-                  }
-                },
+                on: { keypress: _vm.handleAddComment },
                 model: {
                   value: _vm.eventCommentData.comment,
                   callback: function($$v) {
@@ -927,28 +913,34 @@ var render = function() {
           }),
           _vm._v(" "),
           _c(
-            "v-list-item",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showMap,
-                  expression: "showMap"
-                }
-              ]
-            },
+            "v-scroll-y-transition",
             [
               _c(
-                "v-list-item-content",
-                [
-                  _c("v-img", {
-                    attrs: {
-                      src: _vm.card.src,
-                      gradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
-                      height: "300px"
+                "v-list-item",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.showMap,
+                      expression: "showMap"
                     }
-                  })
+                  ]
+                },
+                [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-img", {
+                        attrs: {
+                          src: _vm.card.src,
+                          gradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
+                          height: "300px"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -1324,6 +1316,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
 /* harmony import */ var vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VImg */ "./node_modules/vuetify/lib/components/VImg/index.js");
 /* harmony import */ var vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VList */ "./node_modules/vuetify/lib/components/VList/index.js");
+/* harmony import */ var vuetify_lib_components_transitions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/transitions */ "./node_modules/vuetify/lib/components/transitions/index.js");
 
 
 
@@ -1353,7 +1346,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_6__["VDivider"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_7__["VIcon"],VImg: vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_8__["VImg"],VList: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VList"],VListItem: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItem"],VListItemContent: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemContent"],VListItemIcon: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemIcon"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_6__["VDivider"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_7__["VIcon"],VImg: vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_8__["VImg"],VList: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VList"],VListItem: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItem"],VListItemContent: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemContent"],VListItemIcon: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemIcon"],VScrollYTransition: vuetify_lib_components_transitions__WEBPACK_IMPORTED_MODULE_10__["VScrollYTransition"]})
 
 
 /* hot reload */
