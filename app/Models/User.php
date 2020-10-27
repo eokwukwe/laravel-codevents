@@ -28,7 +28,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'phone',
         'photo_url',
         'bio',
-        'provider_id',
         'email_verified_at'
     ];
 
@@ -112,6 +111,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
+    public function identities()
+    {
+        return $this->hasMany(SocialIdentity::class);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
@@ -161,7 +165,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'following_id'
         )->withTimestamps();
     }
-
 
     /**
      * Check if the user is already a follower

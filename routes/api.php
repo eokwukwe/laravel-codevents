@@ -31,6 +31,10 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::middleware('guest:api')->group(function () {
+
+    Route::get('login/{provider}', 'Auth\SocialLoginController@redirect');
+    Route::get('login/{provider}/callback', 'Auth\SocialLoginController@callback');
+
     Route::post('register', 'Auth\RegisterController@register');
 
     Route::post(
