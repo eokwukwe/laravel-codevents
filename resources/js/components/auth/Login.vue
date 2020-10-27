@@ -40,28 +40,8 @@
                 class="px-3 primary--text darken-0"
               >
                 <v-col class="pl-0" cols="6">
-                  <v-btn
-                    icon
-                    style="background-color: #bbdefb"
-                    color="blue darken-3"
-                    depressed
-                  >
-                    <v-icon size="30" color="blue darken-4"
-                      >mdi-facebook</v-icon
-                    >
-                  </v-btn>
-
-                  <v-btn
-                    icon
-                    style="background-color: #ffcdd2"
-                    color="red darken-3"
-                    depressed
-                    class="ml-4"
-                  >
-                    <v-icon color="red darken-4">mdi-google</v-icon>
-                  </v-btn>
+                  <social-auth-buttons />
                 </v-col>
-
 
                 <v-col class="d-flex justify-end pr-0" cols="6">
                   <v-btn
@@ -96,10 +76,13 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
 
+import SocialAuthButtons from "./SocialAuthButtons";
 import clearFormInput from "../../helpers/clearFormInput";
 
 export default {
   name: "Login",
+
+  components: { SocialAuthButtons },
 
   data: () => ({
     valid: false,
