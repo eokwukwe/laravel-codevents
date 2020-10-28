@@ -137,7 +137,7 @@
             add event
           </v-btn>
 
-          <v-menu transition="slide-y-transition" bottom left offset-y>
+          <!-- <v-menu transition="slide-y-transition" bottom left offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon dark v-bind="attrs" v-on="on">
                 <v-avatar size="36">
@@ -147,14 +147,6 @@
                   />
                 </v-avatar>
               </v-btn>
-              <!-- <v-btn text color="primary" dark v-bind="attrs" v-on="on">
-                <v-avatar size="36">
-                  <img
-                    src="https://cdn.vuetifyjs.com/images/john.jpg"
-                    alt="John"
-                  />
-                </v-avatar>
-              </v-btn> -->
             </template>
             <v-list dense>
               <v-list-item
@@ -188,7 +180,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-          </v-menu>
+          </v-menu> -->
 
           <v-btn to="/login" small outlined class="mr-2" color="primary">
             Login

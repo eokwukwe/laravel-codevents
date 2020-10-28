@@ -16,7 +16,7 @@
                 label="Name"
                 append-icon="mdi-account"
                 v-model="registerData.name"
-                :error-messages="nameErrors"
+                :error-messages="nameErrors || registerErrors.name[0]"
                 @blur="$v.registerData.name.$touch()"
                 @input="$v.registerData.name.$touch()"
               ></v-text-field>
@@ -28,7 +28,7 @@
                 label="Email"
                 append-icon="mdi-email"
                 v-model="registerData.email"
-                :error-messages="emailErrors"
+                :error-messages="emailErrors || registerErrors.email"
                 @blur="$v.registerData.email.$touch()"
                 @input="$v.registerData.email.$touch()"
               ></v-text-field>
@@ -41,7 +41,7 @@
                 label="Password"
                 append-icon="mdi-eye-off"
                 v-model="registerData.password"
-                :error-messages="passwordErrors"
+                :error-messages="passwordErrors || registerErrors.password[0]"
                 @input="$v.registerData.password.$touch()"
                 @blur="$v.registerData.password.$touch()"
               ></v-text-field>
@@ -53,7 +53,10 @@
                 type="password"
                 append-icon="mdi-eye-off"
                 label="Password Confirmation"
-                :error-messages="passwordConfirmationErrors"
+                :error-messages="
+                  passwordConfirmationErrors ||
+                  registerErrors.password_confirmation[0]
+                "
                 v-model="registerData.password_confirmation"
                 @blur="$v.registerData.password_confirmation.$touch()"
                 @input="$v.registerData.password_confirmation.$touch()"
@@ -73,7 +76,8 @@
                     depressed
                     type="submit"
                     color="primary lighten-0"
-                    :disabled="isSubmitting || $v.$invalid"
+                    :loading="asyncLoading"
+                    :disabled="$v.$invalid || asyncLoading"
                   >
                     <v-icon left>mdi-account-plus</v-icon>
                     register
@@ -97,6 +101,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 
 import SocialAuthButtons from "./SocialAuthButtons";
@@ -108,7 +113,6 @@ export default {
   components: { SocialAuthButtons },
 
   data: () => ({
-    isSubmitting: false,
     registerData: {
       name: "",
       email: "",
@@ -127,6 +131,8 @@ export default {
   },
 
   computed: {
+    ...mapGetters(["asyncLoading", "registerErrors"]),
+
     nameErrors() {
       const errors = [];
 
@@ -176,14 +182,22 @@ export default {
   },
 
   methods: {
-    handleRegisterSubmit() {
-      // this.$v.touch()
-      console.log(JSON.stringify(this.registerData, null, 2));
+    ...mapActions(["clearErrors", "register"]),
+
+    async handleRegisterSubmit() {
+      // this.clearErrors("registerErrors");
+
+      await this.register(this.registerData);
+
+      console.log(JSON.stringify(this.registerErrors.email, null, 2));
+
+      // this.$v.$reset();
+      // this.$v.$touch();
+
       clearFormInput({
         validationReset: this.$v.$reset,
         formData: this.registerData,
       });
-      console.log(JSON.stringify(this.registerData, null, 2));
     },
   },
 };

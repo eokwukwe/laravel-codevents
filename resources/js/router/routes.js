@@ -1,8 +1,8 @@
-
 import Login from "../components/auth/Login";
 import Resend from "../components/auth/Resend";
 import Register from "../components/auth/Register";
-import EventForm from "../components/events/EventForm.vue";
+import EventForm from "../components/events/EventForm";
+import VerifyEmail from "../components/auth/VerifyEmail";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
 
@@ -20,6 +20,11 @@ const routes = [
         path: "/register",
         name: "RegisterPage",
         component: Register
+    },
+    {
+        path: "/verification/verify/:id",
+        name: "VerificationPage",
+        component: VerifyEmail
     },
     {
         path: "/resend",

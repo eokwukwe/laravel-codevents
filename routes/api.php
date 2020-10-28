@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(function () {
     Route::get('me', 'Users\UserProfilesController');
+
     Route::get('users/{user}/profile', 'Users\SingleUserController');
     Route::get('users/{user}/events', 'Users\UserEventsController');
 
