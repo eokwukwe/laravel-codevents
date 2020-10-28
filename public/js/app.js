@@ -2222,7 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _SocialAuthButtons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SocialAuthButtons */ "./resources/js/components/auth/SocialAuthButtons.vue");
-/* harmony import */ var _helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/clearFormInput */ "./resources/js/helpers/clearFormInput.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2337,10 +2337,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
+var clearFormInput = _helpers__WEBPACK_IMPORTED_MODULE_4__["default"].clearFormInput,
+    hasServerError = _helpers__WEBPACK_IMPORTED_MODULE_4__["default"].hasServerError;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Register",
   components: {
@@ -2348,6 +2362,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      snackbar: false,
       registerData: {
         name: "",
         email: "",
@@ -2375,7 +2390,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["asyncLoading", "registerErrors"])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["authLoading", "registerErrors", "isRegistered"])), {}, {
     nameErrors: function nameErrors() {
       var errors = [];
       if (!this.$v.registerData.name.$dirty) return errors;
@@ -2384,9 +2399,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     emailErrors: function emailErrors() {
       var errors = [];
+      var serverError = Object.keys(this.registerErrors).includes("email");
       if (!this.$v.registerData.email.$dirty) return errors;
       !this.$v.registerData.email.email && errors.push("Must be valid email");
       !this.$v.registerData.email.required && errors.push("Email is required");
+      hasServerError(this.registerErrors, "email") && errors.push(this.registerErrors["email"]);
       return errors;
     },
     passwordErrors: function passwordErrors() {
@@ -2403,28 +2420,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return errors;
     }
   }),
+  created: function created() {
+    window.localStorage.removeItem("vuex");
+  },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["clearErrors", "register"])), {}, {
     handleRegisterSubmit: function handleRegisterSubmit() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.clearErrors("registerErrors");
+
+                _context.next = 3;
                 return _this.register(_this.registerData);
 
-              case 2:
-                console.log(JSON.stringify(_this.registerErrors.email, null, 2)); // this.$v.$reset();
-                // this.$v.$touch();
+              case 3:
+                res = _context.sent;
 
-                Object(_helpers_clearFormInput__WEBPACK_IMPORTED_MODULE_4__["default"])({
+                if (_this.isRegistered.status) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 6:
+                _this.snackbar = true;
+                clearFormInput({
                   validationReset: _this.$v.$reset,
                   formData: _this.registerData
                 });
 
-              case 4:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -2727,7 +2758,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "VerifyEmail"
+  name: "VerifyEmail",
+  created: function created() {
+    console.log(this.$route);
+  }
 });
 
 /***/ }),
@@ -26039,6 +26073,49 @@ var render = function() {
     { staticClass: "fill-height" },
     [
       _c(
+        "v-snackbar",
+        {
+          attrs: { color: "success", timeout: -1, top: "" },
+          scopedSlots: _vm._u([
+            {
+              key: "action",
+              fn: function(ref) {
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._b(
+                      {
+                        staticClass: "font-weight-bold",
+                        attrs: { text: "", color: "primary" },
+                        on: {
+                          click: function($event) {
+                            _vm.snackbar = false
+                          }
+                        }
+                      },
+                      "v-btn",
+                      attrs,
+                      false
+                    ),
+                    [_vm._v("\n        Close\n      ")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [_vm._v("\n    " + _vm._s(_vm.isRegistered.message) + "\n    ")]
+      ),
+      _vm._v(" "),
+      _c(
         "v-row",
         { attrs: { align: "center", justify: "center" } },
         [
@@ -26075,8 +26152,7 @@ var render = function() {
                               outlined: "",
                               label: "Name",
                               "append-icon": "mdi-account",
-                              "error-messages":
-                                _vm.nameErrors || _vm.registerErrors.name[0]
+                              "error-messages": _vm.nameErrors
                             },
                             on: {
                               blur: function($event) {
@@ -26102,8 +26178,7 @@ var render = function() {
                               outlined: "",
                               label: "Email",
                               "append-icon": "mdi-email",
-                              "error-messages":
-                                _vm.emailErrors || _vm.registerErrors.email
+                              "error-messages": _vm.emailErrors
                             },
                             on: {
                               blur: function($event) {
@@ -26130,9 +26205,7 @@ var render = function() {
                               type: "password",
                               label: "Password",
                               "append-icon": "mdi-eye-off",
-                              "error-messages":
-                                _vm.passwordErrors ||
-                                _vm.registerErrors.password[0]
+                              "error-messages": _vm.passwordErrors
                             },
                             on: {
                               input: function($event) {
@@ -26159,9 +26232,7 @@ var render = function() {
                               type: "password",
                               "append-icon": "mdi-eye-off",
                               label: "Password Confirmation",
-                              "error-messages":
-                                _vm.passwordConfirmationErrors ||
-                                _vm.registerErrors.password_confirmation[0]
+                              "error-messages": _vm.passwordConfirmationErrors
                             },
                             on: {
                               blur: function($event) {
@@ -26215,9 +26286,9 @@ var render = function() {
                                         depressed: "",
                                         type: "submit",
                                         color: "primary lighten-0",
-                                        loading: _vm.asyncLoading,
+                                        loading: _vm.authLoading,
                                         disabled:
-                                          _vm.$v.$invalid || _vm.asyncLoading
+                                          _vm.$v.$invalid || _vm.authLoading
                                       }
                                     },
                                     [
@@ -91068,7 +91139,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VDivider */ "./node_modules/vuetify/lib/components/VDivider/index.js");
 /* harmony import */ var vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VForm */ "./node_modules/vuetify/lib/components/VForm/index.js");
 /* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
-/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
+/* harmony import */ var vuetify_lib_components_VSnackbar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VSnackbar */ "./node_modules/vuetify/lib/components/VSnackbar/index.js");
+/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
 
 
 
@@ -91102,7 +91174,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__["VDivider"],VForm: vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__["VForm"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__["VIcon"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_10__["VTextField"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__["VDivider"],VForm: vuetify_lib_components_VForm__WEBPACK_IMPORTED_MODULE_8__["VForm"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__["VIcon"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSnackbar: vuetify_lib_components_VSnackbar__WEBPACK_IMPORTED_MODULE_10__["VSnackbar"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_11__["VTextField"]})
 
 
 /* hot reload */
@@ -93022,6 +93095,45 @@ var eventCategories = [{
 
 /***/ }),
 
+/***/ "./resources/js/helpers/hasServerError.js":
+/*!************************************************!*\
+  !*** ./resources/js/helpers/hasServerError.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return hasServerError; });
+function hasServerError(errorObj, field) {
+  return Object.keys(errorObj).includes(field);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/index.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/index.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _clearFormInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./clearFormInput */ "./resources/js/helpers/clearFormInput.js");
+/* harmony import */ var _hasServerError__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hasServerError */ "./resources/js/helpers/hasServerError.js");
+/* harmony import */ var _transformErrors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./transformErrors */ "./resources/js/helpers/transformErrors.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  clearFormInput: _clearFormInput__WEBPACK_IMPORTED_MODULE_0__["default"],
+  hasServerError: _hasServerError__WEBPACK_IMPORTED_MODULE_1__["default"],
+  transformErrors: _transformErrors__WEBPACK_IMPORTED_MODULE_2__["default"]
+});
+
+/***/ }),
+
 /***/ "./resources/js/helpers/transformErrors.js":
 /*!*************************************************!*\
   !*** ./resources/js/helpers/transformErrors.js ***!
@@ -93194,7 +93306,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   modules: {
     auth: _modules_auth__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  plugins: [Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_2__["default"])()]
+  plugins: [Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    paths: ["auth.isRegistered"]
+  })]
 }));
 
 /***/ }),
@@ -93211,7 +93325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api_authRequests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/authRequests */ "./resources/js/api/authRequests.js");
-/* harmony import */ var _helpers_transformErrors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/transformErrors */ "./resources/js/helpers/transformErrors.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -93221,12 +93335,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
-  asyncLoading: false,
-  registerErrors: null
+  authLoading: false,
+  registerErrors: {},
+  isRegistered: {
+    status: false,
+    message: ""
+  }
 };
 var getters = {
-  asyncLoading: function asyncLoading(state) {
-    return state.asyncLoading;
+  authLoading: function authLoading(state) {
+    return state.authLoading;
+  },
+  isRegistered: function isRegistered(state) {
+    return state.isRegistered;
   },
   registerErrors: function registerErrors(state) {
     return state.registerErrors;
@@ -93239,7 +93360,8 @@ var actions = {
   },
   register: function register(_ref2, registerData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var commit;
+      var commit, _yield$authRequests$r, data;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -93251,40 +93373,47 @@ var actions = {
               return _api_authRequests__WEBPACK_IMPORTED_MODULE_1__["default"].register(registerData);
 
             case 5:
-              _context.next = 10;
+              _yield$authRequests$r = _context.sent;
+              data = _yield$authRequests$r.data;
+              commit("register-success", data.message);
+              _context.next = 13;
               break;
-
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](2);
-
-              if (_context.t0.response.status === 422) {
-                commit("register-errors", Object(_helpers_transformErrors__WEBPACK_IMPORTED_MODULE_2__["default"])(_context.t0.response.data.errors.details));
-              }
 
             case 10:
               _context.prev = 10;
-              commit("loading-ends");
-              return _context.finish(10);
+              _context.t0 = _context["catch"](2);
+
+              if (_context.t0.response.status === 422) {
+                commit("register-errors", _helpers__WEBPACK_IMPORTED_MODULE_2__["default"].transformErrors(_context.t0.response.data.errors.details));
+              }
 
             case 13:
+              _context.prev = 13;
+              commit("loading-ends");
+              return _context.finish(13);
+
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[2, 7, 10, 13]]);
+      }, _callee, null, [[2, 10, 13, 16]]);
     }))();
   }
 };
 var mutations = {
   "loading-ends": function loadingEnds(state) {
-    return state.asyncLoading = false;
+    return state.authLoading = false;
   },
   "loading-starts": function loadingStarts(state) {
-    return state.asyncLoading = true;
+    return state.authLoading = true;
   },
   "clear-errors": function clearErrors(state, error) {
-    return state[error] = null;
+    return state[error] = {};
+  },
+  "register-success": function registerSuccess(state, responseMessage) {
+    state.isRegistered.status = true;
+    state.isRegistered.message = responseMessage;
   },
   "register-errors": function registerErrors(state, errors) {
     return state.registerErrors = errors;

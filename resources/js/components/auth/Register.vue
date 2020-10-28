@@ -1,5 +1,20 @@
 <template>
   <v-container class="fill-height">
+    <v-snackbar color="success" :timeout="-1" top v-model="snackbar">
+      {{ isRegistered.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          color="primary"
+          class="font-weight-bold"
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
     <v-row align="center" justify="center">
       <v-col cols="12" sm="7" md="5" lg="4">
         <v-card>
@@ -16,7 +31,7 @@
                 label="Name"
                 append-icon="mdi-account"
                 v-model="registerData.name"
-                :error-messages="nameErrors || registerErrors.name[0]"
+                :error-messages="nameErrors"
                 @blur="$v.registerData.name.$touch()"
                 @input="$v.registerData.name.$touch()"
               ></v-text-field>
@@ -28,7 +43,7 @@
                 label="Email"
                 append-icon="mdi-email"
                 v-model="registerData.email"
-                :error-messages="emailErrors || registerErrors.email"
+                :error-messages="emailErrors"
                 @blur="$v.registerData.email.$touch()"
                 @input="$v.registerData.email.$touch()"
               ></v-text-field>
@@ -41,7 +56,7 @@
                 label="Password"
                 append-icon="mdi-eye-off"
                 v-model="registerData.password"
-                :error-messages="passwordErrors || registerErrors.password[0]"
+                :error-messages="passwordErrors"
                 @input="$v.registerData.password.$touch()"
                 @blur="$v.registerData.password.$touch()"
               ></v-text-field>
@@ -53,10 +68,7 @@
                 type="password"
                 append-icon="mdi-eye-off"
                 label="Password Confirmation"
-                :error-messages="
-                  passwordConfirmationErrors ||
-                  registerErrors.password_confirmation[0]
-                "
+                :error-messages="passwordConfirmationErrors"
                 v-model="registerData.password_confirmation"
                 @blur="$v.registerData.password_confirmation.$touch()"
                 @input="$v.registerData.password_confirmation.$touch()"
@@ -76,8 +88,8 @@
                     depressed
                     type="submit"
                     color="primary lighten-0"
-                    :loading="asyncLoading"
-                    :disabled="$v.$invalid || asyncLoading"
+                    :loading="authLoading"
+                    :disabled="$v.$invalid || authLoading"
                   >
                     <v-icon left>mdi-account-plus</v-icon>
                     register
@@ -105,7 +117,9 @@ import { mapGetters, mapActions } from "vuex";
 import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 
 import SocialAuthButtons from "./SocialAuthButtons";
-import clearFormInput from "../../helpers/clearFormInput";
+import helpers from "../../helpers";
+
+const { clearFormInput, hasServerError } = helpers;
 
 export default {
   name: "Register",
@@ -113,6 +127,8 @@ export default {
   components: { SocialAuthButtons },
 
   data: () => ({
+    snackbar: false,
+
     registerData: {
       name: "",
       email: "",
@@ -131,7 +147,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["asyncLoading", "registerErrors"]),
+    ...mapGetters(["authLoading", "registerErrors", "isRegistered"]),
 
     nameErrors() {
       const errors = [];
@@ -146,11 +162,16 @@ export default {
     emailErrors() {
       const errors = [];
 
+      const serverError = Object.keys(this.registerErrors).includes("email");
+
       if (!this.$v.registerData.email.$dirty) return errors;
 
       !this.$v.registerData.email.email && errors.push("Must be valid email");
 
       !this.$v.registerData.email.required && errors.push("Email is required");
+
+      hasServerError(this.registerErrors, "email") &&
+        errors.push(this.registerErrors["email"]);
 
       return errors;
     },
@@ -181,18 +202,23 @@ export default {
     },
   },
 
+  created: function () {
+    window.localStorage.removeItem("vuex");
+  },
+
   methods: {
     ...mapActions(["clearErrors", "register"]),
 
     async handleRegisterSubmit() {
-      // this.clearErrors("registerErrors");
+      this.clearErrors("registerErrors");
 
-      await this.register(this.registerData);
+      const res = await this.register(this.registerData);
 
-      console.log(JSON.stringify(this.registerErrors.email, null, 2));
+      if (!this.isRegistered.status) {
+        return;
+      }
 
-      // this.$v.$reset();
-      // this.$v.$touch();
+      this.snackbar = true;
 
       clearFormInput({
         validationReset: this.$v.$reset,

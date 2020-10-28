@@ -25,6 +25,10 @@
 <script>
 export default {
   name: "VerifyEmail",
+
+  created: function () {
+    console.log(this.$route);
+  },
 };
 </script>
 

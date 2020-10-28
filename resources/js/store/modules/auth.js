@@ -1,13 +1,18 @@
 import authRequests from "../../api/authRequests";
-import transformErrors from "../../helpers/transformErrors";
+import helpers from "../../helpers";
 
 const state = {
-    asyncLoading: false,
-    registerErrors: null
+    authLoading: false,
+    registerErrors: {},
+    isRegistered: {
+        status: false,
+        message: ""
+    }
 };
 
 const getters = {
-    asyncLoading: state => state.asyncLoading,
+    authLoading: state => state.authLoading,
+    isRegistered: state => state.isRegistered,
     registerErrors: state => state.registerErrors
 };
 
@@ -20,12 +25,14 @@ const actions = {
         commit("loading-starts");
 
         try {
-            await authRequests.register(registerData);
+            const { data } = await authRequests.register(registerData);
+
+            commit("register-success", data.message);
         } catch (error) {
             if (error.response.status === 422) {
                 commit(
                     "register-errors",
-                    transformErrors(error.response.data.errors.details)
+                    helpers.transformErrors(error.response.data.errors.details)
                 );
             }
         } finally {
@@ -35,9 +42,13 @@ const actions = {
 };
 
 const mutations = {
-    "loading-ends": state => (state.asyncLoading = false),
-    "loading-starts": state => (state.asyncLoading = true),
-    "clear-errors": (state, error) => (state[error] = null),
+    "loading-ends": state => (state.authLoading = false),
+    "loading-starts": state => (state.authLoading = true),
+    "clear-errors": (state, error) => (state[error] = {}),
+    "register-success": (state, responseMessage) => {
+        state.isRegistered.status = true;
+        state.isRegistered.message = responseMessage;
+    },
     "register-errors": (state, errors) => (state.registerErrors = errors)
 };
 
