@@ -116,8 +116,8 @@
 import { mapGetters, mapActions } from "vuex";
 import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 
-import SocialAuthButtons from "./SocialAuthButtons";
 import helpers from "../../helpers";
+import SocialAuthButtons from "./SocialAuthButtons";
 
 const { clearFormInput, hasServerError } = helpers;
 

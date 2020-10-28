@@ -2221,8 +2221,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _SocialAuthButtons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SocialAuthButtons */ "./resources/js/components/auth/SocialAuthButtons.vue");
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
+/* harmony import */ var _SocialAuthButtons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SocialAuthButtons */ "./resources/js/components/auth/SocialAuthButtons.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2353,12 +2353,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var clearFormInput = _helpers__WEBPACK_IMPORTED_MODULE_4__["default"].clearFormInput,
-    hasServerError = _helpers__WEBPACK_IMPORTED_MODULE_4__["default"].hasServerError;
+var clearFormInput = _helpers__WEBPACK_IMPORTED_MODULE_3__["default"].clearFormInput,
+    hasServerError = _helpers__WEBPACK_IMPORTED_MODULE_3__["default"].hasServerError;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Register",
   components: {
-    SocialAuthButtons: _SocialAuthButtons__WEBPACK_IMPORTED_MODULE_3__["default"]
+    SocialAuthButtons: _SocialAuthButtons__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -2733,6 +2733,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2757,11 +2772,99 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "VerifyEmail",
-  created: function created() {
-    console.log(this.$route);
-  }
+  data: function data() {
+    return {
+      snackbar: true
+    };
+  },
+  mounted: function () {
+    var _mounted = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _this = this;
+
+      var requestData;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              requestData = {
+                id: this.$route.params.id,
+                query: Object.keys(this.$route.query).map(function (key) {
+                  return "".concat(key, "=").concat(_this.$route.query[key]);
+                }).join("&")
+              };
+              console.log("verify", this.isVerified);
+              _context.next = 4;
+              return this.verification(requestData);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function mounted() {
+      return _mounted.apply(this, arguments);
+    }
+
+    return mounted;
+  }(),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["authLoading", "verifyError", "isVerified"])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["verify"])), {}, {
+    verification: function verification(props) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.verify(props);
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
+  })
 });
 
 /***/ }),
@@ -26725,39 +26828,105 @@ var render = function() {
     "v-container",
     { staticClass: "d-flex flex-column align-center justify-center" },
     [
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex justify-center text-h6 text-sm-h4 verification--message"
-        },
-        [_vm._v("\n    Please wait while we verify your email\n  ")]
-      ),
+      _vm.authLoading
+        ? _c(
+            "span",
+            { staticClass: "d-flex flex-column align-center justify-center" },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-center text-h6 text-sm-h4 verification--message"
+                },
+                [_vm._v("\n      Please wait while we verify your email\n    ")]
+              ),
+              _vm._v(" "),
+              _c("v-progress-circular", {
+                attrs: {
+                  size: 70,
+                  width: 3,
+                  color: "primary",
+                  indeterminate: ""
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c("v-progress-circular", {
-        attrs: { size: 70, width: 3, color: "purple", indeterminate: "" }
-      }),
+      _vm.isVerified.status
+        ? _c(
+            "span",
+            { staticClass: "d-flex flex-column align-center justify-center" },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-center text-h6 text-sm-h4 verification--message"
+                },
+                [_vm._v("\n      " + _vm._s(_vm.isVerified.message) + "\n    ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    to: { name: "LoginPage" },
+                    depressed: "",
+                    color: "primary"
+                  }
+                },
+                [
+                  _vm._v("\n      Proceed to login\n      "),
+                  _c("v-icon", { attrs: { right: "" } }, [
+                    _vm._v("mdi-arrow-right")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex justify-center text-h6 text-sm-h4 verification--message"
-        },
-        [_vm._v("\n    Email verification successful\n  ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        { attrs: { depressed: "", color: "primary" } },
-        [
-          _vm._v("\n    Proceed to login\n    "),
-          _c("v-icon", { attrs: { right: "" } }, [_vm._v("mdi-arrow-right")])
-        ],
-        1
-      )
-    ],
-    1
+      !_vm.isVerified.status && !_vm.authLoading
+        ? _c(
+            "span",
+            { staticClass: "d-flex flex-column align-center justify-center" },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "text-center text-h6 text-sm-h4 verification--message"
+                },
+                [_c("span", [_vm._v(_vm._s(_vm.verifyError.message))])]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    to: { name: "ResendLinkPage" },
+                    depressed: "",
+                    color: "primary"
+                  }
+                },
+                [
+                  _vm._v("\n      request a new link\n      "),
+                  _c("v-icon", { attrs: { right: "" } }, [
+                    _vm._v("mdi-arrow-right")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e()
+    ]
   )
 }
 var staticRenderFns = []
@@ -90802,7 +90971,7 @@ __webpack_require__.r(__webpack_exports__);
     return Object(_request__WEBPACK_IMPORTED_MODULE_0__["default"])().post("/login", data);
   },
   verifyEmail: function verifyEmail(data) {
-    return Object(_request__WEBPACK_IMPORTED_MODULE_0__["default"])().post("/verification/verify/:id", data);
+    return Object(_request__WEBPACK_IMPORTED_MODULE_0__["default"])().post("/verification/verify/".concat(data.id, "?").concat(data.query));
   },
   resendVerificationLink: function resendVerificationLink(data) {
     return Object(_request__WEBPACK_IMPORTED_MODULE_0__["default"])().post("/verification/resend", data);
@@ -93324,8 +93493,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api_authRequests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/authRequests */ "./resources/js/api/authRequests.js");
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
+/* harmony import */ var _api_authRequests__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/authRequests */ "./resources/js/api/authRequests.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -93337,14 +93506,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   authLoading: false,
   registerErrors: {},
-  isRegistered: {
-    status: false,
+  verifyError: {
     message: ""
+  },
+  isVerified: {
+    message: "",
+    status: false
+  },
+  isRegistered: {
+    message: "",
+    status: false
   }
 };
 var getters = {
+  isVerified: function isVerified(state) {
+    return state.isVerified;
+  },
   authLoading: function authLoading(state) {
     return state.authLoading;
+  },
+  verifyError: function verifyError(state) {
+    return state.verifyError;
   },
   isRegistered: function isRegistered(state) {
     return state.isRegistered;
@@ -93370,7 +93552,7 @@ var actions = {
               commit("loading-starts");
               _context.prev = 2;
               _context.next = 5;
-              return _api_authRequests__WEBPACK_IMPORTED_MODULE_1__["default"].register(registerData);
+              return _api_authRequests__WEBPACK_IMPORTED_MODULE_2__["default"].register(registerData);
 
             case 5:
               _yield$authRequests$r = _context.sent;
@@ -93384,7 +93566,7 @@ var actions = {
               _context.t0 = _context["catch"](2);
 
               if (_context.t0.response.status === 422) {
-                commit("register-errors", _helpers__WEBPACK_IMPORTED_MODULE_2__["default"].transformErrors(_context.t0.response.data.errors.details));
+                commit("register-errors", _helpers__WEBPACK_IMPORTED_MODULE_1__["default"].transformErrors(_context.t0.response.data.errors.details));
               }
 
             case 13:
@@ -93399,6 +93581,45 @@ var actions = {
         }
       }, _callee, null, [[2, 10, 13, 16]]);
     }))();
+  },
+  verify: function verify(_ref3, requestData) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var commit, _yield$authRequests$v, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref3.commit;
+              commit("loading-starts");
+              _context2.prev = 2;
+              _context2.next = 5;
+              return _api_authRequests__WEBPACK_IMPORTED_MODULE_2__["default"].verifyEmail(requestData);
+
+            case 5:
+              _yield$authRequests$v = _context2.sent;
+              data = _yield$authRequests$v.data;
+              commit("verify-success", data.message);
+              _context2.next = 13;
+              break;
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](2);
+              _context2.t0.response.status === 422 ? commit("verify-success", _context2.t0.response.data.error.details) : commit("verify-error", _context2.t0.response.data.error.details);
+
+            case 13:
+              _context2.prev = 13;
+              commit("loading-ends");
+              return _context2.finish(13);
+
+            case 16:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[2, 10, 13, 16]]);
+    }))();
   }
 };
 var mutations = {
@@ -93411,9 +93632,16 @@ var mutations = {
   "clear-errors": function clearErrors(state, error) {
     return state[error] = {};
   },
-  "register-success": function registerSuccess(state, responseMessage) {
+  "verify-success": function verifySuccess(state, message) {
+    state.isVerified.status = true;
+    state.isVerified.message = message;
+  },
+  "register-success": function registerSuccess(state, message) {
     state.isRegistered.status = true;
-    state.isRegistered.message = responseMessage;
+    state.isRegistered.message = message;
+  },
+  "verify-error": function verifyError(state, msg) {
+    return state.verifyError.message = msg;
   },
   "register-errors": function registerErrors(state, errors) {
     return state.registerErrors = errors;

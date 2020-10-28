@@ -1,17 +1,24 @@
-import authRequests from "../../api/authRequests";
 import helpers from "../../helpers";
+import authRequests from "../../api/authRequests";
 
 const state = {
     authLoading: false,
     registerErrors: {},
+    verifyError: { message: "" },
+    isVerified: {
+        message: "",
+        status: false
+    },
     isRegistered: {
-        status: false,
-        message: ""
+        message: "",
+        status: false
     }
 };
 
 const getters = {
+    isVerified: state => state.isVerified,
     authLoading: state => state.authLoading,
+    verifyError: state => state.verifyError,
     isRegistered: state => state.isRegistered,
     registerErrors: state => state.registerErrors
 };
@@ -38,6 +45,22 @@ const actions = {
         } finally {
             commit("loading-ends");
         }
+    },
+
+    async verify({ commit }, requestData) {
+        commit("loading-starts");
+
+        try {
+            const { data } = await authRequests.verifyEmail(requestData);
+
+            commit("verify-success", data.message);
+        } catch (error) {
+            error.response.status === 422
+                ? commit("verify-success", error.response.data.error.details)
+                : commit("verify-error", error.response.data.error.details);
+        } finally {
+            commit("loading-ends");
+        }
     }
 };
 
@@ -45,10 +68,15 @@ const mutations = {
     "loading-ends": state => (state.authLoading = false),
     "loading-starts": state => (state.authLoading = true),
     "clear-errors": (state, error) => (state[error] = {}),
-    "register-success": (state, responseMessage) => {
-        state.isRegistered.status = true;
-        state.isRegistered.message = responseMessage;
+    "verify-success": (state, message) => {
+        state.isVerified.status = true;
+        state.isVerified.message = message;
     },
+    "register-success": (state, message) => {
+        state.isRegistered.status = true;
+        state.isRegistered.message = message;
+    },
+    "verify-error": (state, msg) => (state.verifyError.message = msg),
     "register-errors": (state, errors) => (state.registerErrors = errors)
 };
 

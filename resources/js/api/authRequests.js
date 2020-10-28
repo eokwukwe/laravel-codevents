@@ -10,7 +10,7 @@ export default {
     },
 
     verifyEmail(data) {
-        return request().post("/verification/verify/:id", data);
+        return request().post(`/verification/verify/${data.id}?${data.query}`);
     },
 
     resendVerificationLink(data) {
