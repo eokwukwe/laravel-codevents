@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Users\UsersProfileResource;
+use App\Http\Resources\Users\UsersResource;
 
-class UserProfilesController extends Controller
+class CurrentUsersController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,6 +16,6 @@ class UserProfilesController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return new UsersProfileResource($request->user());
+        return new UsersResource($request->user());
     }
 }
