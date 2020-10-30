@@ -17,15 +17,19 @@ export default {
         return request().post("/verification/resend", data);
     },
 
-    resetPasswordLink(data) {
-        return request().post("/password/resetEmail", data);
+    forgotPassword(data) {
+        return request().post("/password/reset-link", data);
+    },
+
+    resetPassword(data) {
+        return request().post("/password/reset", data);
     },
 
     logout() {
         return request().post("/logout");
     },
 
-    loggedInUser() {
-        return request().get("/me");
-    }
+    // loggedInUser() {
+    //     return request().get("/me");
+    // }
 };

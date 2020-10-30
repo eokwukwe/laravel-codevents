@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-snackbar color="success" :timeout="-1" top v-model="snackbar">
-      {{ isRegistered.message }}
+      {{ asyncSuccess.message }}
       <template v-slot:action="{ attrs }">
         <v-btn
           text
@@ -119,8 +119,6 @@ import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 import helpers from "../../helpers";
 import SocialAuthButtons from "./SocialAuthButtons";
 
-const { clearFormInput, hasServerError } = helpers;
-
 export default {
   name: "Register",
 
@@ -147,7 +145,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["authLoading", "registerErrors", "isRegistered"]),
+    ...mapGetters(["authLoading", "serverValidationErrors", "asyncSuccess"]),
 
     nameErrors() {
       const errors = [];
@@ -162,16 +160,14 @@ export default {
     emailErrors() {
       const errors = [];
 
-      const serverError = Object.keys(this.registerErrors).includes("email");
-
       if (!this.$v.registerData.email.$dirty) return errors;
 
       !this.$v.registerData.email.email && errors.push("Must be valid email");
 
       !this.$v.registerData.email.required && errors.push("Email is required");
 
-      hasServerError(this.registerErrors, "email") &&
-        errors.push(this.registerErrors["email"]);
+      helpers.hasServerError(this.serverValidationErrors, "email") &&
+        errors.push(this.serverValidationErrors["email"]);
 
       return errors;
     },
@@ -210,17 +206,17 @@ export default {
     ...mapActions(["clearErrors", "register"]),
 
     async handleRegisterSubmit() {
-      this.clearErrors("registerErrors");
+      this.clearErrors("serverValidationErrors");
 
       const res = await this.register(this.registerData);
 
-      if (!this.isRegistered.status) {
+      if (!this.asyncSuccess.status) {
         return;
       }
 
       this.snackbar = true;
 
-      clearFormInput({
+      helpers.clearFormInput({
         validationReset: this.$v.$reset,
         formData: this.registerData,
       });

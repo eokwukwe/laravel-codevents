@@ -127,7 +127,6 @@
           <v-spacer></v-spacer>
 
           <v-btn
-            router
             to="/events/add"
             class="mr-3 hidden-sm-and-down"
             small

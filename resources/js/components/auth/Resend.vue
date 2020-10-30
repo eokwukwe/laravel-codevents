@@ -1,5 +1,35 @@
 <template>
   <v-container class="fill-height">
+    <v-snackbar color="success" :timeout="-1" top v-model="snackbarSuccess">
+      {{ asyncSuccess.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          color="primary"
+          class="font-weight-bold"
+          v-bind="attrs"
+          @click="snackbarSuccess = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <v-snackbar color="red" :timeout="6000" top v-model="snackbarError">
+      {{ asyncError.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          color="primary"
+          class="font-weight-bold"
+          v-bind="attrs"
+          @click="snackbarError = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
     <v-row align="center" justify="center">
       <v-col cols="12" sm="7" md="5" lg="4">
         <v-card>
@@ -26,7 +56,8 @@
                 depressed
                 type="submit"
                 color="primary lighten-0"
-                :disabled="isSubmitting || $v.$invalid"
+                :loading="authLoading"
+                :disabled="$v.$invalid || authLoading"
               >
                 <v-icon left>mdi-send</v-icon>
                 submit
@@ -47,15 +78,18 @@
 </template>
 
 <script>
+import isEmpty from "lodash.isempty";
+import { mapGetters, mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
 
-import clearFormInput from "../../helpers/clearFormInput";
+import helpers from "../../helpers";
 
 export default {
   name: "ResendLink",
 
   data: () => ({
-    isSubmitting: false,
+    snackbarError: false,
+    snackbarSuccess: false,
     resendLinkData: { email: "" },
   }),
 
@@ -64,6 +98,13 @@ export default {
   },
 
   computed: {
+    ...mapGetters([
+      "authLoading",
+      "asyncSuccess",
+      "asyncError",
+      "serverValidationErrors",
+    ]),
+
     emailErrors() {
       const errors = [];
 
@@ -74,18 +115,34 @@ export default {
       !this.$v.resendLinkData.email.required &&
         errors.push("Email is required");
 
+      helpers.hasServerError(this.serverValidationErrors, "email") &&
+        errors.push(this.serverValidationErrors["email"]);
+
       return errors;
     },
   },
 
   methods: {
-    handleResendLinkSubmit() {
-      console.log(JSON.stringify(this.resendLinkData, null, 2));
-      clearFormInput({
+    ...mapActions(["clearErrors", "resend"]),
+
+    async handleResendLinkSubmit() {
+      this.clearErrors("serverValidationErrors");
+
+      await this.resend(this.resendLinkData);
+
+      if (!this.asyncSuccess.status && !isEmpty(this.asyncError)) {
+        this.snackbarError = true;
+        return;
+      }
+
+      if (!this.asyncSuccess.status) return;
+
+      this.snackbarSuccess = true;
+
+      helper.clearFormInput({
         validationReset: this.$v.$reset,
         formData: this.resendLinkData,
       });
-      console.log(JSON.stringify(this.resendLinkData, null, 2));
     },
   },
 };

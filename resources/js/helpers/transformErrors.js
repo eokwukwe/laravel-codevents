@@ -1,5 +1,10 @@
-import { transform } from "lodash";
-
+/**
+ * Transform the validation eroror from the server from an
+ * array of objects to object of objects
+ *
+ * @param {Array} errors
+ * @returns {Object} error object
+ */
 export default function transformErrors(errors = []) {
     if (errors.length <= 0) {
         return;

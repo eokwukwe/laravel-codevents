@@ -93,7 +93,7 @@ class VerificationController extends Controller
                     'title' => 'Verification Error',
                     'details' => "Email {$request->email} is already verified."
                 ]
-            ], 422);
+            ], 409);
         }
 
         // Resend verification notification
@@ -101,6 +101,6 @@ class VerificationController extends Controller
 
         return response()->json([
             'message' => "Verification link has been resent to email: {$request->email}",
-        ]);
+        ], 200);
     }
 }

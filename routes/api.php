@@ -47,7 +47,7 @@ Route::middleware('guest:api')->group(function () {
     Route::post('login', 'Auth\LoginController@login');
 
     Route::post(
-        'password/resetEmail',
+        'password/reset-link',
         'Auth\ForgotPasswordController@sendResetLinkEmail'
     );
 

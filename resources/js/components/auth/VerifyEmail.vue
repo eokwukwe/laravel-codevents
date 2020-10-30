@@ -19,13 +19,13 @@
     </span>
 
     <span
-      v-if="isVerified.status"
+      v-if="asyncSuccess.status"
       class="d-flex flex-column align-center justify-center"
     >
       <div
         class="d-flex justify-center text-h6 text-sm-h4 verification--message"
       >
-        {{ isVerified.message }}
+        {{ asyncSuccess.message }}
       </div>
 
       <v-btn :to="{ name: 'LoginPage' }" depressed color="primary">
@@ -35,13 +35,13 @@
     </span>
 
     <span
-      v-if="!isVerified.status && !authLoading"
+      v-if="!asyncSuccess.status && !authLoading"
       class="d-flex flex-column align-center justify-center"
     >
       <div
         class="text-center text-h6 text-sm-h4 verification--message"
       >
-        <span>{{ verifyError.message }}</span>
+        <span>{{ asyncError.message }}</span>
       </div>
 
       <v-btn :to="{ name: 'ResendLinkPage' }" depressed color="primary">
@@ -58,10 +58,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "VerifyEmail",
 
-  data: () => ({
-    snackbar: true,
-  }),
-
   mounted: async function () {
     const requestData = {
       id: this.$route.params.id,
@@ -70,21 +66,15 @@ export default {
         .join("&"),
     };
 
-    console.log("verify", this.isVerified);
-
-    await this.verification(requestData);
+    await this.verify(requestData);
   },
 
   computed: {
-    ...mapGetters(["authLoading", "verifyError", "isVerified"]),
+    ...mapGetters(["authLoading", "asyncError", "asyncSuccess"]),
   },
 
   methods: {
     ...mapActions(["verify"]),
-
-    async verification(props) {
-      await this.verify(props);
-    },
   },
 };
 </script>
