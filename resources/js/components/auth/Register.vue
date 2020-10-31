@@ -52,26 +52,28 @@
                 dense
                 filled
                 outlined
-                type="password"
                 label="Password"
-                append-icon="mdi-eye-off"
                 v-model="registerData.password"
                 :error-messages="passwordErrors"
                 @input="$v.registerData.password.$touch()"
                 @blur="$v.registerData.password.$touch()"
+                :type="showPassword ? 'text' : 'password'"
+                @click:append="showPassword = !showPassword"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               ></v-text-field>
 
               <v-text-field
                 dense
                 filled
                 outlined
-                type="password"
-                append-icon="mdi-eye-off"
                 label="Password Confirmation"
                 :error-messages="passwordConfirmationErrors"
                 v-model="registerData.password_confirmation"
                 @blur="$v.registerData.password_confirmation.$touch()"
                 @input="$v.registerData.password_confirmation.$touch()"
+                :type="showPassword2 ? 'text' : 'password'"
+                @click:append="showPassword2 = !showPassword2"
+                :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
               ></v-text-field>
 
               <v-row
@@ -102,7 +104,7 @@
           <v-divider></v-divider>
 
           <v-card-actions>
-            <v-btn color="primary" text to="/resend">resend link</v-btn>
+            <v-btn color="info" text to="/resend">resend link</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" text to="/login"> login </v-btn>
           </v-card-actions>
@@ -126,6 +128,8 @@ export default {
 
   data: () => ({
     snackbar: false,
+    showPassword: false,
+    showPassword2: false,
 
     registerData: {
       name: "",

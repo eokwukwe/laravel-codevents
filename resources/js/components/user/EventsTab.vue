@@ -13,12 +13,12 @@
 
         <v-card-actions>
           <span class="d-inline-flex align-center mr-3">
-            <v-icon>mdi-calendar</v-icon>
+            <v-icon small>mdi-calendar</v-icon>
             Jan 20, 2020
           </span>
 
           <span class="d-inline-flex align-center">
-            <v-icon>mdi-clock</v-icon>
+            <v-icon small>mdi-clock</v-icon>
             12:30 AM
           </span>
           <v-spacer></v-spacer>

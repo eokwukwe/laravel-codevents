@@ -1,12 +1,12 @@
 <template>
-  <v-row align="center" justify="center" justify-sm="start" dense>
-    <v-col v-for="(card, idx) in cards" :key="idx" cols="10" sm="4" md="3">
+  <v-row align="center" justify="start" dense>
+    <v-col v-for="(card, idx) in cards" :key="idx" cols="6" sm="3" md="2">
       <v-card>
         <v-img
           :src="card.src"
           class="white--text align-end"
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-          height="200px"
+          height="150px"
         >
           <v-card-title v-text="card.name"></v-card-title>
         </v-img>

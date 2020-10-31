@@ -34,6 +34,14 @@ export default {
       return this.$route.fullPath === "/";
     },
   },
+
+  created: function () {
+    // console.log("app component created");
+  },
+
+  mounted: function () {
+    // console.log("app component mounted");
+  },
 };
 </script>
 

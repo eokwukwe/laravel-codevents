@@ -3,6 +3,7 @@ import authRequests from "../../api/authRequests";
 
 const state = {
     asyncError: {},
+    isLoggedIn: false,
     authLoading: false,
     serverValidationErrors: {},
     asyncSuccess: {
@@ -14,6 +15,7 @@ const state = {
 
 const getters = {
     asyncError: state => state.asyncError,
+    isLoggedIn: state => state.isLoggedIn,
     authLoading: state => state.authLoading,
     asyncSuccess: state => state.asyncSuccess,
     serverValidationErrors: state => state.serverValidationErrors
@@ -144,10 +146,59 @@ const actions = {
         } finally {
             commit("loading-ends");
         }
+    },
+
+    async login({ commit }, loginData) {
+        commit("loading-starts");
+
+        try {
+            const { data } = await authRequests.login(loginData);
+
+            localStorage.setItem("token", data.data.token);
+
+            commit("login-success");
+
+            commit("async-success", {
+                data: {},
+                status: true,
+                message: "Login successful 🚀"
+            });
+        } catch (error) {
+            error.response.status === 422 || error.response.status === 429
+                ? commit(
+                      "server-validation-errors",
+                      helpers.transformErrors(
+                          error.response.data.errors.details
+                      )
+                  )
+                : commit("async-error", {
+                      message: error.response.data.error.details
+                  });
+        } finally {
+            commit("loading-ends");
+        }
+    },
+
+    async logout({ commit }) {
+        commit("loading-starts");
+
+        try {
+          await authRequests.logout();
+
+            localStorage.removeItem("token");
+
+            commit("logout-success");
+        } catch (error) {
+            console.error(JSON.stringify(error.response.data, null, 2));
+        } finally {
+            commit("loading-ends");
+        }
     }
 };
 
 const mutations = {
+    "login-success": state => (state.isLoggedIn = true),
+    "logout-success": state => (state.isLoggedIn = false),
     "loading-ends": state => (state.authLoading = false),
     "loading-starts": state => (state.authLoading = true),
     "clear-errors": (state, error) => (state[error] = {}),

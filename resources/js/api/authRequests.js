@@ -5,10 +5,6 @@ export default {
         return request().post("/register", data);
     },
 
-    login(data) {
-        return request().post("/login", data);
-    },
-
     verifyEmail(data) {
         return request().post(`/verification/verify/${data.id}?${data.query}`);
     },
@@ -25,9 +21,13 @@ export default {
         return request().post("/password/reset", data);
     },
 
+    login(data) {
+        return request().post("/login", data);
+    },
+
     logout() {
         return request().post("/logout");
-    },
+    }
 
     // loggedInUser() {
     //     return request().get("/me");

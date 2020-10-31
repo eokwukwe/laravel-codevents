@@ -43,11 +43,11 @@
         </v-list-item>
       </v-list>
 
-      <!-- create event button-->
       <template v-slot:append>
-        <div class="pa-2">
+        <div class="px-2">
           <v-row align="center" justify="center">
-            <v-col cols="6">
+            <v-col cols="9">
+              <!-- create event button-->
               <v-btn
                 to="/events/add"
                 small
@@ -60,8 +60,15 @@
               </v-btn>
             </v-col>
 
-            <v-col cols="6">
-              <v-btn small block depressed color="white--text primary darken-3">
+            <v-col cols="9">
+              <!-- logout button-->
+              <v-btn
+                small
+                block
+                depressed
+                @click="userLogout"
+                color="white--text primary darken-3"
+              >
                 <v-icon small left dark>mdi-exit-to-app</v-icon>
                 logout
               </v-btn>
@@ -149,7 +156,7 @@
             </template>
             <v-list dense>
               <v-list-item
-                v-for="(link, index) in navbarLinks"
+                v-for="(link, index) in navbarMenuLinks"
                 :key="index"
                 router
                 :to="{ name: link.routeName }"
@@ -195,24 +202,36 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "NavigationBar",
 
-  data() {
-    return {
-      drawer: false,
-      drawerLinks: [
-        { icon: "mdi-view-dashboard", text: "Events", routeName: "EventsPage" },
-        // { icon: "mdi-folder", text: "My Projects", route: "/projects" },
-        // { icon: "mdi-account", text: "Team", route: "/team" },
-      ],
+  data: () => ({
+    drawer: false,
+    drawerLinks: [
+      { icon: "mdi-view-dashboard", text: "Events", routeName: "EventsPage" },
+    ],
 
-      navbarLinks: [
-        { icon: "mdi-account", text: "My Profile", routeName: "ProfilePage" },
-        // { icon: "mdi-folder", text: "My Projects", route: "/projects" },
-        // { icon: "mdi-account", text: "Team", route: "/team" },
-      ],
-    };
+    navbarMenuLinks: [
+      { icon: "mdi-account", text: "My Profile", routeName: "ProfilePage" },
+    ],
+  }),
+
+  computed: {
+    ...mapGetters(["isLoggedIn"]),
+  },
+
+  methods: {
+    ...mapActions(["logout"]),
+
+    async userLogout() {
+      await this.logout();
+
+      this.$route.path === "/events"
+        ? this.$router.go()
+        : this.$router.push({ name: "EventsPage" });
+    },
   },
 };
 </script>
