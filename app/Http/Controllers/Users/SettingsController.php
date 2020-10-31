@@ -18,7 +18,7 @@ class SettingsController extends Controller
     {
         $photo_url = '';
 
-        if ($request->file('image')) {
+        if ($request->hasFile('image')) {
             $fileName = $request->file('image')->getClientOriginalName();
 
             $name = substr($fileName, 0, strrpos($fileName, '.'));

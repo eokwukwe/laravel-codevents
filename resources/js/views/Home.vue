@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import request from "../api/request";
-
 export default {
   name: "Home",
 };

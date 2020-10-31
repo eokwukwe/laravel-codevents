@@ -12,16 +12,20 @@
 
       <v-divider></v-divider>
 
-      <v-row justify="center" class="mt-2">
-        <v-col cols="6">
-          <v-avatar size="100">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" />
-          </v-avatar>
-          <p class="white--text subtitle-1 mt-1">The fCoder</p>
-        </v-col>
-      </v-row>
+      <span v-if="isLoggedIn">
+        <v-row justify="center" align="center" class="mt-2">
+          <v-col class="d-flex justify-center align-center" cols="12">
+            <v-avatar class="text-center" size="90">
+              <img :src="loggedInUser.photoURL || '/images/user.png'" />
+            </v-avatar>
+          </v-col>
+          <p class="white--text subtitle-1 text-center text-capitalize pb-0">
+            {{ loggedInUser.name }}
+          </p>
+        </v-row>
 
-      <v-divider class="my-2"></v-divider>
+        <v-divider class="my-2"></v-divider>
+      </span>
 
       <v-list dense nav>
         <v-list-item
@@ -44,12 +48,12 @@
       </v-list>
 
       <template v-slot:append>
-        <div class="px-2">
+        <div v-if="isLoggedIn" class="px-2">
           <v-row align="center" justify="center">
             <v-col cols="9">
               <!-- create event button-->
               <v-btn
-                to="/events/add"
+                :to="{ name: 'EventFormPage' }"
                 small
                 block
                 depressed
@@ -71,6 +75,36 @@
               >
                 <v-icon small left dark>mdi-exit-to-app</v-icon>
                 logout
+              </v-btn>
+            </v-col>
+          </v-row>
+        </div>
+
+        <div v-else class="px-2">
+          <v-row align="center" justify="center">
+            <v-col cols="9">
+              <v-btn
+                :to="{ name: 'LoginPage' }"
+                small
+                block
+                depressed
+                color="white--text success"
+              >
+                <v-icon small left dark>mdi-login</v-icon>
+                login
+              </v-btn>
+            </v-col>
+
+            <v-col cols="9">
+              <v-btn
+                small
+                block
+                depressed
+                :to="{ name: 'RegisterPage' }"
+                color="white--text primary darken-3"
+              >
+                <v-icon small left dark>mdi-account-plus</v-icon>
+                register
               </v-btn>
             </v-col>
           </v-row>
@@ -133,68 +167,69 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn
-            to="/events/add"
-            class="mr-3 hidden-sm-and-down"
-            small
-            depressed
-            color="white--text success"
-          >
-            add event
-          </v-btn>
+          <span v-if="isLoggedIn">
+            <v-btn
+              :to="{ name: 'EventFormPage' }"
+              class="mr-3 px-1 hidden-sm-and-down"
+              small
+              depressed
+              color="white--text success"
+            >
+              add event
+            </v-btn>
 
-          <!-- <v-menu transition="slide-y-transition" bottom left offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon dark v-bind="attrs" v-on="on">
-                <v-avatar size="36">
-                  <img
-                    src="https://cdn.vuetifyjs.com/images/john.jpg"
-                    alt="John"
-                  />
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-list dense>
-              <v-list-item
-                v-for="(link, index) in navbarMenuLinks"
-                :key="index"
-                router
-                :to="{ name: link.routeName }"
-                class=""
-              >
-                <v-list-item-icon class="mr-1">
-                  <v-icon size="20">{{ link.icon }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title class="text-subtitle-2">{{
-                    link.text
-                  }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+            <v-menu transition="slide-y-transition" bottom left offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon dark v-bind="attrs" v-on="on">
+                  <v-avatar size="36">
+                    <img
+                      :src="loggedInUser.photoURL || '/images/user.png'"
+                      alt="profile photo"
+                    />
+                  </v-avatar>
+                </v-btn>
+              </template>
+              <v-list dense>
+                <v-list-item
+                  router
+                  :to="{ name: 'ProfilePage', params: { id: loggedInUser.id } }"
+                  class=""
+                >
+                  <v-list-item-icon class="mr-1">
+                    <v-icon size="20">mdi-account</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title class="text-subtitle-2">
+                      My Profile
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
 
-              <v-divider></v-divider>
+                <v-divider></v-divider>
 
-              <v-list-item router to="/">
-                <v-list-item-icon class="mr-1">
-                  <v-icon size="20">mdi-exit-to-app</v-icon>
-                </v-list-item-icon>
+                <v-list-item @click="userLogout">
+                  <v-list-item-icon class="mr-1">
+                    <v-icon size="20">mdi-exit-to-app</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title class="text-subtitle-2">
+                      Logout
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </span>
 
-                <v-list-item-content>
-                  <v-list-item-title class="text-subtitle-2">
-                    Logout
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu> -->
+          <span v-if="!isLoggedIn" class="d-none d-sm-block">
+            <v-btn to="/login" small outlined class="mr-2" color="primary">
+              Login
+            </v-btn>
 
-          <v-btn to="/login" small outlined class="mr-2" color="primary">
-            Login
-          </v-btn>
-
-          <v-btn to="/register" depressed small color="primary lighten-1">
-            Register
-          </v-btn>
+            <v-btn to="/register" depressed small color="primary lighten-1">
+              Register
+            </v-btn>
+          </span>
         </span>
       </v-container>
     </v-app-bar>
@@ -212,14 +247,10 @@ export default {
     drawerLinks: [
       { icon: "mdi-view-dashboard", text: "Events", routeName: "EventsPage" },
     ],
-
-    navbarMenuLinks: [
-      { icon: "mdi-account", text: "My Profile", routeName: "ProfilePage" },
-    ],
   }),
 
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn", "loggedInUser"]),
   },
 
   methods: {
@@ -228,7 +259,7 @@ export default {
     async userLogout() {
       await this.logout();
 
-      this.$route.path === "/events"
+      this.$route.name === "EventsPage"
         ? this.$router.go()
         : this.$router.push({ name: "EventsPage" });
     },
@@ -237,12 +268,4 @@ export default {
 </script>
 
 <style scoped>
-  .nav-color {
-    background-image: linear-gradient(
-      135deg,
-      rgb(24, 42, 115) 0%,
-      rgb(33, 138, 174) 69%,
-      rgb(32, 167, 172) 89%
-    );
-  }
 </style>

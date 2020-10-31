@@ -14,6 +14,7 @@
 
 
 <script>
+import axios from "axios";
 import Home from "./views/Home";
 import Navigation from "./components/navigation/Navigation";
 
@@ -35,9 +36,7 @@ export default {
     },
   },
 
-  created: function () {
-    // console.log("app component created");
-  },
+  created: function () {},
 
   mounted: function () {
     // console.log("app component mounted");

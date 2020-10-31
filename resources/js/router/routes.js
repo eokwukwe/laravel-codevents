@@ -12,64 +12,78 @@ import EventDashboard from "../views/EventDashboard.vue";
 
 const routes = [
     {
+        path: '/',
+        meta: {guest: true}
+    },
+    {
         path: "/login",
         name: "LoginPage",
-        component: Login
+        component: Login,
+        meta: { guest: true }
     },
     {
         path: "/register",
         name: "RegisterPage",
-        component: Register
+        component: Register,
+        meta: { guest: true }
     },
     {
         path: "/verification/verify/:id",
         name: "VerificationPage",
-        component: VerifyEmail
+        component: VerifyEmail,
+        meta: { guest: true }
     },
     {
         path: "/resend",
         name: "ResendLinkPage",
-        component: Resend
+        component: Resend,
+        meta: { guest: true }
     },
     {
         path: "/forgot-password",
         name: "ForgotPasswordPage",
-        component: ForgotPassword
+        component: ForgotPassword,
+        meta: { guest: true }
     },
     {
         path: "/password/reset/:token",
         name: "ResetPasswordPage",
-        component: ResetPassword
-    },
-    {
-        path: "/users",
-        name: "ProfilePage",
-        component: Profile
-        // component: () =>
-        //     import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
-    },
-    {
-        path: "/events/add",
-        name: "EventFormPage",
-        component: EventForm
-        // component: () =>
-        //     import(
-        //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
-        //     )
+        component: ResetPassword,
+        meta: { guest: true }
     },
     {
         path: "/events",
         name: "EventsPage",
-        component: EventDashboard
+        component: EventDashboard,
+        meta: { general: true }
         // component: () =>
         //     import(
         //         /* webpackChunkName: "EventsPage" */ "../views/EventDashboard.vue"
         //     )
     },
     {
-        path: "/events/:id/detail",
+        path: "/users/:id/profile",
+        name: "ProfilePage",
+        component: Profile,
+        meta: { requiresAuth: true }
+        // component: () =>
+        //     import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
+    },
+    {
+        path: "/events/add",
+        name: "EventFormPage",
+        component: EventForm,
+        meta: { requiresAuth: true }
+        // component: () =>
+        //     import(
+        //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
+        //     )
+    },
+    {
+        path: "/events/:id/details",
         name: "EventDetailPage",
-        component: EventDetail
+        component: EventDetail,
+        meta: { requiresAuth: true }
         // component: () =>
         //     import(
         //         /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"

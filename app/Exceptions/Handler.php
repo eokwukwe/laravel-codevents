@@ -92,7 +92,7 @@ class Handler extends ExceptionHandler
                         'title' => 'Unauthenticated',
                         'details' => 'You are not authenticated',
                 ]
-            ], 403);
+            ], 401);
         }
         return redirect()->guest($exception->redirectTo() ?? route('login'));
     }

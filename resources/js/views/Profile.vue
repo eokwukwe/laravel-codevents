@@ -19,6 +19,20 @@ export default {
     ProfileTabs,
     ProfileHeader,
   },
+
+  created: function () {
+    console.log("profile", this.$route.path);
+  },
+
+  watch: {
+    "$route.params.id": function (id) {
+      console.log("profile id route change", id);
+    },
+  },
+
+  // beforeRouteUpdate(to, from, next) {
+  //   console.log("beforeRouteUpdate", to);
+  // },
 };
 </script>
 

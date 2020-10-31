@@ -27,9 +27,9 @@ export default {
 
     logout() {
         return request().post("/logout");
-    }
+    },
 
-    // loggedInUser() {
-    //     return request().get("/me");
-    // }
+    loggedInUser() {
+        return request().get("/me");
+    }
 };

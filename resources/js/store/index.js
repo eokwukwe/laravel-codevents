@@ -12,7 +12,7 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-            paths: ["auth.isLoggedIn"]
+            paths: ["auth.isLoggedIn", "auth.loggedInUser"]
         })
     ]
 });

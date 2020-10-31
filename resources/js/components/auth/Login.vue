@@ -220,6 +220,8 @@ export default {
         validationReset: this.$v.$reset,
         formData: this.loginData,
       });
+
+      this.$router.push({ name: "EventsPage" });
     },
   },
 };

@@ -3,6 +3,7 @@ import authRequests from "../../api/authRequests";
 
 const state = {
     asyncError: {},
+    loggedInUser: {},
     isLoggedIn: false,
     authLoading: false,
     serverValidationErrors: {},
@@ -18,6 +19,7 @@ const getters = {
     isLoggedIn: state => state.isLoggedIn,
     authLoading: state => state.authLoading,
     asyncSuccess: state => state.asyncSuccess,
+    loggedInUser: state => state.loggedInUser,
     serverValidationErrors: state => state.serverValidationErrors
 };
 
@@ -163,6 +165,10 @@ const actions = {
                 status: true,
                 message: "Login successful 🚀"
             });
+
+            const res = await authRequests.loggedInUser();
+
+            commit("logged-in-user", res.data.data);
         } catch (error) {
             error.response.status === 422 || error.response.status === 429
                 ? commit(
@@ -174,6 +180,8 @@ const actions = {
                 : commit("async-error", {
                       message: error.response.data.error.details
                   });
+
+            localStorage.removeItem("token");
         } finally {
             commit("loading-ends");
         }
@@ -181,13 +189,28 @@ const actions = {
 
     async logout({ commit }) {
         commit("loading-starts");
-
         try {
-          await authRequests.logout();
+            await authRequests.logout();
 
             localStorage.removeItem("token");
 
             commit("logout-success");
+        } catch (error) {
+            console.error(JSON.stringify(error.response.data, null, 2));
+            commit("logout-success");
+        } finally {
+            commit("loading-ends");
+        }
+    },
+
+    async loggedInUser({ commit }) {
+        console.log('logged in user action');
+        commit("loading-starts");
+
+        try {
+            const { data } = await authRequests.loggedInUser();
+
+            commit("logged-in-user", data.data);
         } catch (error) {
             console.error(JSON.stringify(error.response.data, null, 2));
         } finally {
@@ -198,11 +221,15 @@ const actions = {
 
 const mutations = {
     "login-success": state => (state.isLoggedIn = true),
-    "logout-success": state => (state.isLoggedIn = false),
+    "logout-success": state => {
+        state.isLoggedIn = false;
+        state.loggedInUser = {};
+    },
     "loading-ends": state => (state.authLoading = false),
     "loading-starts": state => (state.authLoading = true),
     "clear-errors": (state, error) => (state[error] = {}),
     "async-error": (state, payload) => (state.asyncError = payload),
+    "logged-in-user": (state, payload) => (state.loggedInUser = payload),
     "async-success": (state, payload) => (state.asyncSuccess = payload),
     "server-validation-errors": (state, errors) =>
         (state.serverValidationErrors = errors)
