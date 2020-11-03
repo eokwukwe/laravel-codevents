@@ -170,7 +170,7 @@
           <span v-if="isLoggedIn">
             <v-btn
               :to="{ name: 'EventFormPage' }"
-              class="mr-3 px-1 hidden-sm-and-down"
+              class="mr-3 hidden-sm-and-down"
               small
               depressed
               color="white--text success"

@@ -11,7 +11,8 @@ const state = {
         data: {},
         message: "",
         status: false
-    }
+    },
+    sessionExpired: false
 };
 
 const getters = {
@@ -20,12 +21,26 @@ const getters = {
     authLoading: state => state.authLoading,
     asyncSuccess: state => state.asyncSuccess,
     loggedInUser: state => state.loggedInUser,
+    sessionExpired: state => state.sessionExpired,
     serverValidationErrors: state => state.serverValidationErrors
 };
 
 const actions = {
     clearErrors({ commit }, error) {
         commit("clear-errors", error);
+    },
+
+    clearLocalStorage({ commit }) {
+        localStorage.removeItem("token");
+        commit("logout-success");
+    },
+
+    showSessionExpired({ commit }) {
+        commit("show-session-expired");
+    },
+
+    hideSessionExpired({ commit }) {
+        commit("hide-session-expired");
     },
 
     async register({ commit }, registerData) {
@@ -204,7 +219,6 @@ const actions = {
     },
 
     async loggedInUser({ commit }) {
-        console.log('logged in user action');
         commit("loading-starts");
 
         try {
@@ -232,7 +246,9 @@ const mutations = {
     "logged-in-user": (state, payload) => (state.loggedInUser = payload),
     "async-success": (state, payload) => (state.asyncSuccess = payload),
     "server-validation-errors": (state, errors) =>
-        (state.serverValidationErrors = errors)
+        (state.serverValidationErrors = errors),
+    "show-session-expired": state => (state.sessionExpired = true),
+    "hide-session-expired": state => (state.sessionExpired = false)
 };
 
 export default {

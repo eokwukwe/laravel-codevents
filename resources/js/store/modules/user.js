@@ -5,9 +5,9 @@ const state = {
     userErrors: {},
     userLoading: false,
     userSuccess: {
-        status: false,
         data: {},
-        message: ""
+        message: "",
+        status: false
     },
     userServerValidationErrors: {}
 };
@@ -18,7 +18,27 @@ const getters = {
     userSuccess: state => state.userSuccess,
     userServerValidationErrors: state => state.userServerValidationErrors
 };
-const actions = {};
+const actions = {
+    async getProfile({ commit }, id) {
+        commit("user-loading-starts");
+
+        try {
+            const { data } = await userRequests.profile(id);
+
+            commit("user-success", {
+                status: true,
+                message: "",
+                data: data.data
+            });
+        } catch (error) {
+            commit("clear-user-errors", {
+                message: error.response.data.error.details
+            });
+        } finally {
+            commit("user-loading-ends");
+        }
+    }
+};
 
 const mutations = {
     "user-loading-ends": state => (state.userLoading = false),

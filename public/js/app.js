@@ -1922,8 +1922,15 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/navigation/Navigation */ "./resources/js/components/navigation/Navigation.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
+/* harmony import */ var _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/navigation/Navigation */ "./resources/js/components/navigation/Navigation.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1939,26 +1946,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   components: {
-    Home: _views_Home__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Navigation: _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Home: _views_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Navigation: _components_navigation_Navigation__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  computed: {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["sessionExpired"])), {}, {
     theme: function theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
     },
     homePage: function homePage() {
       return this.$route.fullPath === "/";
     }
-  },
+  }),
   created: function created() {},
-  mounted: function mounted() {// console.log("app component mounted");
-  }
+  mounted: function mounted() {},
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["hideSessionExpired"])), {}, {
+    goToLogin: function goToLogin() {
+      this.hideSessionExpired();
+      this.$router.push({
+        name: "LoginPage"
+      });
+    }
+  })
 });
 
 /***/ }),
@@ -5045,8 +5079,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_user_ProfileTabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/user/ProfileTabs */ "./resources/js/components/user/ProfileTabs.vue");
-/* harmony import */ var _components_user_ProfileHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/user/ProfileHeader */ "./resources/js/components/user/ProfileHeader.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_user_ProfileTabs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/user/ProfileTabs */ "./resources/js/components/user/ProfileTabs.vue");
+/* harmony import */ var _components_user_ProfileHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/user/ProfileHeader */ "./resources/js/components/user/ProfileHeader.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -5057,13 +5098,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Profile",
   components: {
-    ProfileTabs: _components_user_ProfileTabs__WEBPACK_IMPORTED_MODULE_0__["default"],
-    ProfileHeader: _components_user_ProfileHeader__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ProfileTabs: _components_user_ProfileTabs__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ProfileHeader: _components_user_ProfileHeader__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {
     console.log("profile", this.$route.path);
@@ -5072,7 +5117,8 @@ __webpack_require__.r(__webpack_exports__);
     "$route.params.id": function $routeParamsId(id) {
       console.log("profile id route change", id);
     }
-  } // beforeRouteUpdate(to, from, next) {
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["clearErrors", "getProfile"])) // beforeRouteUpdate(to, from, next) {
   //   console.log("beforeRouteUpdate", to);
   // },
 
@@ -26780,6 +26826,64 @@ var render = function() {
     "v-app",
     { style: { background: _vm.$vuetify.theme.themes[_vm.theme].background } },
     [
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            persistent: "",
+            "min-width": "350",
+            "max-width": "400",
+            value: _vm.sessionExpired
+          }
+        },
+        [
+          _c(
+            "v-card",
+            { staticClass: "primary--text darken-5" },
+            [
+              _c("v-card-title", { staticClass: "headline" }, [
+                _vm._v(" Your Session has Expired ")
+              ]),
+              _vm._v(" "),
+              _c("v-card-text", [_vm._v("Please, login again to continue.")]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "" },
+                      on: { click: _vm.hideSessionExpired }
+                    },
+                    [_vm._v(" close ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          $event.stopPropagation()
+                          return _vm.goToLogin($event)
+                        }
+                      }
+                    },
+                    [_vm._v("\n          login\n        ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _vm.homePage
         ? _c("home")
         : _c(
@@ -30094,7 +30198,7 @@ var render = function() {
                         _c(
                           "v-btn",
                           {
-                            staticClass: "mr-3 px-1 hidden-sm-and-down",
+                            staticClass: "mr-3 hidden-sm-and-down",
                             attrs: {
                               to: { name: "EventFormPage" },
                               small: "",
@@ -31312,6 +31416,18 @@ var render = function() {
       _c("profile-header"),
       _vm._v(" "),
       _c("div", { staticClass: "my-4" }),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          on: {
+            click: function($event) {
+              return _vm.getProfile("76b060cc-4895-43bd-9e24-57482da91d53")
+            }
+          }
+        },
+        [_vm._v("\n    get profile\n  ")]
+      ),
       _vm._v(" "),
       _c("profile-tabs")
     ],
@@ -92586,7 +92702,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../node_modules/vuetify-loader/lib/runtime/installComponents.js */ "./node_modules/vuetify-loader/lib/runtime/installComponents.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var vuetify_lib_components_VApp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VApp */ "./node_modules/vuetify/lib/components/VApp/index.js");
-/* harmony import */ var vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VMain */ "./node_modules/vuetify/lib/components/VMain/index.js");
+/* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/index.js");
+/* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/index.js");
+/* harmony import */ var vuetify_lib_components_VDialog__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VDialog */ "./node_modules/vuetify/lib/components/VDialog/index.js");
+/* harmony import */ var vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VMain */ "./node_modules/vuetify/lib/components/VMain/index.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
 
 
 
@@ -92610,7 +92730,14 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_4___default()(component, {VApp: vuetify_lib_components_VApp__WEBPACK_IMPORTED_MODULE_5__["VApp"],VMain: vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_6__["VMain"]})
+
+
+
+
+
+
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_4___default()(component, {VApp: vuetify_lib_components_VApp__WEBPACK_IMPORTED_MODULE_5__["VApp"],VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_6__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__["VCardTitle"],VDialog: vuetify_lib_components_VDialog__WEBPACK_IMPORTED_MODULE_8__["VDialog"],VMain: vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_9__["VMain"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_10__["VSpacer"]})
 
 
 /* hot reload */
@@ -92738,6 +92865,25 @@ var request = function request() {
 
 /***/ }),
 
+/***/ "./resources/js/api/userRequests.js":
+/*!******************************************!*\
+  !*** ./resources/js/api/userRequests.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./request */ "./resources/js/api/request.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  profile: function profile(id) {
+    return Object(_request__WEBPACK_IMPORTED_MODULE_0__["default"])().get("users/".concat(id, "/profile"));
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -92756,6 +92902,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
 /* harmony import */ var _plugins_vuetify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../plugins/vuetify */ "./resources/plugins/vuetify.js");
+/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./api/request */ "./resources/js/api/request.js");
+
 
 
 
@@ -92771,6 +92919,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify_google_autocomplete__WEBP
   apiKey: "AIzaSyAddwFzEu83xzv_3kQjwLOrK3d35bmiOKg"
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
+Object(_api_request__WEBPACK_IMPORTED_MODULE_7__["default"])().interceptors.response.use(undefined, function (error) {
+  if (error.response.status === 401 && error.response.data.error.title === "Unauthenticated") {
+    _store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("clearLocalStorage");
+    _store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("showSessionExpired");
+  }
+
+  return Promise.reject(error);
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   components: {
@@ -95248,7 +95404,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vuex_persistedstate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex-persistedstate */ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js");
-/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/auth */ "./resources/js/store/modules/auth.js");
+/* harmony import */ var _modules_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/user */ "./resources/js/store/modules/user.js");
+/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/auth */ "./resources/js/store/modules/auth.js");
+
 
 
 
@@ -95256,7 +95414,8 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    auth: _modules_auth__WEBPACK_IMPORTED_MODULE_3__["default"]
+    auth: _modules_auth__WEBPACK_IMPORTED_MODULE_4__["default"],
+    user: _modules_user__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   plugins: [Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_2__["default"])({
     paths: ["auth.isLoggedIn", "auth.loggedInUser"]
@@ -95296,7 +95455,8 @@ var state = {
     data: {},
     message: "",
     status: false
-  }
+  },
+  sessionExpired: false
 };
 var getters = {
   asyncError: function asyncError(state) {
@@ -95314,6 +95474,9 @@ var getters = {
   loggedInUser: function loggedInUser(state) {
     return state.loggedInUser;
   },
+  sessionExpired: function sessionExpired(state) {
+    return state.sessionExpired;
+  },
   serverValidationErrors: function serverValidationErrors(state) {
     return state.serverValidationErrors;
   }
@@ -95323,7 +95486,20 @@ var actions = {
     var commit = _ref.commit;
     commit("clear-errors", error);
   },
-  register: function register(_ref2, registerData) {
+  clearLocalStorage: function clearLocalStorage(_ref2) {
+    var commit = _ref2.commit;
+    localStorage.removeItem("token");
+    commit("logout-success");
+  },
+  showSessionExpired: function showSessionExpired(_ref3) {
+    var commit = _ref3.commit;
+    commit("show-session-expired");
+  },
+  hideSessionExpired: function hideSessionExpired(_ref4) {
+    var commit = _ref4.commit;
+    commit("hide-session-expired");
+  },
+  register: function register(_ref5, registerData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, _yield$authRequests$r, data;
 
@@ -95331,7 +95507,7 @@ var actions = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              commit = _ref2.commit;
+              commit = _ref5.commit;
               commit("loading-starts");
               _context.prev = 2;
               _context.next = 5;
@@ -95369,7 +95545,7 @@ var actions = {
       }, _callee, null, [[2, 10, 13, 16]]);
     }))();
   },
-  verify: function verify(_ref3, requestData) {
+  verify: function verify(_ref6, requestData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var commit, _yield$authRequests$v, data;
 
@@ -95377,7 +95553,7 @@ var actions = {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref3.commit;
+              commit = _ref6.commit;
               commit("loading-starts");
               _context2.prev = 2;
               _context2.next = 5;
@@ -95418,7 +95594,7 @@ var actions = {
       }, _callee2, null, [[2, 10, 13, 16]]);
     }))();
   },
-  resend: function resend(_ref4, resendData) {
+  resend: function resend(_ref7, resendData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var commit, _yield$authRequests$r2, data;
 
@@ -95426,7 +95602,7 @@ var actions = {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref7.commit;
               commit("loading-starts");
               _context3.prev = 2;
               _context3.next = 5;
@@ -95463,7 +95639,7 @@ var actions = {
       }, _callee3, null, [[2, 10, 13, 16]]);
     }))();
   },
-  passwordResetLink: function passwordResetLink(_ref5, resetLinkData) {
+  passwordResetLink: function passwordResetLink(_ref8, resetLinkData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var commit, _yield$authRequests$f, data;
 
@@ -95471,7 +95647,7 @@ var actions = {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              commit = _ref5.commit;
+              commit = _ref8.commit;
               commit("loading-starts");
               _context4.prev = 2;
               _context4.next = 5;
@@ -95508,7 +95684,7 @@ var actions = {
       }, _callee4, null, [[2, 10, 13, 16]]);
     }))();
   },
-  resetPassword: function resetPassword(_ref6, resetData) {
+  resetPassword: function resetPassword(_ref9, resetData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       var commit, _yield$authRequests$r3, data, e;
 
@@ -95516,7 +95692,7 @@ var actions = {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              commit = _ref6.commit;
+              commit = _ref9.commit;
               commit("loading-starts");
               _context5.prev = 2;
               _context5.next = 5;
@@ -95554,7 +95730,7 @@ var actions = {
       }, _callee5, null, [[2, 10, 14, 17]]);
     }))();
   },
-  login: function login(_ref7, loginData) {
+  login: function login(_ref10, loginData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
       var commit, _yield$authRequests$l, data, res;
 
@@ -95562,7 +95738,7 @@ var actions = {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
-              commit = _ref7.commit;
+              commit = _ref10.commit;
               commit("loading-starts");
               _context6.prev = 2;
               _context6.next = 5;
@@ -95608,14 +95784,14 @@ var actions = {
       }, _callee6, null, [[2, 16, 20, 23]]);
     }))();
   },
-  logout: function logout(_ref8) {
+  logout: function logout(_ref11) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              commit = _ref8.commit;
+              commit = _ref11.commit;
               commit("loading-starts");
               _context7.prev = 2;
               _context7.next = 5;
@@ -95646,7 +95822,7 @@ var actions = {
       }, _callee7, null, [[2, 9, 13, 16]]);
     }))();
   },
-  loggedInUser: function loggedInUser(_ref9) {
+  loggedInUser: function loggedInUser(_ref12) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
       var commit, _yield$authRequests$l2, data;
 
@@ -95654,36 +95830,35 @@ var actions = {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
-              commit = _ref9.commit;
-              console.log('logged in user action');
+              commit = _ref12.commit;
               commit("loading-starts");
-              _context8.prev = 3;
-              _context8.next = 6;
+              _context8.prev = 2;
+              _context8.next = 5;
               return _api_authRequests__WEBPACK_IMPORTED_MODULE_2__["default"].loggedInUser();
 
-            case 6:
+            case 5:
               _yield$authRequests$l2 = _context8.sent;
               data = _yield$authRequests$l2.data;
               commit("logged-in-user", data.data);
-              _context8.next = 14;
+              _context8.next = 13;
               break;
 
-            case 11:
-              _context8.prev = 11;
-              _context8.t0 = _context8["catch"](3);
+            case 10:
+              _context8.prev = 10;
+              _context8.t0 = _context8["catch"](2);
               console.error(JSON.stringify(_context8.t0.response.data, null, 2));
 
-            case 14:
-              _context8.prev = 14;
+            case 13:
+              _context8.prev = 13;
               commit("loading-ends");
-              return _context8.finish(14);
+              return _context8.finish(13);
 
-            case 17:
+            case 16:
             case "end":
               return _context8.stop();
           }
         }
-      }, _callee8, null, [[3, 11, 14, 17]]);
+      }, _callee8, null, [[2, 10, 13, 16]]);
     }))();
   }
 };
@@ -95715,6 +95890,130 @@ var mutations = {
   },
   "server-validation-errors": function serverValidationErrors(state, errors) {
     return state.serverValidationErrors = errors;
+  },
+  "show-session-expired": function showSessionExpired(state) {
+    return state.sessionExpired = true;
+  },
+  "hide-session-expired": function hideSessionExpired(state) {
+    return state.sessionExpired = false;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/user.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/modules/user.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers/index.js");
+/* harmony import */ var _api_userRequests__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/userRequests */ "./resources/js/api/userRequests.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = {
+  userErrors: {},
+  userLoading: false,
+  userSuccess: {
+    data: {},
+    message: "",
+    status: false
+  },
+  userServerValidationErrors: {}
+};
+var getters = {
+  userErrors: function userErrors(state) {
+    return state.userErrors;
+  },
+  userLoading: function userLoading(state) {
+    return state.userLoading;
+  },
+  userSuccess: function userSuccess(state) {
+    return state.userSuccess;
+  },
+  userServerValidationErrors: function userServerValidationErrors(state) {
+    return state.userServerValidationErrors;
+  }
+};
+var actions = {
+  getProfile: function getProfile(_ref, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var commit, _yield$userRequests$p, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              commit("user-loading-starts");
+              _context.prev = 2;
+              _context.next = 5;
+              return _api_userRequests__WEBPACK_IMPORTED_MODULE_2__["default"].profile(id);
+
+            case 5:
+              _yield$userRequests$p = _context.sent;
+              data = _yield$userRequests$p.data;
+              commit("user-success", {
+                status: true,
+                message: "",
+                data: data.data
+              });
+              _context.next = 13;
+              break;
+
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](2);
+              commit("clear-user-errors", {
+                message: _context.t0.response.data.error.details
+              });
+
+            case 13:
+              _context.prev = 13;
+              commit("user-loading-ends");
+              return _context.finish(13);
+
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[2, 10, 13, 16]]);
+    }))();
+  }
+};
+var mutations = {
+  "user-loading-ends": function userLoadingEnds(state) {
+    return state.userLoading = false;
+  },
+  "user-loading-starts": function userLoadingStarts(state) {
+    return state.userLoading = true;
+  },
+  "clear-user-errors": function clearUserErrors(state, error) {
+    return state[error] = {};
+  },
+  "user-success": function userSuccess(state, payload) {
+    return state.userSuccess = payload;
+  },
+  "server-validation-errors": function serverValidationErrors(state, payload) {
+    return state.userServerValidationErrors = payload;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -95998,7 +96297,8 @@ __webpack_require__.r(__webpack_exports__);
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vuetify-loader/lib/runtime/installComponents.js */ "./node_modules/vuetify-loader/lib/runtime/installComponents.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
+/* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/index.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
 
 
 
@@ -96020,7 +96320,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 /* vuetify-loader */
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_4__["VContainer"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__["VContainer"]})
 
 
 /* hot reload */
