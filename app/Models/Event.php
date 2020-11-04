@@ -4,12 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 
 class Event extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Add the event owner as an attendee when event is created
+        static::created(function ($model) {
+            $model->attendees()->create([
+                'user_id' => $model->user->id
+            ]);
+        });
+    }
 
     public function user()
     {
@@ -38,16 +51,13 @@ class Event extends Model
     }
 
     /**
-     * Check is user is the event host
+     * Check is user is an attendee
      * 
      * @param int $userId
      * @return \App\Models\Attendee  $attendee
      */
     public function isAttendee($userId)
     {
-        return Attendee::where([
-            'event_id' => $this->id,
-            'user_id' => $userId
-        ])->first();
+        return $this->attendees()->where('user_id', $userId)->exists();
     }
 }

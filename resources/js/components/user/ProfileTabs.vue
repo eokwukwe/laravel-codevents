@@ -12,7 +12,7 @@
       <v-tab-item>
         <v-card flat>
           <v-card-text>
-            <events-tab />
+            <events-tab :events="events" />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -21,7 +21,10 @@
       <v-tab-item>
         <v-card flat>
           <v-card-text>
-            <relationship-tab />
+            <relationship-tab
+              :name="'Followers'"
+              :relationships="profile.followers"
+            />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -30,7 +33,10 @@
       <v-tab-item>
         <v-card flat>
           <v-card-text>
-            <relationship-tab />
+            <relationship-tab
+              :name="'Followings'"
+              :relationships="profile.followings"
+            />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -54,6 +60,15 @@ import RelationshipTab from "./RelationshipTab";
 export default {
   name: "ProfileTabs",
 
+  props: {
+    profile: {
+      type: Object,
+    },
+    events: {
+      type: Array,
+    },
+  },
+
   components: {
     EventsTab,
     EditProfileTab,
@@ -63,6 +78,10 @@ export default {
   data: () => ({
     tabs: null,
   }),
+
+  mounted: function () {
+    console.log("profile tab", JSON.stringify(this.events));
+  },
 };
 </script>
 

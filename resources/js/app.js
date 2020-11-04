@@ -14,6 +14,7 @@ Vue.use(Vuelidate);
 Vue.use(VuetifyGoogleAutocomplete, {
     apiKey: process.env.MIX_GOOGLE_API_KEY
 });
+
 Vue.config.productionTip = false;
 
 request().interceptors.response.use(undefined, function(error) {
@@ -22,7 +23,11 @@ request().interceptors.response.use(undefined, function(error) {
         error.response.data.error.title === "Unauthenticated"
     ) {
         store.dispatch("clearLocalStorage");
-        store.dispatch("showSessionExpired");
+        store.dispatch("showAuthModal", {
+            status: true,
+            messageTitle: "Your Session has Expired",
+            messageContent: "Please, login again to continue."
+        });
     }
 
     return Promise.reject(error);

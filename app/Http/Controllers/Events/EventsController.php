@@ -39,12 +39,6 @@ class EventsController extends Controller
                 $request->all()
             ));
 
-            // Add the event creator as an attendee
-            $event->attendees()->create([
-                'event_id' => $event->id,
-                'user_id' => $request->user()->id
-            ]);
-
             DB::commit();
         } catch (\Throwable $ex) {
             Log::info($ex->getMessage());

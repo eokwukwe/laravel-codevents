@@ -1,7 +1,11 @@
 import request from "./request";
 
 export default {
-    profile(id) {
-        return request().get(`users/${id}/profile`);
+    profile(userId) {
+        return request().get(`users/${userId}/profile`);
+    },
+
+    events(userId) {
+        return request().get(`users/${userId}/events`);
     }
 };

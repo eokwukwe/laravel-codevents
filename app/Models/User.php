@@ -173,11 +173,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      */
     public function isFollowedBy($followerId)
     {
-        return DB::table('relationships')
-            ->select('follower_id')
-            ->where([
-                ['follower_id', '=', $followerId],
-                ['following_id', '=', $this->id]
-            ])->get();
+        return $this->followers->contains($followerId);
     }
 }

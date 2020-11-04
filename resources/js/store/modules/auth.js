@@ -12,16 +12,20 @@ const state = {
         message: "",
         status: false
     },
-    sessionExpired: false
+    authModal: {
+        status: false,
+        messageTitle: "",
+        messageContent: ""
+    }
 };
 
 const getters = {
+    authModal: state => state.authModal,
     asyncError: state => state.asyncError,
     isLoggedIn: state => state.isLoggedIn,
     authLoading: state => state.authLoading,
     asyncSuccess: state => state.asyncSuccess,
     loggedInUser: state => state.loggedInUser,
-    sessionExpired: state => state.sessionExpired,
     serverValidationErrors: state => state.serverValidationErrors
 };
 
@@ -35,12 +39,12 @@ const actions = {
         commit("logout-success");
     },
 
-    showSessionExpired({ commit }) {
-        commit("show-session-expired");
+    showAuthModal({ commit }, payload) {
+        commit("show-auth-modal", payload);
     },
 
-    hideSessionExpired({ commit }) {
-        commit("hide-session-expired");
+    hideAuthModal({ commit }) {
+        commit("hide-auth-modal");
     },
 
     async register({ commit }, registerData) {
@@ -247,8 +251,12 @@ const mutations = {
     "async-success": (state, payload) => (state.asyncSuccess = payload),
     "server-validation-errors": (state, errors) =>
         (state.serverValidationErrors = errors),
-    "show-session-expired": state => (state.sessionExpired = true),
-    "hide-session-expired": state => (state.sessionExpired = false)
+    "show-auth-modal": (state, payload) => (state.authModal = payload),
+    "hide-auth-modal": state => {
+        state.authModal.status = false;
+        state.authModal.messageTitle = "";
+        state.authModal.messageContent = "";
+    }
 };
 
 export default {

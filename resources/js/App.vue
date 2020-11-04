@@ -4,14 +4,18 @@
       persistent
       min-width="350"
       max-width="400"
-      :value="sessionExpired"
+      :value="authModal.status"
     >
       <v-card class="primary--text darken-5">
-        <v-card-title class="headline"> Your Session has Expired </v-card-title>
-        <v-card-text>Please, login again to continue.</v-card-text>
+        <v-card-title class="headline">
+          {{ authModal.messageTitle }}
+        </v-card-title>
+        <v-card-text>
+          {{ authModal.messageContent }}
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="hideSessionExpired"> close </v-btn>
+          <v-btn text @click="hideAuthModal"> close </v-btn>
           <v-btn color="primary darken-1" text @click.stop="goToLogin">
             login
           </v-btn>
@@ -48,7 +52,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["sessionExpired"]),
+    ...mapGetters(["authModal"]),
 
     theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
@@ -64,10 +68,10 @@ export default {
   mounted: function () {},
 
   methods: {
-    ...mapActions(["hideSessionExpired"]),
+    ...mapActions(["hideAuthModal"]),
 
     goToLogin() {
-      this.hideSessionExpired();
+      this.hideAuthModal();
       this.$router.push({ name: "LoginPage" });
     },
   },

@@ -45,7 +45,7 @@
     <v-card-text class="grey lighten-3 d-flex align-center">
       <v-item-group multiple>
         <v-item v-for="n in 3" :key="n">
-          <router-link :to="{ name: 'ProfilePage', params: {id: n} }">
+          <router-link :to="{ name: 'ProfilePage', params: {id: '123333'} }">
             <v-avatar class="mr-1" size="36">
               <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
             </v-avatar>

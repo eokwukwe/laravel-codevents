@@ -38,7 +38,7 @@ class EventAttendeesController extends Controller
         }
 
         // Check if the user has already joined the event
-        if (!is_null($event->isAttendee($request->user()->id))) {
+        if ($event->isAttendee($request->user()->id)) {
             return response()->json([
                 'message' => 'You have already joined the event'
             ], 403);

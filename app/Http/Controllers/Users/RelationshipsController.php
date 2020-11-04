@@ -20,7 +20,7 @@ class RelationshipsController extends Controller
         $authUser = $request->user()->id;
 
         // Check if logged in user is already a follower
-        if ($user->isFollowedBy($authUser)->isEmpty()) {
+        if (!$user->isFollowedBy($authUser)) {
             $user->followers()->attach($authUser);
 
             return response()->json([

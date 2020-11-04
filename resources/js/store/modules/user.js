@@ -3,35 +3,46 @@ import userRequests from "../../api/userRequests";
 
 const state = {
     userErrors: {},
+    userEvents: [],
+    userProfile: {},
     userLoading: false,
-    userSuccess: {
-        data: {},
-        message: "",
-        status: false
-    },
     userServerValidationErrors: {}
 };
 
 const getters = {
     userErrors: state => state.userErrors,
     userLoading: state => state.userLoading,
-    userSuccess: state => state.userSuccess,
+    userEvents: state => state.userEvents,
+    userProfile: state => state.userProfile,
     userServerValidationErrors: state => state.userServerValidationErrors
 };
+
 const actions = {
-    async getProfile({ commit }, id) {
+    async getUserProfile({ commit }, userId) {
         commit("user-loading-starts");
 
         try {
-            const { data } = await userRequests.profile(id);
+            const { data } = await userRequests.profile(userId);
 
-            commit("user-success", {
-                status: true,
-                message: "",
-                data: data.data
-            });
+            commit("user-profile", data.data);
         } catch (error) {
-            commit("clear-user-errors", {
+            commit("user-loading-errors", {
+                message: error.response.data.error.details
+            });
+        } finally {
+            commit("user-loading-ends");
+        }
+    },
+
+    async getUserEvents({ commit }, userId) {
+        commit("user-loading-starts");
+
+        try {
+            const { data } = await userRequests.events(userId);
+
+            commit("user-events", data.data);
+        } catch (error) {
+            commit("user-loading-errors", {
                 message: error.response.data.error.details
             });
         } finally {
@@ -41,10 +52,12 @@ const actions = {
 };
 
 const mutations = {
+    "clear-user-errors": state => (state.userErrors = {}),
     "user-loading-ends": state => (state.userLoading = false),
     "user-loading-starts": state => (state.userLoading = true),
-    "clear-user-errors": (state, error) => (state[error] = {}),
-    "user-success": (state, payload) => (state.userSuccess = payload),
+    "user-events": (state, payload) => (state.userEvents = payload),
+    "user-profile": (state, payload) => (state.userProfile = payload),
+    "user-loading-errors": (state, payload) => (state.userErrors = payload),
     "server-validation-errors": (state, payload) =>
         (state.userServerValidationErrors = payload)
 };

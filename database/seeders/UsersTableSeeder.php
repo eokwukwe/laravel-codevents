@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +14,6 @@ class UsersTableSeeder extends Seeder
    */
   public function run()
   {
-    User::factory()->count(5)->couhasEvents(5)->create();
+    User::factory()->count(3)->hasEvents(3)->create();
   }
 }
