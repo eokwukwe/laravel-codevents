@@ -35,8 +35,8 @@ class EventFactory extends Factory
             ]),
             'description' => $this->faker->sentence(15),
             'venue' => $this->faker->streetAddress(),
-            'venue_lat' => $this->faker->latitude(),
-            'venue_lng' => $this->faker->longitude(),
+            'venue_lat' => 40.7484405,
+            'venue_lng' => -73.98566440000002,
             'user_id' => User::factory(),
         ];
     }

@@ -66,6 +66,7 @@
                 dense
                 filled
                 outlined
+                autofocus
                 label="Email"
                 append-icon="mdi-email"
                 v-model="loginData.email"
@@ -200,7 +201,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["clearErrors", "login"]),
+    ...mapActions(["clearErrors", "login", "getLoggedInUser"]),
 
     async handleLoginSubmit() {
       this.clearErrors("serverValidationErrors");
@@ -220,6 +221,8 @@ export default {
         validationReset: this.$v.$reset,
         formData: this.loginData,
       });
+
+      this.getLoggedInUser()
 
       this.$router.push({ name: "EventsPage" });
     },

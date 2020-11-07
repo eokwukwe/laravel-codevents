@@ -12,8 +12,8 @@ import EventDashboard from "../views/EventDashboard.vue";
 
 const routes = [
     {
-        path: '/',
-        meta: {guest: true}
+        path: "/",
+        meta: { guest: true }
     },
     {
         path: "/login",
@@ -85,7 +85,12 @@ const routes = [
         path: "/events/:id/details",
         name: "EventDetailPage",
         component: EventDetail,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
+        props(route) {
+            const props = { ...route.params };
+            props.id = +props.id;
+            return props;
+        }
         // component: () =>
         //     import(
         //         /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"

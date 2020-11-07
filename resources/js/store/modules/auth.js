@@ -185,9 +185,9 @@ const actions = {
                 message: "Login successful 🚀"
             });
 
-            const res = await authRequests.loggedInUser();
+            // const res = await authRequests.loggedInUser();
 
-            commit("logged-in-user", res.data.data);
+            // commit("logged-in-user", res.data.data);
         } catch (error) {
             error.response.status === 422 || error.response.status === 429
                 ? commit(
@@ -222,7 +222,7 @@ const actions = {
         }
     },
 
-    async loggedInUser({ commit }) {
+    async getLoggedInUser({ commit }) {
         commit("loading-starts");
 
         try {

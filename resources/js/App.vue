@@ -6,8 +6,9 @@
       max-width="400"
       :value="authModal.status"
     >
-      <v-card class="primary--text darken-5">
-        <v-card-title class="headline">
+      <v-card class="text-center darken-5">
+        <v-card-title class="headline d-flex justify-center warning--text">
+          <v-icon left color="warning">mdi-alert</v-icon>
           {{ authModal.messageTitle }}
         </v-card-title>
         <v-card-text>
@@ -15,7 +16,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="hideAuthModal"> close </v-btn>
+          <v-btn text @click="closeAuthModal">close</v-btn>
           <v-btn color="primary darken-1" text @click.stop="goToLogin">
             login
           </v-btn>
@@ -69,6 +70,11 @@ export default {
 
   methods: {
     ...mapActions(["hideAuthModal"]),
+
+    closeAuthModal() {
+      this.hideAuthModal();
+      this.$router.push({ name: "EventsPage" });
+    },
 
     goToLogin() {
       this.hideAuthModal();

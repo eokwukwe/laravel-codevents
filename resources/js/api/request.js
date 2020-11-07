@@ -1,6 +1,10 @@
 import axios from "axios";
 
-let api = axios.create({
+const api = axios.create({
+    headers: {
+        Accept: "application/json",
+        "Content-type": "application/json"
+    },
     baseURL:
         process.env.NODE_ENV === "development"
             ? process.env.MIX_DEV_BASE_URL
@@ -16,5 +20,7 @@ const request = () => {
 
     return api;
 };
+
+export const token = process.env.MIX_MAPBOX_ACCESS_TOKEN;
 
 export default request;

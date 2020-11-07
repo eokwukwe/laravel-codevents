@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <div class="d-flex flex-no-wrap align-sm-start">
-      <v-avatar class="mt-3 ml-3 mr-0" size="125">
+      <v-avatar class="mt-3 ml-3 mr-0" size="100">
         <v-img :src="profile.photoURL || '/images/user.png'"></v-img>
       </v-avatar>
 
@@ -36,7 +36,7 @@
     <v-divider></v-divider>
 
     <v-card-text>
-      <span class="bio">About Me</span>
+      <span class="bio font-weight-bold">About Me</span>
       <br />
       <span>
         {{ profile.bio || "Your yet to tell us about yourself 😉😉" }}

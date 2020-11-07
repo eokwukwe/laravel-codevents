@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+Route::apiResource('events', 'Events\EventsController')
+    ->only('index', 'show');
+
 Route::middleware('auth:api')->group(function () {
     Route::get('me', 'Users\CurrentUsersController');
 
@@ -53,6 +57,6 @@ Route::middleware('guest:api')->group(function () {
 
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-    Route::apiResource('events', 'Events\EventsController')
-        ->only('index', 'show');
+    // Route::apiResource('events', 'Events\EventsController')
+    //     ->only('index', 'show');
 });

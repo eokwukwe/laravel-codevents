@@ -25,8 +25,11 @@
     <span v-for="comment in comments" :key="comment.id">
       <v-card-text class="py-0 mt-3 mb-4">
         <div class="d-flex flex-no-wrap align-start">
-          <v-avatar class="mx-0" size="35">
-            <img :src="comment.user.photoURL" alt="photo" />
+          <v-avatar class="mx-0" size="30">
+            <img
+              alt="user photo"
+              :src="comment.user.photoURL || '/images/user.png'"
+            />
           </v-avatar>
 
           <div class="grey lighten-3 comment--content ml-2">
@@ -41,12 +44,12 @@
                 class="text-capitalize primary--text"
                 :to="{ name: 'ProfilePage', params: { id: comment.user.id } }"
               >
-                {{ comment.user.name }}
+                {{ comment.user.name.split(" ")[0] }}
               </router-link>
 
               <span> - </span>
 
-              <small> about 1 month ago</small>
+              <small>{{ comment.createdAt.forHuman }}</small>
             </v-card-subtitle>
           </div>
         </div>
@@ -61,22 +64,24 @@ import clearFormInput from "../../helpers/clearFormInput";
 export default {
   name: "EventDetailComment",
 
+  props: {
+    event: {
+      type: Object,
+    },
+  },
+
   data: () => ({
     eventCommentData: { comment: null },
-    comments: [
-      {
-        id: 1,
-        content: "this is a comment that comments a comment in the commnent for more comment in the comment",
-        user: {
-          id: 2,
-          name: "john doe",
-          photoURL: "https://cdn.vuetifyjs.com/images/john.jpg",
-        },
-      },
-    ],
+
     commentId: 0,
     userId: 0,
   }),
+
+  computed: {
+    comments() {
+      return this.event.comments;
+    },
+  },
 
   methods: {
     handleAddComment(e) {
@@ -88,23 +93,7 @@ export default {
         e.preventDefault();
 
         if (!this.eventCommentData.comment) return;
-
-        const cId = ++this.commentId;
-        const uId = ++this.userId;
-
-        const userComment = {
-          id: cId,
-          content: this.eventCommentData.comment,
-          user: {
-            id: uId,
-            name: "john doe",
-            photoURL: "https://cdn.vuetifyjs.com/images/john.jpg",
-          },
-        };
-
-        this.comments.push(userComment);
-
-        this.eventCommentData.comment = "";
+        console.log(this.eventCommentData);
       }
     },
   },

@@ -22,6 +22,6 @@ Route::get('/', function () {
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
-Route::get('/test/{id}', function (Request $request) {
-    return new EventsResource(Event::find($request->id));
-});
+// Route::get('/test/{id}', function (Request $request) {
+//     return new EventsResource(Event::find($request->id));
+// });

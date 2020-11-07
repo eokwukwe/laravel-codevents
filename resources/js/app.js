@@ -5,8 +5,8 @@ import VuetifyGoogleAutocomplete from "vuetify-google-autocomplete";
 import store from "./store";
 import App from "./App.vue";
 import router from "./router";
-import vuetify from "../plugins/vuetify";
 import request from "./api/request";
+import vuetify from "../plugins/vuetify";
 
 require("./bootstrap");
 

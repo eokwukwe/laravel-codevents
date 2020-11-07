@@ -181,7 +181,7 @@
             <v-menu transition="slide-y-transition" bottom left offset-y>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon dark v-bind="attrs" v-on="on">
-                  <v-avatar size="36">
+                  <v-avatar size="30">
                     <img
                       :src="loggedInUser.photoURL || '/images/user.png'"
                       alt="profile photo"

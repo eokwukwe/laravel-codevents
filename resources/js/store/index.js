@@ -4,13 +4,15 @@ import createPersistedState from "vuex-persistedstate";
 
 import user from "./modules/user";
 import auth from "./modules/auth";
+import event from "./modules/event";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
         auth,
-        user
+        user,
+        event
     },
     plugins: [
         createPersistedState({

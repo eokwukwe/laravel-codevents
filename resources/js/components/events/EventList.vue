@@ -1,13 +1,16 @@
 <template>
   <v-card class="mb-4">
-    <div class="d-flex flex-no-wrap align-center">
+    <div class="d-flex flex-no-wrap align-start">
       <v-avatar class="ml-3 mr-2 my-3" size="90">
-        <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
+        <v-img
+          alt="user photo"
+          :src="event.hostedBy.photoURL || '/images/user.png'"
+        ></v-img>
       </v-avatar>
 
       <div>
         <v-card-title class="text-capitalize primary--text font-weight-bold">
-          trip to empire state
+          {{ event.title }}
         </v-card-title>
 
         <v-card-subtitle>
@@ -16,9 +19,10 @@
             style="cursor: pointer"
             class="primary--text"
             tag="span"
-            :to="{ name: 'ProfilePage', params: {id: 5} }"
-            >fCode</router-link
+            :to="{ name: 'ProfilePage', params: { id: event.hostedBy.id } }"
           >
+            {{ event.hostedBy.name }}
+          </router-link>
         </v-card-subtitle>
       </div>
     </div>
@@ -30,11 +34,11 @@
       <div>
         <span>
           <v-icon small>mdi-clock</v-icon>
-          <span> October 31, 2020 1:00 PM</span>
+          <span>{{ formattedDate.dateTime }}</span>
         </span>
         <span class="ml-1 text-capitalize">
           <v-icon small>mdi-map-marker</v-icon>
-          <span>ikeja computer village, Pepple Street, Lagos, Nigeria</span>
+          <span>{{ event.venue.address }}</span>
         </span>
       </div>
     </v-card-text>
@@ -44,13 +48,11 @@
     <!-- Event attendees -->
     <v-card-text class="grey lighten-3 d-flex align-center">
       <v-item-group multiple>
-        <v-item v-for="n in 3" :key="n">
-          <router-link :to="{ name: 'ProfilePage', params: {id: '123333'} }">
-            <v-avatar class="mr-1" size="36">
-              <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
-            </v-avatar>
-          </router-link>
-        </v-item>
+        <event-list-attendees
+          v-for="attendee in attendees"
+          :key="attendee.id"
+          :attendee="attendee"
+        />
       </v-item-group>
     </v-card-text>
 
@@ -59,25 +61,21 @@
     <!-- Event description -->
     <v-card-text class="pb-0">
       <span>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure pariatur
-        recusandae modi epudiandae, nihil culpa optio facilis nulla incidunt.
+        {{ event.description }}
       </span>
     </v-card-text>
 
     <v-card-text class="py-0">
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn small text color="warning darken-3"> delete </v-btn>
-
         <v-btn
-          router
-          :to="{ name: 'EventDetailPage', params: { id: 1 } }"
+          @click="viewEvent"
           small
           depressed
           dark
-          color="success px-3"
+          color="success px-3 ml-2"
         >
-          view
+          details
         </v-btn>
       </v-card-actions>
     </v-card-text>
@@ -85,8 +83,54 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import helpers from "../../helpers";
+import EventListAttendees from "./EventListAttendees";
+
 export default {
   name: "EventList",
+
+  components: {
+    EventListAttendees,
+  },
+
+  props: {
+    event: {
+      type: Object,
+    },
+  },
+
+  computed: {
+    ...mapGetters(["isLoggedIn"]),
+
+    formattedDate() {
+      return helpers.formattedEventDate(this.event.date);
+    },
+
+    attendees() {
+      return this.event.attendees;
+    },
+  },
+
+  methods: {
+    viewEvent() {
+      if (!this.isLoggedIn) {
+        this.$store.dispatch("showAuthModal", {
+          status: true,
+          messageTitle: "Ooops!!! You're not logged in",
+          messageContent:
+            "You need to login in or register to proceed.",
+        });
+        return;
+      }
+
+      this.$router.push({
+        name: "EventDetailPage",
+        params: { id: this.event.id },
+      });
+    },
+  },
 };
 </script>
 

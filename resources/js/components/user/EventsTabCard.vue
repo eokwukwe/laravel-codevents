@@ -16,12 +16,12 @@
     <v-card-actions>
       <span class="d-inline-flex align-center mr-3">
         <v-icon small>mdi-calendar</v-icon>
-        {{ formattedDay }}
+        {{ formattedDate.day }}
       </span>
 
       <span class="d-inline-flex align-center">
         <v-icon small>mdi-clock</v-icon>
-        {{ formattedTime }}
+        {{ formattedDate.time }}
       </span>
       <v-spacer></v-spacer>
     </v-card-actions>
@@ -30,6 +30,8 @@
 
 <script>
 import { format, parseISO } from "date-fns";
+
+import helpers from "../../helpers";
 
 export default {
   name: "EventsTabCard",
@@ -41,11 +43,8 @@ export default {
   },
 
   computed: {
-    formattedDay() {
-      return format(parseISO(this.event.date), "dd MMM yyyy");
-    },
-    formattedTime() {
-      return format(parseISO(this.event.date), "h:mm a");
+    formattedDate() {
+      return helpers.formattedEventDate(this.event.date);
     },
   },
 };

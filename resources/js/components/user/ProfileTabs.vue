@@ -78,10 +78,6 @@ export default {
   data: () => ({
     tabs: null,
   }),
-
-  mounted: function () {
-    console.log("profile tab", JSON.stringify(this.events));
-  },
 };
 </script>
 

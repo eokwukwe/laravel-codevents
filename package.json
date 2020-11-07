@@ -23,9 +23,12 @@
     },
     "dependencies": {
         "date-fns": "^2.16.1",
+        "leaflet": "^1.7.1",
         "lodash.isempty": "^4.4.0",
         "vue": "^2.6.12",
+        "vue-infinite-loading": "^2.4.5",
         "vue-router": "^3.4.6",
+        "vue2-leaflet": "^2.6.0",
         "vuelidate": "^0.7.5",
         "vuetify": "^2.3.14",
         "vuetify-google-autocomplete": "^2.0.3",
