@@ -10,6 +10,12 @@ import Profile from "../views/Profile.vue";
 import EventDetail from "../views/EventDetail.vue";
 import EventDashboard from "../views/EventDashboard.vue";
 
+function castId(route) {
+    const props = { ...route.params };
+    props.id = +props.id;
+    return props;
+}
+
 const routes = [
     {
         path: "/",
@@ -72,10 +78,11 @@ const routes = [
         //     import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
     },
     {
-        path: "/events/add",
+        path: "/events/:id?/add",
         name: "EventFormPage",
         component: EventForm,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
+        props: castId
         // component: () =>
         //     import(
         //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
@@ -86,11 +93,7 @@ const routes = [
         name: "EventDetailPage",
         component: EventDetail,
         meta: { requiresAuth: true },
-        props(route) {
-            const props = { ...route.params };
-            props.id = +props.id;
-            return props;
-        }
+        props: castId
         // component: () =>
         //     import(
         //         /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"

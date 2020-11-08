@@ -5,7 +5,7 @@
         order="last"
         order-sm="0"
         cols="12"
-        :sm="isLoggedIn ? '8' : '10' "
+        :sm="isLoggedIn ? '8' : '10'"
         :offset-sm="isLoggedIn ? '0' : '1'"
       >
         <event-list
@@ -15,7 +15,22 @@
         />
 
         <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
-          <div slot="no-more">That will be all for now...</div>
+          <div class="grey--text" slot="no-more">
+            That will be all for now...
+          </div>
+          <div
+            style="height: 80vh"
+            class="d-flex flex-column justify-center align-center"
+            slot="no-results"
+          >
+            <div class="d-flex primary--text mb-4">
+              <v-icon left x-large color="primary">mdi-alert</v-icon>
+              <span class="text-h4 font-italic">Oh dear!!!</span>
+            </div>
+            <span class="grey--text">
+              Looks like nothing is up for the moment.
+            </span>
+          </div>
         </infinite-loading>
       </v-col>
 
@@ -53,16 +68,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(["loggedInUser", "isLoggedIn"]),
-    // ...mapGetters(["allEvents", "eventLoading", "loggedInUser"]),
-
-    // eventExist() {
-    //   return this.fetchedEvents.length > 0;
-    // },
-
-    // eventExist() {
-    //   return this.allEvents.data.length > 0;
-    // },
+    ...mapGetters(["allEvents", "isLoggedIn"]),
   },
 
   mounted: async function () {
@@ -70,27 +76,20 @@ export default {
   },
 
   methods: {
-    // ...mapActions(["getAllEvents", "getLoggedInUser"]),
+    ...mapActions(["getAllEvents"]),
 
-    infiniteHandler($state) {
-      request()
-        .get(`/events?page=${this.page}`)
-        .then(({ data }) => {
-          if (data.data.length) {
-            this.page += 1;
+    async infiniteHandler($state) {
+      await this.getAllEvents(this.page);
 
-            this.fetchedEvents.push(...data.data);
+      if (this.allEvents.data.length > 0) {
+        this.page += 1;
 
-            $state.loaded();
+        this.fetchedEvents.push(...this.allEvents.data);
 
-            this.eventLoading = false;
-          } else {
-            $state.complete();
-          }
-        })
-        .catch((e) => {
-          console.log(e.response);
-        });
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     },
   },
 };

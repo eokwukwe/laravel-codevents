@@ -36,7 +36,13 @@
       </v-btn>
       <v-spacer></v-spacer>
 
-      <v-btn small depressed color="success" v-if="isHost">
+      <v-btn
+        :to="{ name: 'EventFormPage', params: { id: event.id } }"
+        small
+        depressed
+        color="success"
+        v-if="isHost"
+      >
         <v-icon small left>mdi-file-document-edit</v-icon>
         edit
       </v-btn>
@@ -55,10 +61,10 @@ export default {
       type: Object,
     },
     isHost: {
-      type: Boolean
+      type: Boolean,
     },
     isGoing: {
-      type: Boolean
+      type: Boolean,
     },
   },
 

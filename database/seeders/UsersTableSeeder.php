@@ -14,6 +14,11 @@ class UsersTableSeeder extends Seeder
    */
   public function run()
   {
-    User::factory()->count(3)->hasEvents(3)->create();
+    $users = User::factory()->count(3)->hasEvents(3)->create();
+
+    $users[0]->update([
+      'email' => 'john@doe.com',
+      'photo_url' => 'https://randomuser.me/api/portraits/men/20.jpg'
+    ]);
   }
 }

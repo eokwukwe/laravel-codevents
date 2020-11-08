@@ -130,7 +130,6 @@
                 append-icon="mdi-map-marker-radius"
               >
               </vuetify-google-autocomplete>
-
             </v-card-text>
 
             <v-card-actions class="pt-0 pr-4">
@@ -163,9 +162,11 @@
 </template>
 
 <script>
+import { format, parseISO } from "date-fns";
+import { mapGetters, mapActions } from "vuex";
 import { required, minValue } from "vuelidate/lib/validators";
 
-import clearFormInput from "../../helpers/clearFormInput";
+import helpers from "../../helpers";
 import { eventCategories } from "../../helpers/eventCategories";
 
 const minDate = (value) => new Date(value) >= new Date();
@@ -173,16 +174,23 @@ const minDate = (value) => new Date(value) >= new Date();
 export default {
   name: "EventForm",
 
+  props: {
+    id: { type: Number },
+  },
+
   data: () => ({
     categories: eventCategories,
     dateMenu: false,
     timeMenu: false,
     isSubmitting: false,
+    isEditing: false,
     eventData: {
       date: "",
       time: "",
       title: "",
       venue: "",
+      venue_lat: "",
+      venue_lng: "",
       category: "",
       description: "",
     },
@@ -200,6 +208,8 @@ export default {
   },
 
   computed: {
+    ...mapGetters(["singleEvent", "eventLoading", "loggedInUser"]),
+
     dateErrors() {
       const errors = [];
 
@@ -270,26 +280,73 @@ export default {
     },
   },
 
+  created: async function () {
+    console.log("it is created and isEditting is", this.isEditing);
+    if (!this.id) return;
+
+
+    this.isEditing = true;
+
+    console.log(
+      "after prop check is created and isEditting is",
+      this.isEditing
+    );
+
+    await this.getSingleEvent(this.id);
+
+    this.eventData = {
+      date: format(parseISO(this.singleEvent.date), "yyyy-MM-dd"),
+      time: format(parseISO(this.singleEvent.date), "HH:mm"),
+      title: this.singleEvent.title,
+      category: this.singleEvent.category,
+      venue: this.singleEvent.venue.address,
+      venue_lat: this.singleEvent.venue.lat,
+      venue_lng: this.singleEvent.venue.lng,
+      description: this.singleEvent.description,
+    };
+  },
+
   methods: {
-    handleEventSubmit() {
-      console.log(JSON.stringify(this.eventData, null, 2));
-      clearFormInput({
+    ...mapActions(["getSingleEvent"]),
+
+    async handleEventSubmit() {
+      this.eventData.date = new Date(
+        `${this.eventData.date} ${this.eventData.time}`
+      );
+
+      delete this.eventData.time;
+
+      console.log("before check isEditing ", this.isEditing);
+
+      if (!this.isEditing) {
+        console.log("creating a new event");
+        helpers.logJSON(this.eventData);
+
+        helpers.clearFormInput({
+          validationReset: this.$v.$reset,
+          formData: this.eventData,
+        });
+        return;
+      }
+
+      console.log("after check isEditing ", this.isEditing);
+
+      helpers.logJSON(this.eventData);
+
+      helpers.clearFormInput({
         validationReset: this.$v.$reset,
         formData: this.eventData,
       });
-      console.log(JSON.stringify(this.eventData, null, 2));
     },
 
     getEventVenue(addressData, placeResultData, id) {
-      console.log({ addressData }, { placeResultData }, { id });
-      // this.address = addressData;
+      this.eventData.venue = placeResultData.formatted_address;
+      this.eventData.venue_lat = addressData.latitude;
+      this.eventData.venue_lng = addressData.longitude;
     },
   },
 };
 </script>
 
 <style scoped>
-  .btn--cancel:disabled {
-    background-color: rgb(189, 189, 189) !important;
-  }
 </style>

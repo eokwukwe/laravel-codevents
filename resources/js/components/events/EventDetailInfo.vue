@@ -48,7 +48,7 @@
       <v-scroll-y-transition>
         <v-list-item v-show="showMap">
           <v-list-item-content>
-            <event-map :venueLatLng="event.venue.latLng" />
+            <event-map :venueLatLng="event.venue" />
           </v-list-item-content>
         </v-list-item>
       </v-scroll-y-transition>

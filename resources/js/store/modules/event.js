@@ -3,7 +3,7 @@ import eventRequests from "../../api/eventRequests";
 
 const state = {
     eventErrors: {},
-    allEvents: [],
+    allEvents: {},
     singleEvent: {},
     eventLoading: false,
     eventServerValidationErrors: {}

@@ -25,10 +25,8 @@ class EventsResource extends JsonResource
             'description' => $this->description,
             'venue' => [
                 'address' => $this->venue,
-                'latLng'  => [
-                    'lat' => $this->venue_lat,
-                    'lng' => $this->venue_lng,
-                ]
+                'lat' => $this->venue_lat,
+                'lng' => $this->venue_lng,
             ],
             'hostedBy' => new UsersResource($this->user),
             'attendees'   => AttendeesResource::collection($this->attendees),
