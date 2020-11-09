@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from '../store'
 
 const api = axios.create({
     headers: {
@@ -21,6 +22,20 @@ const request = () => {
     return api;
 };
 
-export const token = process.env.MIX_MAPBOX_ACCESS_TOKEN;
+request().interceptors.response.use(undefined, function(error) {
+    if (
+        error.response.status === 401 &&
+        error.response.data.error.title === "Unauthenticated"
+    ) {
+        store.dispatch("clearLocalStorage");
+        store.dispatch("showAuthModal", {
+            status: true,
+            messageTitle: "Your Session has Expired",
+            messageContent: "Please, login again to continue."
+        });
+    }
+
+    return Promise.reject(error);
+});
 
 export default request;

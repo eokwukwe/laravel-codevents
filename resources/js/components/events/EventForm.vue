@@ -1,7 +1,22 @@
 <template>
   <v-container class="fill-height">
+    <v-snackbar color="success" :timeout="6000" top v-model="snackbarSuccess">
+      {{ eventActionSuccess.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          color="primary"
+          class="font-weight-bold"
+          v-bind="attrs"
+          @click="snackbarSuccess = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="7" md="5">
+      <v-col cols="12" sm="7" md="6" lg="5">
         <v-card>
           <v-card-title class="primary--text title">
             Create Event
@@ -138,7 +153,7 @@
                 depressed
                 class="white--text btn--cancel"
                 color="grey darken-2"
-                :disabled="isSubmitting"
+                :disabled="eventLoading"
               >
                 <v-icon small left>mdi-text-box-minus-outline</v-icon>
                 Cancel
@@ -148,7 +163,8 @@
                 depressed
                 type="submit"
                 color="primary lighten-0"
-                :disabled="isSubmitting || $v.$invalid"
+                :loading="eventLoading"
+                :disabled="$v.$invalid || eventLoading"
               >
                 <v-icon small left>mdi-text-box-plus-outline</v-icon>
                 Add event
@@ -164,9 +180,10 @@
 <script>
 import { format, parseISO } from "date-fns";
 import { mapGetters, mapActions } from "vuex";
-import { required, minValue } from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators";
 
 import helpers from "../../helpers";
+import request from "../../api/request";
 import { eventCategories } from "../../helpers/eventCategories";
 
 const minDate = (value) => new Date(value) >= new Date();
@@ -176,13 +193,14 @@ export default {
 
   props: {
     id: { type: Number },
+    event: { type: Object },
   },
 
   data: () => ({
     categories: eventCategories,
     dateMenu: false,
     timeMenu: false,
-    isSubmitting: false,
+    snackbarSuccess: false,
     isEditing: false,
     eventData: {
       date: "",
@@ -200,15 +218,20 @@ export default {
     eventData: {
       date: { required, minDate },
       time: { required },
-      title: { required },
       venue: { required },
       category: { required },
-      description: { required },
+      title: { required, minLength: minLength(10) },
+      description: { required, minLength: minLength(10) },
     },
   },
 
   computed: {
-    ...mapGetters(["singleEvent", "eventLoading", "loggedInUser"]),
+    ...mapGetters([
+      "singleEvent",
+      "eventLoading",
+      "eventActionSuccess",
+      "eventServerValidationErrors",
+    ]),
 
     dateErrors() {
       const errors = [];
@@ -220,6 +243,9 @@ export default {
 
       !this.$v.eventData.date.minDate &&
         errors.push("Event date cannot be less than today.");
+
+      helpers.hasServerError(this.eventServerValidationErrors, "date") &&
+        errors.push(this.eventServerValidationErrors["date"]);
 
       return errors;
     },
@@ -243,6 +269,12 @@ export default {
       !this.$v.eventData.title.required &&
         errors.push("Event title is required.");
 
+      !this.$v.eventData.title.minLength &&
+        errors.push("Event title must be at least 10 characters long.");
+
+      helpers.hasServerError(this.eventServerValidationErrors, "title") &&
+        errors.push(this.eventServerValidationErrors["title"]);
+
       return errors;
     },
 
@@ -253,6 +285,9 @@ export default {
 
       !this.$v.eventData.venue.required &&
         errors.push("Event venue is required.");
+
+      helpers.hasServerError(this.eventServerValidationErrors, "venue") &&
+        errors.push(this.eventServerValidationErrors["venue"]);
 
       return errors;
     },
@@ -276,62 +311,99 @@ export default {
       !this.$v.eventData.description.required &&
         errors.push("Event description is required.");
 
+      !this.$v.eventData.description.minLength &&
+        errors.push("Event description must be at least 10 characters long.");
+
       return errors;
+    },
+
+    otherServerError() {
+      return (
+        helpers.hasServerError(this.eventServerValidationErrors, "venue_lat") ||
+        (helpers.hasServerError(
+          this.eventServerValidationErrors,
+          "venue_lng"
+        ) && {
+          error: true,
+          message:
+            this.eventServerValidationErrors["venue_lat"] ||
+            this.eventServerValidationErrors["venue_lng"],
+        })
+      );
+    },
+  },
+
+  watch: {
+    $route: async function ($route) {
+      if (!this.id) {
+        this.isEditing = false;
+
+        helpers.clearFormInput({
+          validationReset: this.$v.$reset,
+          formData: this.eventData,
+        });
+
+        return;
+      }
+
+      this.isEditing = true;
+
+      await this.getSingleEvent(this.id);
+
+      this.eventData = this.formData(this.singleEvent);
     },
   },
 
   created: async function () {
-    console.log("it is created and isEditting is", this.isEditing);
     if (!this.id) return;
-
 
     this.isEditing = true;
 
-    console.log(
-      "after prop check is created and isEditting is",
-      this.isEditing
-    );
-
     await this.getSingleEvent(this.id);
 
-    this.eventData = {
-      date: format(parseISO(this.singleEvent.date), "yyyy-MM-dd"),
-      time: format(parseISO(this.singleEvent.date), "HH:mm"),
-      title: this.singleEvent.title,
-      category: this.singleEvent.category,
-      venue: this.singleEvent.venue.address,
-      venue_lat: this.singleEvent.venue.lat,
-      venue_lng: this.singleEvent.venue.lng,
-      description: this.singleEvent.description,
-    };
+    this.eventData = this.formData(this.singleEvent);
   },
 
   methods: {
-    ...mapActions(["getSingleEvent"]),
+    ...mapActions(["getSingleEvent", "updateEvent", "clearErrors"]),
 
     async handleEventSubmit() {
+      this.clearErrors("eventServerValidationErrors");
+
       this.eventData.date = new Date(
         `${this.eventData.date} ${this.eventData.time}`
       );
 
       delete this.eventData.time;
 
-      console.log("before check isEditing ", this.isEditing);
-
       if (!this.isEditing) {
-        console.log("creating a new event");
         helpers.logJSON(this.eventData);
 
         helpers.clearFormInput({
           validationReset: this.$v.$reset,
           formData: this.eventData,
         });
+
         return;
       }
 
-      console.log("after check isEditing ", this.isEditing);
+      const updatedEvent = {
+        data: { ...this.eventData },
+        id: this.id,
+      };
 
-      helpers.logJSON(this.eventData);
+      helpers.logJSON(updatedEvent);
+
+      await this.updateEvent(updatedEvent);
+
+      if (!this.eventActionSuccess.status) {
+        helpers.logJSON(
+          helpers.hasServerError(this.eventServerValidationErrors, "title")
+        );
+        return;
+      }
+
+      this.snackbarSuccess = true;
 
       helpers.clearFormInput({
         validationReset: this.$v.$reset,
@@ -344,6 +416,17 @@ export default {
       this.eventData.venue_lat = addressData.latitude;
       this.eventData.venue_lng = addressData.longitude;
     },
+
+    formData: (fetchedData) => ({
+      date: format(parseISO(fetchedData.date), "yyyy-MM-dd"),
+      time: format(parseISO(fetchedData.date), "HH:mm"),
+      title: fetchedData.title,
+      category: fetchedData.category,
+      venue: fetchedData.venue.address,
+      venue_lat: fetchedData.venue.lat,
+      venue_lng: fetchedData.venue.lng,
+      description: fetchedData.description,
+    }),
   },
 };
 </script>

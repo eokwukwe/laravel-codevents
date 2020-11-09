@@ -19,6 +19,7 @@ function castId(route) {
 const routes = [
     {
         path: "/",
+        name: 'HomePage',
         meta: { guest: true }
     },
     {

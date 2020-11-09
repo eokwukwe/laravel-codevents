@@ -17,22 +17,6 @@ Vue.use(VuetifyGoogleAutocomplete, {
 
 Vue.config.productionTip = false;
 
-request().interceptors.response.use(undefined, function(error) {
-    if (
-        error.response.status === 401 &&
-        error.response.data.error.title === "Unauthenticated"
-    ) {
-        store.dispatch("clearLocalStorage");
-        store.dispatch("showAuthModal", {
-            status: true,
-            messageTitle: "Your Session has Expired",
-            messageContent: "Please, login again to continue."
-        });
-    }
-
-    return Promise.reject(error);
-});
-
 const app = new Vue({
     el: "#app",
     components: { App },

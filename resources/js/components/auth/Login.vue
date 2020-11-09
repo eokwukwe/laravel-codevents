@@ -8,7 +8,7 @@
           color="primary"
           class="font-weight-bold"
           v-bind="attrs"
-          @click="snackbar = false"
+          @click="snackbarSuccess = false"
         >
           Close
         </v-btn>

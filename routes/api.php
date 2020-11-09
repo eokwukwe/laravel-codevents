@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource('events', 'Events\EventsController')
-    ->only('index', 'show');
+    ->only('index');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('me', 'Users\CurrentUsersController');
@@ -27,7 +27,7 @@ Route::middleware('auth:api')->group(function () {
     );
 
     Route::apiResource('events', 'Events\EventsController')
-        ->except('index', 'show');
+        ->except('index');
 
     Route::apiResource('events.comments', 'Comments\CommentsController')
         ->only('store', 'update', 'destroy');

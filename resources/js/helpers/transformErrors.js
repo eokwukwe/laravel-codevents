@@ -1,5 +1,5 @@
 /**
- * Transform the validation eroror from the server from an
+ * Transform the validation error from the server from an
  * array of objects to object of objects
  *
  * @param {Array} errors

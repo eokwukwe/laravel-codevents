@@ -7,5 +7,13 @@ export default {
 
     singleEvent(eventId) {
         return request().get(`/events/${eventId}`);
+    },
+
+    createEvent(payload) {
+        return request().post('/events', payload)
+    },
+
+    updateEvent(payload) {
+        return request().put(`/events/${payload.id}`, payload.data)
     }
 };
