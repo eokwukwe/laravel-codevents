@@ -4,7 +4,11 @@
 
     <div class="my-4"></div>
 
-    <profile-tabs :profile="userProfile" :events="userEvents" />
+    <profile-tabs
+      :profile="userProfile"
+      :events="userEvents"
+      :loggedInUser="loggedInUser"
+    />
   </v-container>
 </template>
 

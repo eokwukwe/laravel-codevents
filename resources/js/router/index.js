@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import routes from "./routes";
-import request from "../api/request";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -14,44 +14,33 @@ const router = new VueRouter({
     }
 });
 
-function loggedIn() {
-    return localStorage.getItem("token");
-}
-
 router.beforeEach(async (to, from, next) => {
-    const currentUser = loggedIn();
+    const authenticated = localStorage.getItem("token");
     const guest = to.matched.some(record => record.meta.guest);
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const requiresOwner = to.matched.some(record => record.meta.requiresOwner);
 
-    if (requiresAuth && !currentUser) {
-        next({ name: "LoginPage", query: { redirectFrom: to.fullPath } });
+    const vuex = JSON.parse(localStorage.getItem("vuex"));
+    let event;
 
-        return;
-    } else if (guest && currentUser) {
-        next({ name: "EventsPage", query: { redirectFrom: to.fullPath } });
+    if (to.name === "UpdateEventForm") {
+        await store.dispatch("getSingleEvent", parseInt(to.params.id, 10));
+        event = store.getters.singleEvent;
+    }
 
-        return;
+    if (requiresAuth && !authenticated) {
+        next({ name: "LoginPage" });
+    } else if (guest && authenticated) {
+        next({ name: "EventsPage" });
+    } else if (requiresAuth && authenticated && requiresOwner) {
+        if (vuex.auth.loggedInUser.id !== event.hostedBy.id) {
+            next({ name: "EventsPage" });
+        } else {
+            next();
+        }
     } else {
         next();
     }
 });
 
 export default router;
-
-
-// else if (requiresAuth && currentUser && to.name === "EventFormPage") {
-//         const id = parseInt(to.params.id, 10);
-
-//         if (!id) return;
-
-//         const user = JSON.parse(localStorage.getItem("vuex"));
-
-//         const { data } = await request().get(`/events/${id}`);
-
-//         if (user.auth.loggedInUser.id !== data.data.hostedBy.id) {
-//             next({ name: "EventsPage" });
-
-//             return;
-//         } else {
-//             next();
-//         }

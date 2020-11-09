@@ -19,7 +19,7 @@ function castId(route) {
 const routes = [
     {
         path: "/",
-        name: 'HomePage',
+        name: "HomePage",
         meta: { guest: true }
     },
     {
@@ -79,10 +79,20 @@ const routes = [
         //     import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
     },
     {
-        path: "/events/:id?/add",
-        name: "EventFormPage",
+        path: "/create-event",
+        name: "CreateEventForm",
         component: EventForm,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true }
+        // component: () =>
+        //     import(
+        //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
+        //     )
+    },
+    {
+        path: "/update-event/:id",
+        name: "UpdateEventForm",
+        component: EventForm,
+        meta: { requiresAuth: true, requiresOwner: true },
         props: castId
         // component: () =>
         //     import(

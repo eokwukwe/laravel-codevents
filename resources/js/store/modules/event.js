@@ -59,23 +59,44 @@ const actions = {
         }
     },
 
+    async createEvent({ commit }, payload) {
+        commit("event-action-starts");
+
+        try {
+            await eventRequests.createEvent(payload);
+
+            commit("event-action-success", {
+                status: true,
+                message: "Event create successfully"
+            });
+        } catch (error) {
+            if (error.response.status === 422) {
+                commit(
+                    "server-validation-errors",
+                    helpers.transformErrors(error.response.data.errors.details)
+                );
+            } else {
+                commit("event-action-errors", {
+                    message: error.response.data.error.details
+                });
+            }
+        } finally {
+            commit("event-action-ends");
+        }
+    },
+
     async updateEvent({ commit }, payload) {
         commit("event-action-starts");
 
         try {
             const { data } = await eventRequests.updateEvent(payload);
 
-            helpers.logJSON(data);
-
             commit("event-action-success", {
                 status: true,
                 message: data.message
             });
         } catch (error) {
-
-            helpers.logJSON(
-                helpers.transformErrors(error.response.data.errors.details)
-            );
+            helpers.logJSON(error.response);
 
             if (error.response.status === 422) {
                 commit(

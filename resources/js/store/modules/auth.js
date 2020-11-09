@@ -212,6 +212,7 @@ const actions = {
             await authRequests.logout();
 
             localStorage.removeItem("token");
+            localStorage.removeItem("vuex");
 
             commit("logout-success");
         } catch (error) {

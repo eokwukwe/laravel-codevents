@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -51,6 +52,8 @@ class Handler extends ExceptionHandler
      */
     protected function prepareJsonResponse($request, Throwable $e)
     {
+        Log::info($e);
+
         return response()->json([
             'error' => [
                 'title' => Str::title(Str::snake(class_basename(
@@ -112,6 +115,8 @@ class Handler extends ExceptionHandler
             $exception instanceof QueryException ||
             $exception instanceof ModelNotFoundException
         ) {
+            Log::info($exception);
+            
             $exception = new NotFoundHttpException(
                 'Resource not found',
                 null,

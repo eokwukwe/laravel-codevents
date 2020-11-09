@@ -14,7 +14,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    
+
     <v-row align="center" justify="center">
       <v-col cols="12" sm="7" md="6" lg="5">
         <v-card>
@@ -154,6 +154,7 @@
                 class="white--text btn--cancel"
                 color="grey darken-2"
                 :disabled="eventLoading"
+                @click="cancelForm"
               >
                 <v-icon small left>mdi-text-box-minus-outline</v-icon>
                 Cancel
@@ -365,34 +366,62 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getSingleEvent", "updateEvent", "clearErrors"]),
+    ...mapActions([
+      "getSingleEvent",
+      "updateEvent",
+      "clearErrors",
+      "createEvent",
+    ]),
 
     async handleEventSubmit() {
       this.clearErrors("eventServerValidationErrors");
 
-      this.eventData.date = new Date(
-        `${this.eventData.date} ${this.eventData.time}`
-      );
-
-      delete this.eventData.time;
-
       if (!this.isEditing) {
-        helpers.logJSON(this.eventData);
+        const newEventData = {
+          title: this.eventData.title,
+          category: this.eventData.category,
+          venue: this.eventData.venue,
+          venue_lat: this.eventData.venue_lat,
+          venue_lng: this.eventData.venue_lng,
+          description: this.eventData.description,
+          date: format(
+            parseISO(`${this.eventData.date} ${this.eventData.time}`),
+            "yyyy-MM-dd HH:mm:ss"
+          ),
+        };
+
+        await this.createEvent(newEventData);
+
+        if (!this.eventActionSuccess.status) {
+          helpers.logJSON(
+            helpers.hasServerError(this.eventServerValidationErrors, "title")
+          );
+          return;
+        }
+
+        this.snackbarSuccess = true;
 
         helpers.clearFormInput({
           validationReset: this.$v.$reset,
           formData: this.eventData,
         });
 
+        this.$router.push({ name: "EventsPage" });
+
         return;
       }
 
+      const { date, time, ...rest } = this.eventData;
       const updatedEvent = {
-        data: { ...this.eventData },
+        data: {
+          ...rest,
+          date: format(
+            parseISO(`${this.eventData.date} ${this.eventData.time}`),
+            "yyyy-MM-dd HH:mm:ss"
+          ),
+        },
         id: this.id,
       };
-
-      helpers.logJSON(updatedEvent);
 
       await this.updateEvent(updatedEvent);
 
@@ -404,6 +433,8 @@ export default {
       }
 
       this.snackbarSuccess = true;
+
+      this.$router.push({ name: "EventDetailPage", params: { id: this.id } });
 
       helpers.clearFormInput({
         validationReset: this.$v.$reset,
@@ -427,6 +458,15 @@ export default {
       venue_lng: fetchedData.venue.lng,
       description: fetchedData.description,
     }),
+
+    cancelForm() {
+      this.id
+        ? this.$router.push({
+            name: "EventDetailPage",
+            params: { id: this.id },
+          })
+        : this.$router.push({ name: "EventsPage" });
+    },
   },
 };
 </script>

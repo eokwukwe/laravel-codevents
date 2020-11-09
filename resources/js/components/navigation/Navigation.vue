@@ -53,7 +53,7 @@
             <v-col cols="9">
               <!-- create event button-->
               <v-btn
-                :to="{ name: 'EventFormPage' }"
+                :to="{ name: 'CreateEventForm' }"
                 small
                 block
                 depressed
@@ -169,7 +169,7 @@
 
           <span v-if="isLoggedIn">
             <v-btn
-              :to="{ name: 'EventFormPage' }"
+              :to="{ name: 'CreateEventForm' }"
               class="mr-3 hidden-sm-and-down"
               small
               depressed

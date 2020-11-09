@@ -4,7 +4,9 @@
       <v-tab> <v-icon left>mdi-calendar</v-icon> Events </v-tab>
       <v-tab> <v-icon left>mdi-account-arrow-right</v-icon> Followers </v-tab>
       <v-tab> <v-icon left>mdi-account-arrow-left</v-icon> Following </v-tab>
-      <v-tab> <v-icon left>mdi-account-edit</v-icon>Edit Profile </v-tab>
+      <v-tab v-if="isProfileOwner">
+        <v-icon left>mdi-account-edit</v-icon>Edit Profile
+      </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tabs">
@@ -41,7 +43,7 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
+      <v-tab-item v-if="isProfileOwner">
         <v-card flat>
           <v-card-text>
             <edit-profile-tab />
@@ -67,6 +69,9 @@ export default {
     events: {
       type: Array,
     },
+    loggedInUser: {
+      type: Array,
+    },
   },
 
   components: {
@@ -78,6 +83,12 @@ export default {
   data: () => ({
     tabs: null,
   }),
+
+  computed: {
+    isProfileOwner() {
+      return this.profile.id === this.loggedInUser.id;
+    },
+  },
 };
 </script>
 

@@ -37,13 +37,22 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        :to="{ name: 'EventFormPage', params: { id: event.id, event: event } }"
+        small
+        depressed
+        color="warning"
+        v-if="isHost"
+      >
+        <v-icon small>mdi-delete</v-icon>
+        close
+      </v-btn>
+      <v-btn
+        :to="{ name: 'UpdateEventForm', params: { id: event.id } }"
         small
         depressed
         color="success"
         v-if="isHost"
       >
-        <v-icon small left>mdi-file-document-edit</v-icon>
+        <v-icon small class="pr-1">mdi-file-document-edit</v-icon>
         update
       </v-btn>
     </v-card-actions>

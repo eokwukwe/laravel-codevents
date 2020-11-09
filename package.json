@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "date-fns": "^2.16.1",
+        "jwt-decode": "^3.1.1",
         "leaflet": "^1.7.1",
         "lodash.isempty": "^4.4.0",
         "vue": "^2.6.12",
