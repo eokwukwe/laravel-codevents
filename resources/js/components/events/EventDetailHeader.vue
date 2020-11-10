@@ -1,5 +1,15 @@
 <template>
   <v-card>
+    <v-snackbar
+      top
+      color="success"
+      :timeout="4000"
+      class="text-center"
+      v-model="eventActionSuccess.status"
+    >
+      {{ eventActionSuccess.message }}
+    </v-snackbar>
+
     <v-img
       :src="`/images/categoryImages/${event.category}.jpg`"
       class="white--text"
@@ -28,22 +38,31 @@
     </v-img>
 
     <v-card-actions>
-      <v-btn v-if="!isHost && isGoing" small depressed color="warning">
-        leave event
-      </v-btn>
-      <v-btn v-if="!isHost && !isGoing" small depressed color="primary">
-        join event
-      </v-btn>
-      <v-spacer></v-spacer>
-
       <v-btn
         small
         depressed
         color="warning"
-        v-if="isHost"
+        @click="leave"
+        v-if="!isHost && isGoing"
+        :loading="joinEventLoading"
       >
+        leave event
+      </v-btn>
+      <v-btn
+        small
+        depressed
+        color="primary"
+        @click="join"
+        v-if="!isHost && !isGoing"
+        :loading="joinEventLoading"
+      >
+        join event
+      </v-btn>
+      <v-spacer></v-spacer>
+
+      <v-btn small depressed color="warning" v-if="isHost">
         <v-icon small>mdi-delete</v-icon>
-        close
+        cancel
       </v-btn>
       <v-btn
         :to="{ name: 'UpdateEventForm', params: { id: event.id } }"
@@ -60,6 +79,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 import helpers from "../../helpers";
 
 export default {
@@ -77,9 +98,33 @@ export default {
     },
   },
 
+  data: () => ({
+    snackbar: false,
+  }),
+
   computed: {
+    ...mapGetters(["joinEventLoading", "eventActionSuccess"]),
+
     formattedDate() {
       return helpers.formattedEventDate(this.event.date);
+    },
+  },
+
+  methods: {
+    ...mapActions(["joinEvent", "leaveEvent", "getSingleEvent"]),
+
+    async join() {
+      await this.joinEvent(this.event.id);
+
+      // this.snackbar = this.eventActionSuccess.status;
+
+      await this.getSingleEvent(this.event.id);
+    },
+
+    async leave() {
+      await this.leaveEvent(this.event.id);
+
+      await this.getSingleEvent(this.event.id);
     },
   },
 };

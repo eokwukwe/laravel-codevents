@@ -11,15 +11,15 @@ use function PHPUnit\Framework\isEmpty;
 
 class EventAttendeesController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('throttle:6,1')->only('join', 'leave');
-    }
+    // /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    // public function __construct()
+    // {
+    //     $this->middleware('throttle:6,1')->only('join', 'leave');
+    // }
 
     /**
      * Add user as an event attendee.

@@ -75,7 +75,7 @@ export default {
       this.hideAuthModal();
 
       this.$route.name === "EventsPage"
-        ? this.$router.go()
+        ? ''
         : this.$router.push({ name: "EventsPage" });
     },
 

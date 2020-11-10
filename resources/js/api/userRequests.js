@@ -7,5 +7,9 @@ export default {
 
     events(userId) {
         return request().get(`/users/${userId}/events`);
+    },
+
+    relationsShip(userId){
+        return request().post(`/users/${userId}/relationships`)
     }
 };

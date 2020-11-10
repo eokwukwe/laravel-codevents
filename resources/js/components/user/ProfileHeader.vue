@@ -15,7 +15,17 @@
             <v-icon small>mdi-phone</v-icon>{{ profile.phone || "" }}</span
           >
           <br />
-          <v-btn class="mt-2" depressed color="success" x-small>Follow</v-btn>
+          <v-btn
+            x-small
+            depressed
+            class="mt-2"
+            @click="relationships"
+            :loading="followLoading"
+            v-if="!isLoggedInUserProfile"
+            :color="isFollowing ? 'warning' : 'success'"
+          >
+            {{ isFollowing ? "unfollow" : "follow" }}
+          </v-btn>
         </v-card-subtitle>
 
         <v-card-text class="d-flex">
@@ -46,6 +56,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "ProfileHeader",
 
@@ -53,6 +65,32 @@ export default {
     profile: {
       type: Object,
       required: true,
+    },
+    loggedInUser: {
+      type: Object,
+    },
+  },
+
+  computed: {
+    ...mapGetters(["followLoading", "userActionSuccess"]),
+
+    isFollowing() {
+      return this.profile?.followers?.some(
+        (follower) => follower.id === this.loggedInUser.id
+      );
+    },
+
+    isLoggedInUserProfile() {
+      return this.profile.id === this.loggedInUser.id;
+    },
+  },
+
+  methods: {
+    ...mapActions(["userRelationships", "getUserProfile"]),
+
+    async relationships() {
+      await this.userRelationships(this.profile.id);
+      await this.getUserProfile(this.profile.id);
     },
   },
 };

@@ -41,7 +41,7 @@ class UserFactory extends Factory
         ];
 
         return [
-            'name' => $this->faker->name(),
+            'name' => "{$this->faker->firstName()} {$this->faker->lastName()}",
             'email' => $this->faker->unique()->safeEmail,
             'bio' => $this->faker->sentence(),
             'phone' => $this->faker->unique()->randomElement($phones),

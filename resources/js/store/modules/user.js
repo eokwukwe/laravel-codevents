@@ -6,7 +6,9 @@ const state = {
     userEvents: [],
     userProfile: {},
     userLoading: false,
-    userServerValidationErrors: {}
+    userServerValidationErrors: {},
+    followLoading: false,
+    userActionSuccess: { status: false, message: "" }
 };
 
 const getters = {
@@ -14,6 +16,8 @@ const getters = {
     userLoading: state => state.userLoading,
     userEvents: state => state.userEvents,
     userProfile: state => state.userProfile,
+    followLoading: state => state.followLoading,
+    userActionSuccess: state => state.userActionSuccess,
     userServerValidationErrors: state => state.userServerValidationErrors
 };
 
@@ -48,6 +52,25 @@ const actions = {
         } finally {
             commit("user-loading-ends");
         }
+    },
+
+    async userRelationships({ commit }, userId) {
+        commit("follow-loading-starts");
+
+        try {
+            const { data } = await userRequests.relationsShip(userId);
+
+            commit("user-action-success", {
+                status: true,
+                message: data.message
+            });
+        } catch (error) {
+            commit("user-loading-errors", {
+                message: error.response.data.error.details
+            });
+        } finally {
+            commit("follow-loading-ends");
+        }
     }
 };
 
@@ -55,9 +78,13 @@ const mutations = {
     "clear-user-errors": state => (state.userErrors = {}),
     "user-loading-ends": state => (state.userLoading = false),
     "user-loading-starts": state => (state.userLoading = true),
+    "follow-loading-ends": state => (state.followLoading = false),
+    "follow-loading-starts": state => (state.followLoading = true),
     "user-events": (state, payload) => (state.userEvents = payload),
     "user-profile": (state, payload) => (state.userProfile = payload),
     "user-loading-errors": (state, payload) => (state.userErrors = payload),
+    "user-action-success": (state, payload) =>
+        (state.userActionSuccess = payload),
     "server-validation-errors": (state, payload) =>
         (state.userServerValidationErrors = payload)
 };

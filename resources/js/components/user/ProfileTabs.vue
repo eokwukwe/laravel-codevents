@@ -70,7 +70,7 @@ export default {
       type: Array,
     },
     loggedInUser: {
-      type: Array,
+      type: Object,
     },
   },
 

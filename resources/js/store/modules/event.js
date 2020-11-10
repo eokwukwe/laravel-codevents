@@ -10,6 +10,7 @@ const state = {
         status: false,
         message: ""
     },
+    joinEventLoading: false,
     eventServerValidationErrors: {}
 };
 
@@ -18,6 +19,7 @@ const getters = {
     eventErrors: state => state.eventErrors,
     singleEvent: state => state.singleEvent,
     eventLoading: state => state.eventLoading,
+    joinEventLoading: state => state.joinEventLoading,
     eventActionSuccess: state => state.eventActionSuccess,
     eventServerValidationErrors: state => state.eventServerValidationErrors
 };
@@ -111,6 +113,44 @@ const actions = {
         } finally {
             commit("event-action-ends");
         }
+    },
+
+    async joinEvent({ commit }, eventId) {
+        commit("join-action-starts");
+
+        try {
+            const { data } = await eventRequests.joinEvent(eventId);
+
+            commit("event-action-success", {
+                status: true,
+                message: data.message
+            });
+        } catch (error) {
+            commit("event-action-errors", {
+                message: error.response.data.error.details
+            });
+        } finally {
+            commit("join-action-ends");
+        }
+    },
+
+    async leaveEvent({ commit }, eventId) {
+        commit("join-action-starts");
+
+        try {
+            const { data } = await eventRequests.leaveEvent(eventId);
+
+            commit("event-action-success", {
+                status: true,
+                message: data.message
+            });
+        } catch (error) {
+            commit("event-action-errors", {
+                message: error.response.data.error.details
+            });
+        } finally {
+            commit("join-action-ends");
+        }
     }
 };
 
@@ -118,6 +158,8 @@ const mutations = {
     "clear-event-errors": (state, error) => (state[error] = {}),
     "event-action-ends": state => (state.eventLoading = false),
     "event-action-starts": state => (state.eventLoading = true),
+    "join-action-ends": state => (state.joinEventLoading = false),
+    "join-action-starts": state => (state.joinEventLoading = true),
     "all-events": (state, payload) => (state.allEvents = payload),
     "single-event": (state, payload) => (state.singleEvent = payload),
     "event-action-errors": (state, payload) => (state.eventErrors = payload),

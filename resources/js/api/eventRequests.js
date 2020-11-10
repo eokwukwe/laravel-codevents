@@ -15,5 +15,13 @@ export default {
 
     updateEvent(payload) {
         return request().put(`/events/${payload.id}`, payload.data)
+    },
+
+    joinEvent(eventId) {
+        return request().post(`/events/${eventId}/attendees`);
+    },
+
+    leaveEvent(eventId) {
+        return request().delete(`/events/${eventId}/attendees`);
     }
 };
