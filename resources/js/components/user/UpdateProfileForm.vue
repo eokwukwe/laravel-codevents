@@ -49,7 +49,8 @@
           depressed
           type="submit"
           color="primary lighten-0"
-          :disabled="isSubmitting || $v.$invalid"
+          :loading="userLoading"
+          :disabled="$v.$invalid || userLoading"
         >
           <v-icon left>mdi-file-document-edit</v-icon>
           update
@@ -60,9 +61,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 
-import clearFormInput from "../../helpers/clearFormInput";
+import helpers from "../../helpers";
 
 export default {
   name: "UpdateProfileForm",
@@ -74,7 +76,7 @@ export default {
   },
 
   data: () => ({
-    isSubmitting: false,
+    snackbar: false,
     updateProfileData: {
       bio: "",
       name: "",
@@ -90,6 +92,13 @@ export default {
   },
 
   computed: {
+    ...mapGetters([
+      "userErrors",
+      "userLoading",
+      "userActionSuccess",
+      "userServerValidationErrors",
+    ]),
+
     nameErrors() {
       const errors = [];
 
@@ -109,18 +118,32 @@ export default {
       !this.$v.updateProfileData.phone.minLength &&
         errors.push("Phone number must be at least 11 characters.");
 
+      helpers.hasServerError(this.userServerValidationErrors, "phone") &&
+        errors.push(this.userServerValidationErrors["phone"]);
+
       return errors;
     },
   },
 
+  created: function () {
+    this.updateProfileData = {
+      name: this.profile.name,
+      phone: this.profile.phone,
+      bio: this.profile.bio,
+    };
+  },
+
   methods: {
-    handleUpdateProfileSubmit() {
-      console.log(JSON.stringify(this.updateProfileData, null, 2));
-      clearFormInput({
-        validationReset: this.$v.$reset,
-        formData: this.updateProfileData,
-      });
-      console.log(JSON.stringify(this.updateProfileData, null, 2));
+    ...mapActions(["clearErrors", "updateProfile", "getUserProfile"]),
+
+    async handleUpdateProfileSubmit() {
+      this.clearErrors();
+
+      await this.updateProfile(this.updateProfileData);
+
+      if (!this.userActionSuccess.status) return;
+
+      this.$emit('profile-updated', this.userActionSuccess.message)
     },
   },
 };

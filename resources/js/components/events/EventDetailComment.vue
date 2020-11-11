@@ -38,18 +38,35 @@
                 {{ comment.content }}
               </p>
 
-              <router-link
-                style="cursor: pointer"
-                tag="span"
-                class="text-capitalize primary--text"
-                :to="{ name: 'ProfilePage', params: { id: comment.user.id } }"
-              >
-                {{ comment.user.name.split(" ")[0] }}
-              </router-link>
+              <div class="d-flex justify-space-between mt-2">
+                <span>
+                  <router-link
+                    style="cursor: pointer"
+                    tag="span"
+                    class="text-capitalize primary--text"
+                    :to="{
+                      name: 'ProfilePage',
+                      params: { id: comment.user.id },
+                    }"
+                  >
+                    {{ comment.user.name.split(" ")[0] }}
+                  </router-link>
 
-              <span> - </span>
+                  <span> - </span>
 
-              <small>{{ comment.createdAt.forHuman }}</small>
+                  <small>{{ comment.createdAt.forHuman }}</small>
+                </span>
+
+                <span>
+                  <v-btn @click="updateComment(comment.content)" x-small icon>
+                    <v-icon color="success" small>mdi-pencil-circle</v-icon>
+                  </v-btn>
+
+                  <v-btn x-small icon class="ml-2">
+                    <v-icon color="warning" small>mdi-delete</v-icon>
+                  </v-btn>
+                </span>
+              </div>
             </v-card-subtitle>
           </div>
         </div>
@@ -95,6 +112,10 @@ export default {
         if (!this.eventCommentData.comment) return;
         console.log(this.eventCommentData);
       }
+    },
+
+    updateComment(content) {
+      this.eventCommentData = { comment: content };
     },
   },
 };

@@ -15,5 +15,9 @@ export default {
 
     updatePassword(passwordData){
         return request().put("/settings/password", passwordData)
+    },
+
+    updateProfile(profileData){
+        return request().post("/settings/profile", profileData);
     }
 };

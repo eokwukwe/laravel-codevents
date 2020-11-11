@@ -46,7 +46,7 @@ class ProfilePasswordUpdateRequest extends FormRequest
                 $rules = [
                     'name' => ['sometimes', 'required', 'string', 'max:255'],
                     'bio' => ['sometimes', 'required', 'string'],
-                    'phone' => ['sometimes', 'required', 'string', 'unique:users,phone', 'size:11'],
+                    'phone' => ['sometimes', 'required', 'string', 'size:11'],
                     'image' => [
                         'sometimes', 'required',
                         'mimes:jpeg,gif,bmp,png', 'max:1000'

@@ -1,19 +1,5 @@
 <template>
   <v-expansion-panel>
-    <v-snackbar color="success" :timeout="-1" top v-model="snackbar">
-      {{ userActionSuccess.message }}
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          text
-          color="primary"
-          class="font-weight-bold"
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
     <v-expansion-panel-header
       style="min-height: 40px"
       class="primary--text text-capitalize"
@@ -171,7 +157,7 @@ export default {
 
       if (!this.userActionSuccess.status) return;
 
-      this.snackbar = true;
+      this.$emit("password-updated", this.userActionSuccess.message);
 
       helpers.clearFormInput({
         validationReset: this.$v.$reset,

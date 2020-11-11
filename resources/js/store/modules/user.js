@@ -101,6 +101,32 @@ const actions = {
         } finally {
             commit("user-loading-ends");
         }
+    },
+
+    async updateProfile({ commit }, payload) {
+        commit("user-loading-starts");
+
+        try {
+            const { data } = await userRequests.updateProfile(payload);
+
+            commit("user-action-success", {
+                status: true,
+                message: data.message
+            });
+        } catch (error) {
+            if (error.response.status === 422) {
+                commit(
+                    "server-validation-errors",
+                    helpers.transformErrors(error.response.data.errors.details)
+                );
+            } else {
+                commit("user-loading-errors", {
+                    message: error.response.data.error.details
+                });
+            }
+        } finally {
+            commit("user-loading-ends");
+        }
     }
 };
 
