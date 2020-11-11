@@ -6,12 +6,9 @@ const state = {
     allEvents: {},
     singleEvent: {},
     eventLoading: false,
-    eventActionSuccess: {
-        status: false,
-        message: ""
-    },
     joinEventLoading: false,
-    eventServerValidationErrors: {}
+    eventServerValidationErrors: {},
+    eventActionSuccess: { status: false, message: "" },
 };
 
 const getters = {
@@ -98,8 +95,6 @@ const actions = {
                 message: data.message
             });
         } catch (error) {
-            helpers.logJSON(error.response);
-
             if (error.response.status === 422) {
                 commit(
                     "server-validation-errors",

@@ -11,5 +11,9 @@ export default {
 
     relationsShip(userId){
         return request().post(`/users/${userId}/relationships`)
+    },
+
+    updatePassword(passwordData){
+        return request().put("/settings/password", passwordData)
     }
 };

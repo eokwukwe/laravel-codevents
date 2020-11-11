@@ -67,6 +67,12 @@ import clearFormInput from "../../helpers/clearFormInput";
 export default {
   name: "UpdateProfileForm",
 
+  props: {
+    profile: {
+      type: Object,
+    },
+  },
+
   data: () => ({
     isSubmitting: false,
     updateProfileData: {

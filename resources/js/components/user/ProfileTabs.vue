@@ -46,7 +46,7 @@
       <v-tab-item v-if="isProfileOwner">
         <v-card flat>
           <v-card-text>
-            <edit-profile-tab />
+            <edit-profile-tab :profile="profile" />
           </v-card-text>
         </v-card>
       </v-tab-item>

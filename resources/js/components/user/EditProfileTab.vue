@@ -6,7 +6,7 @@
       </v-col>
 
       <v-col cols="12" sm="6">
-        <update-profile-form />
+        <update-profile-form :profile="profile" />
       </v-col>
     </v-row>
   </v-expansion-panels>
@@ -18,6 +18,12 @@ import UpdatePasswordForm from "./UpdatePasswordForm";
 
 export default {
   name: "EditProfileTab",
+
+  props: {
+    profile: {
+      type: Object,
+    },
+  },
 
   components: {
     UpdateProfileForm,

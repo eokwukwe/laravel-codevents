@@ -6,8 +6,8 @@ const state = {
     userEvents: [],
     userProfile: {},
     userLoading: false,
-    userServerValidationErrors: {},
     followLoading: false,
+    userServerValidationErrors: {},
     userActionSuccess: { status: false, message: "" }
 };
 
@@ -22,6 +22,10 @@ const getters = {
 };
 
 const actions = {
+    clearErrors({ commit }) {
+        commit("clear-user-errors");
+    },
+
     async getUserProfile({ commit }, userId) {
         commit("user-loading-starts");
 
@@ -70,6 +74,32 @@ const actions = {
             });
         } finally {
             commit("follow-loading-ends");
+        }
+    },
+
+    async updatePassword({ commit }, payload) {
+        commit("user-loading-starts");
+
+        try {
+            const { data } = await userRequests.updatePassword(payload);
+
+            commit("user-action-success", {
+                status: true,
+                message: data.message
+            });
+        } catch (error) {
+            if (error.response.status === 422) {
+                commit(
+                    "server-validation-errors",
+                    helpers.transformErrors(error.response.data.errors.details)
+                );
+            } else {
+                commit("user-loading-errors", {
+                    message: error.response.data.error.details
+                });
+            }
+        } finally {
+            commit("user-loading-ends");
         }
     }
 };
