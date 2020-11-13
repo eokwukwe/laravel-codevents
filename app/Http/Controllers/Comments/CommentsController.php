@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Comments\CommentsResource;
 
 class CommentsController extends Controller
 {
@@ -14,9 +15,11 @@ class CommentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Event $event)
     {
-        //
+        return CommentsResource::collection(
+            $event->comments->sortByDesc('created_at')
+        );
     }
 
     /**

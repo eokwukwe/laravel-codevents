@@ -29,7 +29,10 @@
 
         <div class="my-3"></div>
 
-        <event-detail-comment :event="singleEvent" />
+        <event-detail-comment
+          :event="singleEvent"
+          :loggedInUser="loggedInUser"
+        />
       </v-col>
 
       <v-col cols="12" sm="4">
@@ -91,7 +94,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getSingleEvent", "getLoggedInUser"]),
+    ...mapActions(["getSingleEvent", "getLoggedInUser", "eventComments"]),
   },
 };
 </script>

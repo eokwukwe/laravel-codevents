@@ -30,7 +30,7 @@ Route::middleware('auth:api')->group(function () {
         ->except('index');
 
     Route::apiResource('events.comments', 'Comments\CommentsController')
-        ->only('store', 'update', 'destroy');
+        ->only('index', 'store', 'update', 'destroy');
 
     Route::post('users/{user}/relationships', 'Users\RelationshipsController');
 });

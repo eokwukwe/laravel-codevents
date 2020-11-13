@@ -30,7 +30,7 @@ class EventsResource extends JsonResource
             ],
             'hostedBy' => new UsersResource($this->user),
             'attendees'   => AttendeesResource::collection($this->attendees),
-            'comments'    => CommentsResource::collection($this->comments),
+            // 'comments'    => CommentsResource::collection($this->comments),
             'createdAt'   => [
                 'forHuman'  => $this->created_at->diffForHumans(),
                 'timestamp' => $this->created_at

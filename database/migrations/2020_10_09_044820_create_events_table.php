@@ -23,6 +23,7 @@ class CreateEventsTable extends Migration
             $table->decimal('venue_lat', 8, 6);
             $table->decimal('venue_lng', 9, 6);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreignUuid('user_id')
                 ->constrained()
                 ->onDelete('cascade');

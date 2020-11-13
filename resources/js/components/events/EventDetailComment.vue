@@ -7,14 +7,15 @@
     <v-card-text class="py-0 mt-5">
       <v-form>
         <v-textarea
-          rows="2"
           dense
           filled
+          rows="2"
           outlined
           auto-grow
           label="Comment"
+          :error-messages="eventServerValidationErrors['content']"
           placeholder="Enter your comment (Press Enter to submit, SHIFT + Enter for new line)"
-          v-model="eventCommentData.comment"
+          v-model="eventCommentData.content"
           @keypress="handleAddComment"
         ></v-textarea>
       </v-form>
@@ -22,7 +23,7 @@
 
     <v-divider></v-divider>
 
-    <span v-for="comment in comments" :key="comment.id">
+    <span v-if="!commentLoading" v-for="comment in comments" :key="comment.id">
       <v-card-text class="py-0 mt-3 mb-4">
         <div class="d-flex flex-no-wrap align-start">
           <v-avatar class="mx-0" size="30">
@@ -57,12 +58,17 @@
                   <small>{{ comment.createdAt.forHuman }}</small>
                 </span>
 
-                <span>
-                  <v-btn @click="updateComment(comment.content)" x-small icon>
+                <span v-if="comment.user.id === loggedInUser.id">
+                  <v-btn @click="selectCommentToUpdate(comment)" x-small icon>
                     <v-icon color="success" small>mdi-pencil-circle</v-icon>
                   </v-btn>
 
-                  <v-btn x-small icon class="ml-2">
+                  <v-btn
+                    icon
+                    x-small
+                    class="ml-2"
+                    @click="deleteComment(comment.id)"
+                  >
                     <v-icon color="warning" small>mdi-delete</v-icon>
                   </v-btn>
                 </span>
@@ -76,7 +82,10 @@
 </template>
 
 <script>
-import clearFormInput from "../../helpers/clearFormInput";
+import { mapGetters, mapActions } from "vuex";
+
+import helpers from "../../helpers";
+import SkeletonLoader from "../../components/common/SkeletonLoader";
 
 export default {
   name: "EventDetailComment",
@@ -85,23 +94,42 @@ export default {
     event: {
       type: Object,
     },
-  },
-
-  data: () => ({
-    eventCommentData: { comment: null },
-
-    commentId: 0,
-    userId: 0,
-  }),
-
-  computed: {
-    comments() {
-      return this.event.comments;
+    loggedInUser: {
+      type: Object,
     },
   },
 
+  components: { SkeletonLoader },
+
+  data: () => ({
+    commentId: "",
+    isUpdating: false,
+    eventCommentData: { content: null },
+  }),
+
+  computed: {
+    ...mapGetters([
+      "comments",
+      "commentError",
+      "commentLoading",
+      "eventActionSuccess",
+      "eventServerValidationErrors",
+    ]),
+  },
+
+  created: function () {
+    this.getEventComments(this.event.id);
+  },
+
   methods: {
-    handleAddComment(e) {
+    ...mapActions([
+      "getEventComments",
+      "addEventComment",
+      "updateEventComment",
+      "deleteEventComment",
+    ]),
+
+    async handleAddComment(e) {
       if (e.key === "Enter" && e.shiftKey) {
         return;
       }
@@ -109,13 +137,50 @@ export default {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
 
-        if (!this.eventCommentData.comment) return;
-        console.log(this.eventCommentData);
+        if (!this.eventCommentData.content) return;
+
+        if (!this.isUpdating) {
+          const payload = {
+            eventId: this.event.id,
+            comment: {
+              content: this.eventCommentData.content,
+            },
+          };
+
+          await this.addEventComment(payload);
+        } else {
+          const payload = {
+            eventId: this.event.id,
+            commentId: this.commentId,
+            comment: {
+              content: this.eventCommentData.content,
+            },
+          };
+
+          await this.updateEventComment(payload);
+        }
+
+        this.eventCommentData.content = null;
+
+        await this.getEventComments(this.event.id);
       }
     },
 
-    updateComment(content) {
-      this.eventCommentData = { comment: content };
+    selectCommentToUpdate(comment) {
+      this.isUpdating = true;
+
+      this.commentId = comment.id;
+
+      this.eventCommentData = { content: comment.content };
+    },
+
+    async deleteComment(commentId) {
+      await this.deleteEventComment({
+        eventId: this.event.id,
+        commentId: commentId,
+      });
+
+      await this.getEventComments(this.event.id);
     },
   },
 };
