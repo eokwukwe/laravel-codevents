@@ -11,10 +11,18 @@ import { token } from "../../api/request";
 export default {
   name: "EventMap",
 
+  data: () => ({
+    accessToken: "",
+  }),
+
   props: {
     venueLatLng: {
       type: Object,
     },
+  },
+
+  created: function () {
+    this.accessToken = process.env.MIX_MAPBOX_ACCESS_TOKEN;
   },
 
   mounted() {
@@ -37,8 +45,7 @@ export default {
           tileSize: 512,
           zoomOffset: -1,
           id: "mapbox/streets-v11",
-          accessToken:
-            "pk.eyJ1IjoiZW9rd3Vrd2UiLCJhIjoiY2toN3NlYmg4MDZpMTJybWllYWwybzRxaiJ9.Hc0RuvCq07DOj0VYHCtBSw",
+          accessToken: this.accessToken,
         }
       ).addTo(mapDiv);
 

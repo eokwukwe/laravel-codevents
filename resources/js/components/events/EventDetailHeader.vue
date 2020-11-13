@@ -1,15 +1,5 @@
 <template>
   <v-card>
-    <v-snackbar
-      top
-      color="success"
-      :timeout="4000"
-      class="text-center"
-      v-model="eventActionSuccess.status"
-    >
-      {{ eventActionSuccess.message }}
-    </v-snackbar>
-
     <v-img
       :src="`/images/categoryImages/${event.category}.jpg`"
       class="white--text"
@@ -60,16 +50,23 @@
       </v-btn>
       <v-spacer></v-spacer>
 
-      <v-btn small depressed color="warning" v-if="isHost">
+      <v-btn
+        @click="cancel"
+        v-if="isHost"
+        small
+        depressed
+        color="warning"
+        :loading="eventLoading"
+      >
         <v-icon small>mdi-delete</v-icon>
         cancel
       </v-btn>
       <v-btn
-        :to="{ name: 'UpdateEventForm', params: { id: event.id } }"
+        v-if="isHost"
         small
         depressed
         color="success"
-        v-if="isHost"
+        :to="{ name: 'UpdateEventForm', params: { id: event.id } }"
       >
         <v-icon small class="pr-1">mdi-file-document-edit</v-icon>
         update
@@ -103,7 +100,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(["joinEventLoading", "eventActionSuccess"]),
+    ...mapGetters(["joinEventLoading", "eventActionSuccess", "eventLoading"]),
 
     formattedDate() {
       return helpers.formattedEventDate(this.event.date);
@@ -111,12 +108,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(["joinEvent", "leaveEvent", "getSingleEvent"]),
+    ...mapActions(["joinEvent", "leaveEvent", "getSingleEvent", "cancelEvent"]),
 
     async join() {
       await this.joinEvent(this.event.id);
-
-      // this.snackbar = this.eventActionSuccess.status;
 
       await this.getSingleEvent(this.event.id);
     },
@@ -125,6 +120,12 @@ export default {
       await this.leaveEvent(this.event.id);
 
       await this.getSingleEvent(this.event.id);
+    },
+
+    async cancel() {
+      await this.cancelEvent(this.event.id);
+
+      this.$router.push({ name: "EventsPage" });
     },
   },
 };

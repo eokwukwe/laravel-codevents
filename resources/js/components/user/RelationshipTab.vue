@@ -1,6 +1,7 @@
 <template>
   <v-row align="center" justify="start" dense>
     <div v-if="!hasRelationships">No {{ name }}</div>
+
     <v-col
       sm="3"
       md="2"
@@ -46,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-.name {
-  font-size: 0.8rem;
-}
+  .name {
+    font-size: 0.8rem;
+  }
 </style>

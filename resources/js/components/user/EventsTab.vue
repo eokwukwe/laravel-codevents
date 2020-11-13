@@ -1,5 +1,7 @@
 <template>
   <v-row dense>
+ <div v-if="!hasEvents">No pending events</div>
+
     <v-col
       v-for="(event, idx) in events"
       :key="event.id"
@@ -27,6 +29,12 @@ export default {
       type: Array,
     },
   },
+
+  computed: {
+    hasEvents(){
+      return this.events.length > 0
+    }
+  }
 };
 </script>
 

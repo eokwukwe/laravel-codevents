@@ -17,6 +17,10 @@ export default {
         return request().put(`/events/${payload.id}`, payload.data);
     },
 
+    cancelEvent(eventId) {
+        return request().delete(`/events/${eventId}`);
+    },
+
     joinEvent(eventId) {
         return request().post(`/events/${eventId}/attendees`);
     },

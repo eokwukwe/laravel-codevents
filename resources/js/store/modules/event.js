@@ -116,6 +116,25 @@ const actions = {
         }
     },
 
+    async cancelEvent({ commit }, eventId) {
+        commit("event-action-starts");
+
+        try {
+            const { data } = await eventRequests.cancelEvent(eventId);
+
+            commit("event-action-success", {
+                status: true,
+                message: data.message
+            });
+        } catch (error) {
+            commit("event-action-errors", {
+                message: error.response.data.error.details
+            });
+        } finally {
+            commit("event-action-ends");
+        }
+    },
+
     async joinEvent({ commit }, eventId) {
         commit("join-action-starts");
 
