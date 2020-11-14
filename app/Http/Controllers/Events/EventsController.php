@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Events;
 
 use App\Models\Event;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\EventsRequest;
 use App\Http\Resources\Events\EventsResource;
+use Carbon\Carbon;
 
 class EventsController extends Controller
 {
@@ -16,11 +18,14 @@ class EventsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return EventsResource::collection(
-            Event::orderBy('created_at', 'desc')->paginate(5)
-        );
+        $events = Event::filter($request)
+            ->where('date', '>=', Carbon::now())
+            ->latest()
+            ->paginate(5);
+
+        return EventsResource::collection($events);
     }
 
     /**

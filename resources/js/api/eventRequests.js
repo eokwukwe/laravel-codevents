@@ -1,8 +1,10 @@
 import request from "./request";
 
 export default {
-    allEvents(page = 1) {
-        return request().get(`/events?page=${page}`);
+    allEvents({ page, status, userId }) {
+        return request().get(
+            `/events?page=${page}&status=${status}&userId=${userId}`
+        );
     },
 
     singleEvent(eventId) {

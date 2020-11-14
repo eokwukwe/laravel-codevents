@@ -60,4 +60,29 @@ class Event extends Model
     {
         return $this->attendees()->where('user_id', $userId)->exists();
     }
+
+    /**
+     * Scope a query to only include events of a given status
+     * the request query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $request)
+    {
+        $userId = $request->query('userId');
+
+        if ($request->query('status') === 'isHost') {
+            $query->where('user_id', $userId);
+        }
+
+        if ($request->query('status') === 'isGoing') {
+            $query->whereHas('attendees', function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            });
+        }
+
+        return $query;
+    }
 }

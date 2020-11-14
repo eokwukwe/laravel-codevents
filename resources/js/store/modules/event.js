@@ -32,11 +32,11 @@ const actions = {
         commit("clear-event-errors", error);
     },
 
-    async getAllEvents({ commit }, page) {
+    async getAllEvents({ commit }, query) {
         commit("event-action-starts");
 
         try {
-            const { data } = await eventRequests.allEvents(page);
+            const { data } = await eventRequests.allEvents(query);
 
             commit("all-events", data);
         } catch (error) {

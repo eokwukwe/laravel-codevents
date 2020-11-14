@@ -14,7 +14,11 @@
           :event="event"
         />
 
-        <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
+        <infinite-loading
+          spinner="waveDots"
+          :identifier="infiniteId"
+          @infinite="infiniteHandler"
+        >
           <div class="grey--text" slot="no-more">
             That will be all for now...
           </div>
@@ -35,7 +39,7 @@
       </v-col>
 
       <v-col v-if="isLoggedIn" cols="12" sm="4">
-        <event-filter-status />
+        <event-filter-status @filter-events="filterEvents" />
       </v-col>
     </v-row>
   </v-container>
@@ -63,32 +67,65 @@ export default {
   },
 
   data: () => ({
-    page: 1,
+    query: {
+      page: 1,
+      status: "",
+      userId: "",
+    },
+    infiniteId: +new Date(),
     fetchedEvents: [],
   }),
 
   computed: {
-    ...mapGetters(["allEvents", "isLoggedIn"]),
+    ...mapGetters(["allEvents", "isLoggedIn", "loggedInUser"]),
   },
 
   mounted: async function () {
     // await this.getAllEvents(this.page);
   },
 
+  // watch: {
+  //   filterStatus: function (status) {
+  //     console.log("watch hook", { status });
+  //   },
+  // },
+
   methods: {
     ...mapActions(["getAllEvents"]),
 
     async infiniteHandler($state) {
-      await this.getAllEvents(this.page);
+      await this.getAllEvents(this.query);
 
       if (this.allEvents.data.length > 0) {
-        this.page += 1;
+        this.query.page += 1;
 
         this.fetchedEvents.push(...this.allEvents.data);
 
         $state.loaded();
       } else {
         $state.complete();
+      }
+    },
+
+    filterEvents(filter) {
+      if (filter !== "all") {
+        this.query = {
+          status: filter,
+          page: 1,
+          userId: this.loggedInUser.id,
+        };
+
+        this.fetchedEvents = [];
+        this.infiniteId += 1;
+      } else {
+        this.query = {
+          status: "",
+          page: 1,
+          userId: "",
+        };
+
+        this.fetchedEvents = [];
+        this.infiniteId += 1;
       }
     },
   },

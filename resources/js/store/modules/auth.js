@@ -36,6 +36,7 @@ const actions = {
 
     clearLocalStorage({ commit }) {
         localStorage.removeItem("token");
+        localStorage.removeItem("tokenExpiration");
         commit("logout-success");
     },
 
@@ -176,6 +177,7 @@ const actions = {
             const { data } = await authRequests.login(loginData);
 
             localStorage.setItem("token", data.data.token);
+            localStorage.setItem("tokenExpiration", data.data.expires_in);
 
             commit("login-success");
 
@@ -198,6 +200,7 @@ const actions = {
                   });
 
             localStorage.removeItem("token");
+            localStorage.removeItem("tokenExpiration");
         } finally {
             commit("loading-ends");
         }
@@ -210,6 +213,7 @@ const actions = {
 
             localStorage.removeItem("token");
             localStorage.removeItem("vuex");
+            localStorage.removeItem("tokenExpiration");
 
             commit("logout-success");
         } catch (error) {

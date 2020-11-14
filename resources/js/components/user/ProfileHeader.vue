@@ -90,6 +90,7 @@ export default {
 
     async relationships() {
       await this.userRelationships(this.profile.id);
+
       await this.getUserProfile(this.profile.id);
     },
   },
