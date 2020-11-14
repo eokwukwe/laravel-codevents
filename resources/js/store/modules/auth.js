@@ -186,7 +186,6 @@ const actions = {
                 status: true,
                 message: "Login successful 🚀"
             });
-
         } catch (error) {
             error.response.status === 422 || error.response.status === 429
                 ? commit(
@@ -236,6 +235,13 @@ const actions = {
         } finally {
             commit("loading-ends");
         }
+    },
+
+    socialLoginSuccess({ commit }, { token, expiresIn }) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("tokenExpiration", expiresIn);
+
+        commit("login-success");
     }
 };
 

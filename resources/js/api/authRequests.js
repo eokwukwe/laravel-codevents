@@ -31,5 +31,5 @@ export default {
 
     loggedInUser() {
         return request().get("/me");
-    }
+    },
 };

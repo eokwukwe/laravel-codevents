@@ -24,7 +24,6 @@
           dense
           filled
           outlined
-          type="number"
           label="Phone"
           append-icon="mdi-phone"
           :error-messages="phoneErrors"
@@ -62,7 +61,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, numeric } from "vuelidate/lib/validators";
 
 import helpers from "../../helpers";
 
@@ -87,7 +86,7 @@ export default {
   validations: {
     updateProfileData: {
       name: { required },
-      phone: { minLength: minLength(11) },
+      phone: { numeric, minLength: minLength(11) },
     },
   },
 
@@ -114,6 +113,9 @@ export default {
       const errors = [];
 
       if (!this.$v.updateProfileData.phone.$dirty) return errors;
+
+      !this.$v.updateProfileData.phone.numeric &&
+        errors.push("Phone number must be numbers.");
 
       !this.$v.updateProfileData.phone.minLength &&
         errors.push("Phone number must be at least 11 characters.");
@@ -143,7 +145,9 @@ export default {
 
       if (!this.userActionSuccess.status) return;
 
-      this.$emit('profile-updated', this.userActionSuccess.message)
+      this.$emit("profile-updated", this.userActionSuccess.message);
+
+      await this.getUserProfile(this.profile.id);
     },
   },
 };

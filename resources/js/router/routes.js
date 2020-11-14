@@ -5,6 +5,7 @@ import EventForm from "../components/events/EventForm";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import ResetPassword from "../components/auth/ResetPassword";
 import ForgotPassword from "../components/auth/ForgotPassword";
+import SocialLoginRedirect from "../components/auth/SocialLoginRedirect";
 
 import Profile from "../views/Profile.vue";
 import EventDetail from "../views/EventDetail.vue";
@@ -26,6 +27,12 @@ const routes = [
         path: "/login",
         name: "LoginPage",
         component: Login,
+        meta: { guest: true }
+    },
+    {
+        path: "/oauth/:provider",
+        name: "SocialLoginPage",
+        component: SocialLoginRedirect,
         meta: { guest: true }
     },
     {

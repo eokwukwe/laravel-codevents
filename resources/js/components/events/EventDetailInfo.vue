@@ -77,7 +77,7 @@ export default {
   },
 
   data: () => ({
-    showMap: false,
+    showMap: true,
   }),
 
   computed: {

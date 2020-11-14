@@ -37,11 +37,20 @@ class SocialLoginController extends Controller
             );
         }
 
-        $newUser = $this->createUser($provider, $clientBaseUrl, $identity);
+        // create user record or retrieve already existing one
+        $newUser = $this->findOrCreateUser($provider, $clientBaseUrl, $identity);
 
         $token = $this->auth->fromUser($newUser);
 
-        return redirect("{$clientBaseUrl}/auth/{$provider}?token={$token}");
+        $this->auth->setToken($token);
+
+        $this->auth->authenticate();
+
+        $expiration = $this->auth->getPayload()->get('exp');
+
+        return redirect(
+            "{$clientBaseUrl}/oauth/{$provider}?token={$token}&expiresIn={$expiration}"
+        );
     }
 
     /**
@@ -52,7 +61,7 @@ class SocialLoginController extends Controller
      * @param \Laravel\Socialite\Two\User $identity
      * @return \App\Models\User  $user
      */
-    public function createUser($provider, $clientBaseUrl, $identity)
+    public function findOrCreateUser($provider, $clientBaseUrl, $identity)
     {
         DB::beginTransaction();
 
@@ -87,7 +96,7 @@ class SocialLoginController extends Controller
             DB::rollback();
 
             return redirect(
-                "{$clientBaseUrl}?error=Unable to login using {$provider}. Please try again"
+                "{$clientBaseUrl}/oauth?error=Unable to login using {$provider}. Please try again"
             );
         }
 
