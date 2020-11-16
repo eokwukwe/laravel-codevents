@@ -201,6 +201,8 @@ export default {
 
       if (!this.userActionSuccess.status) return;
 
+      this.updateProfileData.image = null
+
       this.$emit("profile-updated", this.userActionSuccess.message);
 
       await this.getUserProfile(this.profile.id);

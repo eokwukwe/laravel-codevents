@@ -44,12 +44,12 @@ class ProfilePasswordUpdateRequest extends FormRequest
 
             case self::PROFILE_UPDATE:
                 $rules = [
-                    'name' => ['sometimes', 'required', 'string', 'max:255'],
-                    'bio' => ['sometimes', 'required', 'string'],
-                    'phone' => ['sometimes', 'required', 'string', 'size:11'],
+                    'name' => ['sometimes', 'string', 'max:255'],
+                    'bio' => ['string', 'nullable'],
+                    'phone' => ['sometimes', 'string', 'size:11', 'nullable'],
                     'image' => [
-                        'sometimes', 'required',
-                        'mimes:jpeg,gif,bmp,png', 'max:1000'
+                        'sometimes',
+                        'mimes:jpeg,gif,bmp,png', 'max:1000', 'nullable'
                     ],
                 ];
                 break;

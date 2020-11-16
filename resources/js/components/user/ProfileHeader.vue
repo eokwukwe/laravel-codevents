@@ -49,7 +49,7 @@
       <span class="bio font-weight-bold">About Me</span>
       <br />
       <span>
-        {{ profile.bio || "Your yet to tell us about yourself 😉😉" }}
+        {{ profile.bio || "You are yet to tell us anything about yourself 😉😉" }}
       </span>
     </v-card-text>
   </v-card>
