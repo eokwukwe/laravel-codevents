@@ -1,6 +1,7 @@
 import Login from "../components/auth/Login";
 import Resend from "../components/auth/Resend";
 import Register from "../components/auth/Register";
+import NotFound from "../components/common/NotFound";
 import EventForm from "../components/events/EventForm";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import ResetPassword from "../components/auth/ResetPassword";
@@ -116,6 +117,11 @@ const routes = [
         //     import(
         //         /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"
         //     )
+    },
+    {
+        path: "*",
+        name: "NotFoundPage",
+        component: NotFound,
     }
 ];
 

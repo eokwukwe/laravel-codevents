@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import routes from "./routes";
 import store from "../store";
 import hasTokenExpired from "../helpers/hasTokenExpired";
+import isEmpty from 'lodash.isempty'
 
 Vue.use(VueRouter);
 
@@ -17,12 +18,12 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
     const authenticated = localStorage.getItem("token");
+    const vuex = JSON.parse(localStorage.getItem("vuex"));
+    const tokenExpiration = JSON.parse(localStorage.getItem("tokenExpiration"));
+
     const guest = to.matched.some(record => record.meta.guest);
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const requiresOwner = to.matched.some(record => record.meta.requiresOwner);
-
-    const vuex = JSON.parse(localStorage.getItem("vuex"));
-    const tokenExpiration = JSON.parse(localStorage.getItem("tokenExpiration"));
 
     let event;
 

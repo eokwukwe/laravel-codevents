@@ -4,7 +4,7 @@ import store from '../store'
 const api = axios.create({
     headers: {
         Accept: "application/json",
-        "Content-type": "application/json"
+        "Content-type": "application/json, multipart/form-data"
     },
     baseURL:
         process.env.NODE_ENV === "development"
