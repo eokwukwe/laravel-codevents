@@ -71,10 +71,6 @@ const routes = [
         name: "EventsPage",
         component: EventDashboard,
         meta: { general: true }
-        // component: () =>
-        //     import(
-        //         /* webpackChunkName: "EventsPage" */ "../views/EventDashboard.vue"
-        //     )
     },
     {
         path: "/users/:id/profile",
@@ -82,19 +78,12 @@ const routes = [
         component: Profile,
         meta: { requiresAuth: true },
         props: true
-
-        // component: () =>
-        //     import(/* webpackChunkName: "ProfilePage" */ "../views/Profile.vue")
     },
     {
         path: "/create-event",
         name: "CreateEventForm",
         component: EventForm,
         meta: { requiresAuth: true }
-        // component: () =>
-        //     import(
-        //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
-        //     )
     },
     {
         path: "/update-event/:id",
@@ -102,10 +91,6 @@ const routes = [
         component: EventForm,
         meta: { requiresAuth: true, requiresOwner: true },
         props: castId
-        // component: () =>
-        //     import(
-        //         /* webpackChunkName: "EventFormPage" */ "../components/events/EventForm.vue"
-        //     )
     },
     {
         path: "/events/:id/details",
@@ -113,10 +98,6 @@ const routes = [
         component: EventDetail,
         meta: { requiresAuth: true },
         props: castId
-        // component: () =>
-        //     import(
-        //         /* webpackChunkName: "EventDetailPage" */ "../views/EventDetail.vue"
-        //     )
     },
     {
         path: "*",

@@ -96,7 +96,7 @@ class SocialLoginController extends Controller
             DB::rollback();
 
             return redirect(
-                "{$clientBaseUrl}/oauth?error=Unable to login using {$provider}. Please try again"
+                "{$clientBaseUrl}/oauth/{$provider}?error=Unable to login using {$provider}. Please try again."
             );
         }
 

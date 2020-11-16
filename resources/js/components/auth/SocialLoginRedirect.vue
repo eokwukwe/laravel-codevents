@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="d-flex justify-center text-h6 text-sm-h4 verification--message">
-      Please wait while we verify your email
+      {{ errorMessage }} Or try registering with an email and password.
     </div>
 
     <v-progress-circular
@@ -20,20 +20,22 @@ export default {
   name: "SocialLoginRedirect",
 
   data: () => ({
-    authenticating: false,
+    errorMessage: "",
   }),
 
   mounted: function () {
-    this.authenticating = true;
+    if (this.$route.query.error) {
+      this.errorMessage = this.$route.query.error;
+
+      return;
+    }
 
     const token = this.$route.query.token;
     const expiresIn = this.$route.query.expiresIn;
 
     this.socialLoginSuccess({ token, expiresIn });
 
-    this.authenticating = false;
-
-    this.getLoggedInUser()
+    this.getLoggedInUser();
 
     this.$router.push({ name: "EventsPage" });
   },
